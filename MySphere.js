@@ -4,7 +4,7 @@
  */
 
 
-function MySphere(scene, stacks, slices, minS, maxS, minT, maxT){
+function MySphere(scene, radius, stacks, slices, minS, maxS, minT, maxT){
 	CGFobject.call(this, scene);
 	
 	if(slices == null)
@@ -15,6 +15,7 @@ function MySphere(scene, stacks, slices, minS, maxS, minT, maxT){
 
 	this.slices = slices;
 	this.stacks = stacks;
+	this.radius = radius;
 
 	this.minS = minS || 0.0;
 	this.maxS = maxS || 1.0;
@@ -48,9 +49,9 @@ MySphere.prototype.initBuffers = function(){
 		var yText = this.minT;
 
 		for (var j = 0; j <= this.stacks; j++, teta += this.z, yText += this.incT){
-			var x = Math.cos(beta) * Math.sin(teta);
-			var y = Math.sin(beta) * Math.sin(teta);
-			var z = Math.cos(teta);
+			var x = Math.cos(beta)*this.radius * Math.sin(teta);
+			var y = Math.sin(beta)*this.radius * Math.sin(teta);
+			var z = Math.cos(teta)*this.radius;
 
 			this.vertices.push(x, y, z);
 			this.normals.push(x, y, z);
