@@ -1425,11 +1425,43 @@ MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
 	// remove log below to avoid performance issues
 
-  for (var i = 0; i < this.nodes.length; i++){
-
-      this.nodes[i].display();
-      console.log("Number " + i);
-  }
+    this.processNode("root", null, null);
 
 	this.log("Graph should be rendered here...");
 }
+
+MySceneGraph.prototype.processNode = function (nodeId, material, texture) {
+
+    if(this.nodes.indexOf(nodeId) == -1 || this.nodes[nodeId] == null){
+        return "the nodes doesn't exist.";
+    }
+
+    var nodeToProcess = this.nodes[nodeId];
+
+    //Transformation matrix
+    this.scene.multMatrix(nodeToProcess.transformMatrix)
+
+    //Material
+    var materialToProcess = nodeToProcess.materialID == null ? material : nodeToProcess.materialID;
+
+    //Texture
+    var textureToProcess = nodeToProcess.textureID == null ? texture : nodeToProcess.textureID;
+
+
+    //Recursive call for children nodes
+    for (var i = 0; i < nodeToProcess.children.length; i++) {
+
+        this.scene.pushMatrix();
+        this.processNode(nodeToProcess.children[i], materialToProcess, textureToProcess);
+        this.scene.popMatrix();
+        console.log("Number " + i);
+    }
+
+    //Display children leaves
+    for (var i = 0; i < nodeToProcess.leaves.length; i++){
+
+        nodeToProcess.leaves[i].display();
+    }
+
+}
+
