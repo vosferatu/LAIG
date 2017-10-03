@@ -30,7 +30,7 @@
 	this.vertices = [];
 	this.normals = [];
 	this.indices = [];
-  this.texCoords = [];
+  	this.texCoords = [];
 
 	for(stack = 0; stack <= this.stacks; stack++){
 
