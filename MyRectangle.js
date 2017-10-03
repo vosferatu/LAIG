@@ -1,10 +1,10 @@
 /**
- * MyQuad
+ * MyRectangle
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
 
-function MyQuad(scene, x1, z1, x2, z2, minS=0, maxS=1, minT=0, maxT=1) {
+function MyRectangle(scene, x1, z1, x2, z2, minS=0, maxS=1, minT=0, maxT=1) {
 	CGFobject.call(this,scene);
 
 	this.x1 = x1;
@@ -21,10 +21,10 @@ function MyQuad(scene, x1, z1, x2, z2, minS=0, maxS=1, minT=0, maxT=1) {
 };
 
 
-MyQuad.prototype = Object.create(CGFobject.prototype);
-MyQuad.prototype.constructor=MyQuad;
+MyRectangle.prototype = Object.create(CGFobject.prototype);
+MyRectangle.prototype.constructor=MyQuad;
 
-MyQuad.prototype.initBuffers = function () {
+MyRectangle.prototype.initBuffers = function () {
 	this.vertices = [
             this.x1, this.z1, 0,
             this.x2, this.z1, 0,
