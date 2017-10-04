@@ -1427,12 +1427,9 @@ MySceneGraph.prototype.displayScene = function() {
 
     this.processNode("root", null, null);
 
-	//this.log("Display - Graph should be rendered here...");
-
 }
 
 MySceneGraph.prototype.processNode = function (nodeId, material, texture) {
-
 
     //console.log("PROCESSO DO NO " + nodeId);
     if(this.nodes[nodeId] == null){
