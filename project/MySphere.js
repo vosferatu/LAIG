@@ -1,11 +1,12 @@
 /**
- * MyCylinder
+ * MySphere
  * @constructor
  */
 
-function MyCylinder(scene, height, botradius, topradius, stacks, slices, minS, maxS, minT, maxT){
-	CGFobject.call(this, scene);
 
+function MySphere(scene, radius, stacks, slices, minS, maxS, minT, maxT){
+	CGFobject.call(this, scene);
+	
 	if(slices == null)
 		slices = 8;
 	
@@ -14,53 +15,50 @@ function MyCylinder(scene, height, botradius, topradius, stacks, slices, minS, m
 
 	this.slices = slices;
 	this.stacks = stacks;
-	this.height = height;
+	this.radius = radius;
 
 	this.minS = minS || 0.0;
 	this.maxS = maxS || 1.0;
 	this.minT = minT || 0.0;
 	this.maxT = maxT || 1.0;
-	this.botradius = botradius;
 
 	this.incS = (this.maxS - this.minS) / this.slices;
 	this.incT = (this.maxT - this.minT) / this.stacks;
 
-	this.radiusvar = (topradius-botradius)/this.stacks;
-
 	this.initBuffers();
 };
 
-MyCylinder.prototype = Object.create(CGFobject.prototype);
-MyCylinder.prototype.constructor = MyCylinder;
+MySphere.prototype = Object.create(CGFobject.prototype);
+MySphere.prototype.constructor = MySphere;
 
-MyCylinder.prototype.initBuffers = function(){
+MySphere.prototype.initBuffers = function(){
+	
 	this.vertices = new Array();
-	this.normals = new Array();
 	this.indices = new Array();
+	this.normals = new Array();
 	this.texCoords = new Array();
 
-	var altura = this.height / this.stacks;
-	var ang = (2 * Math.PI) / this.slices;
+	this.ang = (2*Math.PI)/this.slices;
+	this.z = Math.PI / (this.stacks);
 
-	var teta = 0;
-	var radius = this.botradius;
+	var beta = 0;
 	var xText = this.maxS;
 
-	for (i = 0; i <= this.slices; i++, teta += ang, xText -= this.incS){
+	for (var i = 0; i <= this.slices; i++, beta += this.ang, xText -= this.incS){
+		var teta = 0;
+		var yText = this.minT;
 
-		var yText = this.maxT;
+		for (var j = 0; j <= this.stacks; j++, teta += this.z, yText += this.incT){
+			var x = Math.cos(beta)*this.radius * Math.sin(teta);
+			var y = Math.sin(beta)*this.radius * Math.sin(teta);
+			var z = Math.cos(teta)*this.radius;
 
-		var z = 0;
-
-		for (j = 0; j <= this.stacks; j++, z += altura, yText -= this.incT){
-			var x = Math.cos(teta)*(this.botradius+(this.radiusvar*j));
-			var y = Math.sin(teta)*(this.botradius+(this.radiusvar*j));
 			this.vertices.push(x, y, z);
-			this.normals.push(x, y, 0);
+			this.normals.push(x, y, z);
 			this.texCoords.push(xText, yText);
 		}
 	}
-	
+
 	var ind = 1;
 
 	for (var i = 0; i < this.slices; i++){
@@ -75,7 +73,7 @@ MyCylinder.prototype.initBuffers = function(){
 
 		ind++;
 	}
-	
+
 	this.primitiveType = this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };

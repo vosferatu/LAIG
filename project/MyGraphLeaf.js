@@ -12,20 +12,45 @@ function MyGraphLeaf(graph, xmlelem) {
     this.shape = null;
     switch(this.type){
         case "cylinder":
-            /*this.shape = new MyCylinder(graph.scene,
+            this.shape = new MyCylinder(graph.scene,
                 parseInt(this.arguments[0]),
                 parseInt(this.arguments[1]),
                 parseInt(this.arguments[2]),
                 parseInt(this.arguments[3]),
                 parseInt(this.arguments[4])
-            );*/
-            this.shape = new MyCylinder(graph.scene,
-                parseInt(this.arguments[3]),
-                parseInt(this.arguments[4])
             );
-            /*console.log(this.arguments[3]);
-            console.log(this.arguments[4]);*/
             break;
+
+        case "triangle":
+            this.shape = new MyTriangle(graph.scene,
+                parseInt(this.arguments[0]),
+                parseInt(this.arguments[1]),
+                parseInt(this.arguments[2]),
+                parseInt(this.arguments[3]),
+                parseInt(this.arguments[4]),
+                parseInt(this.arguments[5]),
+                parseInt(this.arguments[6]),
+                parseInt(this.arguments[7]),
+                parseInt(this.arguments[8]),
+                parseInt(this.arguments[9])
+            );
+            break;
+
+        case "rectangle":
+            this.shape = new MyRectangle(graph.scene, 
+
+                parseInt(this.arguments[0]),
+                parseInt(this.arguments[1]),
+                parseInt(this.arguments[2]),
+                parseInt(this.arguments[3])
+            );
+            break;
+        case "sphere":
+            this.shape = new MySphere(graph.scene,
+                parseInt(this.arguments[0]),
+                parseInt(this.arguments[1]),
+                parseInt(this.arguments[2])
+            );
 
     }
 }
