@@ -1,4 +1,4 @@
- /**
+/**
  * MyInterface class, creating a GUI interface.
  * @constructor
  */

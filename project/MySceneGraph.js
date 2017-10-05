@@ -1429,38 +1429,56 @@ MySceneGraph.prototype.displayScene = function() {
 
 }
 
-MySceneGraph.prototype.processNode = function (nodeId, material, texture) {
 
-    //console.log("PROCESSO DO NO " + nodeId);
-    if(this.nodes[nodeId] == null){
+
+MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
+  
+    /*var node = this.nodes[nodeID];
+
+    if(node == null)
+        return;*/
+
+    var nodeToProcess = this.nodes[nodeID];
+
+    if(nodeToProcess == null){
         this.log("error - the nodes doesn't exist");
         return "the nodes doesn't exist.";
-    }
-
-    var nodeToProcess = this.nodes[nodeId];
+    }    
 
     //Transformation matrix
-    this.scene.multMatrix(nodeToProcess.transformMatrix)
-
+    this.scene.multMatrix(nodeToProcess.transformMatrix);
+    
     //Material
-    var materialToProcess = nodeToProcess.materialID == null ? material : nodeToProcess.materialID;
+    var materialToProcess = nodeToProcess.materialID == "null" ? materialId : nodeToProcess.materialID;
 
     //Texture
-    var textureToProcess = nodeToProcess.textureID == null ? texture : nodeToProcess.textureID;
+    var textureToProcess = nodeToProcess.textureID == "null" ? textureId : nodeToProcess.textureID;
 
-    //Recursive call for children nodes
-    for (var i = 0; i < nodeToProcess.children.length; i++) {
+
+    for(var i = 0 ; i < nodeToProcess.children.length ; i++) {
 
         this.scene.pushMatrix();
         this.processNode(nodeToProcess.children[i], materialToProcess, textureToProcess);
         this.scene.popMatrix();
+
     }
 
-    //Display children leaves
-    for (var i = 0; i < nodeToProcess.leaves.length; i++){
+    for(var i = 0; i < nodeToProcess.leaves.length ; i++) {
+        
+        if(materialToProcess != null) {
 
+             var materialToApply = this.materials[materialToProcess];
+
+             if(textureToProcess != null && textureToProcess != "clear") {
+                var textureToApply = this.textures[textureToProcess];
+                materialToApply.setTexture(textureToApply[0]);
+             }
+                
+            materialToApply.apply();
+        }
+        
         nodeToProcess.leaves[i].display();
+
     }
 
 }
-
