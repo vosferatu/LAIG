@@ -95,7 +95,7 @@ MyCylinder.prototype.drawCircles = function (){
 			this.top.display();
 		this.scene.popMatrix();
 	} 
-	
+
 	if (this.bot != null) {
 		this.scene.pushMatrix();
 			this.bot.display();
