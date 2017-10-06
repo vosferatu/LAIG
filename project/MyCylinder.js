@@ -3,7 +3,7 @@
  * @constructor
  */
 
-function MyCylinder(scene, height, botradius, topradius, stacks, slices, minS, maxS, minT, maxT){
+function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap, botcap, minS, maxS, minT, maxT){
 	CGFobject.call(this, scene);
 
 	if(slices == null)
@@ -11,21 +11,27 @@ function MyCylinder(scene, height, botradius, topradius, stacks, slices, minS, m
 	
 	if(stacks == null)
 		stacks = 20;
-
+	
 	this.slices = slices;
 	this.stacks = stacks;
-	this.height = height;
+	this.height = height || 0.0;
 
 	this.minS = minS || 0.0;
 	this.maxS = maxS || 1.0;
 	this.minT = minT || 0.0;
 	this.maxT = maxT || 1.0;
 	this.botradius = botradius;
+	this.topradius = topradius;
 
 	this.incS = (this.maxS - this.minS) / this.slices;
 	this.incT = (this.maxT - this.minT) / this.stacks;
 
 	this.radiusvar = (topradius-botradius)/this.stacks;
+
+	this.angulo = (2*Math.PI) / this.slices;
+
+	this.top = ((topcap == 1) ? new MyCircle(this.scene, this.slices, this.topradius) : null);
+	this.bot = ((botcap == 1) ? new MyCircle(this.scene, this.slices, this.botradius) : null);
 
 	this.initBuffers();
 };
@@ -40,13 +46,12 @@ MyCylinder.prototype.initBuffers = function(){
 	this.texCoords = new Array();
 
 	var altura = this.height / this.stacks;
-	var ang = (2 * Math.PI) / this.slices;
 
 	var teta = 0;
 	var radius = this.botradius;
 	var xText = this.maxS;
 
-	for (i = 0; i <= this.slices; i++, teta += ang, xText -= this.incS){
+	for (i = 0; i <= this.slices; i++, teta += this.angulo, xText -= this.incS){
 
 		var yText = this.maxT;
 
@@ -75,7 +80,25 @@ MyCylinder.prototype.initBuffers = function(){
 
 		ind++;
 	}
+
+	this.drawCircles();
 	
 	this.primitiveType = this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+
+MyCylinder.prototype.drawCircles = function (){
+
+	if(this.top != null){
+		this.scene.pushMatrix();
+			this.scene.rotate(0,1,0,Math.PI);
+			this.top.display();
+		this.scene.popMatrix();
+	} 
+	
+	if (this.bot != null) {
+		this.scene.pushMatrix();
+			this.bot.display();
+		this.scene.popMatrix();
+	}
+}
