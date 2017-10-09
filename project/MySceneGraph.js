@@ -1425,7 +1425,7 @@ MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
 	// remove log below to avoid performance issues
 
-    this.processNode("root", null, null);
+    this.processNode(this.idRoot, null, null);
 
 }
 
@@ -1433,15 +1433,10 @@ MySceneGraph.prototype.displayScene = function() {
 
 MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
   
-    /*var node = this.nodes[nodeID];
-
-    if(node == null)
-        return;*/
-
     var nodeToProcess = this.nodes[nodeID];
 
     if(nodeToProcess == null){
-        this.log("error - the nodes doesn't exist");
+        this.log("error - the node " + nodeID + " doesn't exist");
         return "the nodes doesn't exist.";
     }    
 

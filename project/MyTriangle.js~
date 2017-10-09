@@ -34,8 +34,14 @@ MyTriangle.prototype.initBuffers = function () {
 			];
 
 	this.indices = [
+<<<<<<< HEAD
+            //0, 2, 1
+			1, 2, 0
+        ];
+=======
       0, 1, 2
   ];
+>>>>>>> e76892f345628412662edd4ba66fc7af41f83db4
 
 	var nx = (this.y2-this.y1)*(this.z3-this.z1) - (this.z2-this.z1)*(this.y3-this.y1);
 	var ny = (this.z2-this.z1)*(this.x3-this.x1) - (this.x2-this.x1)*(this.z3-this.z1);
@@ -48,18 +54,27 @@ MyTriangle.prototype.initBuffers = function () {
 	];
 
    	this.texCoords = [
+<<<<<<< HEAD
 		this.minS, this.maxT,
 		this.maxS, this.maxT,
 		this.minS, this.minT
+=======
+			this.minS, this.maxT,
+			this.maxS, this.maxT,
+			this.minS, this.minT
+>>>>>>> e76892f345628412662edd4ba66fc7af41f83db4
 	];
 
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+<<<<<<< HEAD
 
 MyTriangle.prototype.amplify = function (ampS, ampT){
 
 
 
 }
+=======
+>>>>>>> e76892f345628412662edd4ba66fc7af41f83db4
