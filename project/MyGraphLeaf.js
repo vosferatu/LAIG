@@ -17,7 +17,9 @@ function MyGraphLeaf(graph, xmlelem) {
                 parseInt(this.arguments[1]),
                 parseInt(this.arguments[2]),
                 parseInt(this.arguments[3]),
-                parseInt(this.arguments[4])
+                parseInt(this.arguments[4]),
+                parseInt(this.arguments[5]),
+                parseInt(this.arguments[6])
             );
             break;
 
