@@ -26,13 +26,13 @@ MyCircle.prototype.initBuffers = function() {
 	this.indices = new Array();
 	this.texCoords = new Array();
 
-	this.vertices.push(0,0,z);
+	this.vertices.push(0,0,this.z);
   	this.normals.push(0,0,1);
   	this.texCoords.push(0.5,0.5);
 
 	for(i = 0; i < this.slices; i++){
 
-		this.vertices.push(Math.cos(i*this.angle)*this.radius, Math.sin(i*this.angle)*this.radius, z);
+		this.vertices.push(Math.cos(i*this.angle)*this.radius, Math.sin(i*this.angle)*this.radius, this.z);
       	this.normals.push(0, 0, 1);
 
 	}
