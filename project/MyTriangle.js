@@ -47,11 +47,16 @@ MyTriangle.prototype.initBuffers = function () {
     nx, ny, nz
 	];
 
-   	this.texCoords = [
-		this.minS, this.maxT,
-		this.maxS, this.maxT,
-		this.minS, this.minT
-	];
+	var a = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2) + Math.pow(this.z1-this.z3, 2));
+	var b = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2) + Math.pow(this.z2-this.z1, 2));
+    var c = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2) + Math.pow(this.z3-this.z2, 2));
+    var ang = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c));
+    
+    this.texCoords = [
+		0, 0,
+		c, 0,
+		c-a*Math.cos(ang), a*Math.sin(ang)
+    ];
 
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
@@ -60,6 +65,17 @@ MyTriangle.prototype.initBuffers = function () {
 
 MyTriangle.prototype.amplify = function (ampS, ampT){
 
+	var a = Math.sqrt(Math.pow(this.x1-this.x3, 2) + Math.pow(this.y1-this.y3, 2) + Math.pow(this.z1-this.z3, 2));
+	var b = Math.sqrt(Math.pow(this.x2-this.x1, 2) + Math.pow(this.y2-this.y1, 2) + Math.pow(this.z2-this.z1, 2));
+    var c = Math.sqrt(Math.pow(this.x3-this.x2, 2) + Math.pow(this.y3-this.y2, 2) + Math.pow(this.z3-this.z2, 2));
+    var ang = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c));
+    
+    this.texCoords = [
+		0, 0,
+		c/ampS, 0,
+		(c-a*Math.cos(ang))/ampS, (a*Math.sin(ang))/ampT
+    ];
 
+    this.updateTexCoordsGLBuffers();
 
 }

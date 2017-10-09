@@ -30,8 +30,8 @@ function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap,
 
 	this.angulo = (2*Math.PI) / this.slices;
 
-	this.top = ((topcap == 1) ? new MyCircle(this.scene, this.slices, this.topradius) : null);
-	this.bot = ((botcap == 1) ? new MyCircle(this.scene, this.slices, this.botradius) : null);
+	this.top = ((topcap == 1) ? new MyCircle(this.scene, this.slices, this.topradius, this.height) : null);
+	this.bot = ((botcap == 1) ? new MyCircle(this.scene, this.slices, this.botradius, this.height) : null);
 
 	this.initBuffers();
 };
