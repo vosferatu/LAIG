@@ -177,6 +177,10 @@
             <NODEREF id="bancos" />
             <NODEREF id="queijos" />
             <NODEREF id="predios" />
+
+            <!-- TESTE -->
+
+
         </DESCENDANTS>
 
     </NODE>
@@ -197,9 +201,18 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="-100" y="0" z="-150"/>
-        <SCALE sx="40" sy="5" sz="15" />
-        <TRANSLATION x="-2.5" y="-4" z="-2.5"/>
+        <TRANSLATION x="-50" y="0" z="-150"/>
+        <SCALE sx="150" sy="25" sz="60" />
+        <DESCENDANTS>
+           <NODEREF id="cubo" />
+  		</DESCENDANTS>
+    </NODE>
+
+    <!--Cubo-->
+    <NODE id="cubo">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
         <DESCENDANTS>
            <NODEREF id="faceCubo1" />
            <NODEREF id="faceCubo2" />
@@ -209,6 +222,7 @@
            <NODEREF id="faceCubo6" />
   		</DESCENDANTS>
     </NODE>
+
 
     <!-- Queijos -->
     <NODE id="queijos">
@@ -367,7 +381,7 @@
 
         <DESCENDANTS>
           <LEAF type="triangle" args="0 15 0 0 15 -24 -7 15 -24" />
-          <LEAF type="triangle" args="10 15 -24 10 15 0 17 15 -24" />
+          <LEAF type="triangle" args="10 15 0 17 15 -24 10 15 -24" />
 		    </DESCENDANTS>
 
     </NODE>
@@ -650,10 +664,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="2.5" y="4" z="7.5" />
+        <TRANSLATION x="0" y="0" z="1" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -663,11 +677,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="2.5" y="4" z="2.5" />
-		<ROTATION axis="y" angle="-90" />
+		    <ROTATION axis="y" angle="-90" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -677,11 +690,11 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="7.5" y="4" z="7.5" />
-		<ROTATION axis="y" angle="90" />
+        <TRANSLATION x="1" y="0" z="1" />
+		    <ROTATION axis="y" angle="90" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -691,11 +704,11 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="7.5" y="4" z="2.5" />
+        <TRANSLATION x="1" y="0" z="0" />
         <ROTATION axis="y" angle="180" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -705,12 +718,12 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
+        <TRANSLATION x="0" y="1" z="1" />
+
         <ROTATION axis="x" angle="-90" />
-        <TRANSLATION x="2.5" y="-7.5" z="8" />
-        <SCALE sx="1" sy="1.25" sz="1" />
 
         <DESCENDANTS>
- 					<LEAF  type="rectangle" args="0 4 5 0" />
+ 					<LEAF  type="rectangle" args="0 1 1 0" />
        </DESCENDANTS>
 
     </NODE>
@@ -720,12 +733,12 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="2.5" y="4" z="2.5" />
+        <!-- <TRANSLATION x="2.5" y="4" z="2.5" /> -->
         <ROTATION axis="x" angle="90" />
-        <SCALE sx="1" sy="1.25" sz="1" />
+        <!-- <SCALE sx="1" sy="1.25" sz="1" /> -->
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
