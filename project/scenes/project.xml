@@ -188,8 +188,28 @@
 
         <DESCENDANTS>
           <NODEREF  id="predio_atras_queijos" />
+          <NODEREF id="cobertura_queijos" />
           <!-- <NODEREF  id="predio_frente_queijos" /> -->
         </DESCENDANTS>
+    </NODE>
+
+	<!-- Cobertura -->
+
+	<NODE id="cobertura_queijos">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<TRANSLATION x="-100" y="10" z="-150"/>
+		<SCALE sx="40" sy="2" sz="15" />
+        <TRANSLATION x="-10" y="-4" z="-2.5"/>
+        <DESCENDANTS>
+           <NODEREF id="faceCubo1" />
+           <NODEREF id="faceCubo2" />
+           <NODEREF id="faceCubo3" />
+           <NODEREF id="faceCubo4" />
+           <NODEREF id="faceCubo5" />
+           <NODEREF id="faceCubo6" />
+  		</DESCENDANTS>
     </NODE>
 
     <!-- Predio atras queijos -->
@@ -653,7 +673,7 @@
         <TRANSLATION x="2.5" y="4" z="7.5" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -667,7 +687,7 @@
 		<ROTATION axis="y" angle="-90" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -681,7 +701,7 @@
 		<ROTATION axis="y" angle="90" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -695,7 +715,7 @@
         <ROTATION axis="y" angle="180" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -710,7 +730,7 @@
         <SCALE sx="1" sy="1.25" sz="1" />
 
         <DESCENDANTS>
- 					<LEAF  type="rectangle" args="0 4 5 0" />
+ 					<LEAF  type="rectangle" args="0 1 1 0" />
        </DESCENDANTS>
 
     </NODE>
@@ -725,7 +745,7 @@
         <SCALE sx="1" sy="1.25" sz="1" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 4 5 0" />
+					<LEAF  type="rectangle" args="0 1 1 0" />
         </DESCENDANTS>
 
     </NODE>
