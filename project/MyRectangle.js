@@ -59,3 +59,8 @@ MyRectangle.prototype.initBuffers = function () {
 
 	this.initGLBuffers();
 };
+
+MyRectangle.prototype.amplify = function (){
+
+	
+}

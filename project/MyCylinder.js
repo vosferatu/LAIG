@@ -102,3 +102,6 @@ MyCylinder.prototype.drawCircles = function (){
 		this.scene.popMatrix();
 	}
 }
+
+MyCylinder.prototype.amplify = function (ampS, ampT){
+}

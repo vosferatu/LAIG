@@ -1472,6 +1472,7 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
              if(textureToProcess != null && textureToProcess != "clear") {
                 var textureToApply = this.textures[textureToProcess];
                 materialToApply.setTexture(textureToApply[0]);
+                nodeToProcess.leaves[i].amplify(textureToApply[1], textureToApply[2]);
              }
                 
             materialToApply.apply();

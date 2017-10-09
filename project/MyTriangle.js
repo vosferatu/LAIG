@@ -34,7 +34,7 @@ MyTriangle.prototype.initBuffers = function () {
 			];
 
 	this.indices = [
-            0, 2, 1,
+            //0, 2, 1
 			1, 2, 0
         ];
 
@@ -48,11 +48,16 @@ MyTriangle.prototype.initBuffers = function () {
    	this.texCoords = [
 		this.minS, this.maxT,
 		this.maxS, this.maxT,
-		this.minS, this.minT,
-		//this.maxS, this.minT
+		this.minS, this.minT
 	];
 
 			
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+
+MyTriangle.prototype.amplify = function (ampS, ampT){
+
+
+
+}
