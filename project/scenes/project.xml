@@ -207,8 +207,8 @@
 		<MATERIAL id="null" />
 		<TEXTURE id="null" />
 	
-		<ROTATION axis="y" angle="38" />
-		<TRANSLATION x="-10" y="0" z="-100"/>
+		<ROTATION axis="y" angle="32.5" />
+		<TRANSLATION x="-5" y="0" z="-75"/>
 
         <DESCENDANTS>
            <NODEREF id="teto" />
@@ -219,11 +219,7 @@
            <NODEREF id = "pilar5" />
            <NODEREF id = "pilar6" />
            <NODEREF id = "pilar7" />
-           <NODEREF id = "pilar8" />           
-           <NODEREF id = "pilar9" />
-           <NODEREF id = "pilar10" /> 
-           <NODEREF id = "pilar11" />
-           <NODEREF id = "pilar12" />                       
+           <NODEREF id = "pilar8" />                 
   		</DESCENDANTS>
     </NODE>
 
@@ -231,7 +227,7 @@
 		<MATERIAL id="null" />
 		<TEXTURE id="null" />
 
-		<SCALE sx="10" sy="1" sz="100" />
+		<SCALE sx="10" sy="1" sz="60" />
         <TRANSLATION x="0" y="8" z="0"/>
         <DESCENDANTS>
            <NODEREF id="cubo" />
@@ -326,49 +322,6 @@
   		</DESCENDANTS>
     </NODE>  
 
-    <NODE id="pilar9">
-		<MATERIAL id="null" />
-		<TEXTURE id="null" />
-
-		<TRANSLATION x="1" y="0" z="72"/>
-		
-        <DESCENDANTS>
-           <NODEREF id="pilar" />
-  		</DESCENDANTS>
-    </NODE>
-
-    <NODE id="pilar10">
-		<MATERIAL id="null" />
-		<TEXTURE id="null" />
-
-		<TRANSLATION x="9" y="0" z="72"/>
-		
-        <DESCENDANTS>
-           <NODEREF id="pilar" />
-  		</DESCENDANTS>
-    </NODE>   
-
-    <NODE id="pilar11">
-		<MATERIAL id="null" />
-		<TEXTURE id="null" />
-
-		<TRANSLATION x="1" y="0" z="90"/>
-		
-        <DESCENDANTS>
-           <NODEREF id="pilar" />
-  		</DESCENDANTS>
-    </NODE>
-
-    <NODE id="pilar12">
-		<MATERIAL id="null" />
-		<TEXTURE id="null" />
-
-		<TRANSLATION x="9" y="0" z="90"/>
-		
-        <DESCENDANTS>
-           <NODEREF id="pilar" />
-  		</DESCENDANTS>
-    </NODE>     
 
 	<NODE id="pilar">
         <MATERIAL id="lightPostMaterial" />
@@ -389,7 +342,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-        <TRANSLATION x="-50" y="0" z="-120"/>
+        <TRANSLATION x="-80" y="0" z="-125"/>
         <DESCENDANTS>
           <NODEREF id="dep_minas" />
           <NODEREF id="dep_civil" />
