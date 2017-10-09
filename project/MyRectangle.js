@@ -12,10 +12,10 @@ function MyRectangle(scene, x1, z1, x2, z2, minS=0, maxS=1, minT=0, maxT=1) {
 	this.z1 = z1;
 	this.z2 = z2;
 
-	this.minS = minS;
-	this.maxS = maxS;
-	this.minT = minT;
-	this.maxT = maxT;
+	this.minS = x1;
+	this.maxS = x2;
+	this.minT = z2;
+	this.maxT = z1;
 
 	this.initBuffers();
 };
@@ -48,19 +48,29 @@ MyRectangle.prototype.initBuffers = function () {
 		0, 0, 1
 	];
 
-	this.texCoords = [
+	this.nonScaledTexCoords = [
 
-		/*this.minS, this.maxT,
+		this.minS, this.maxT,
 		this.maxS, this.maxT,
-		this.minS, this.minT, 
-		this.maxS, this.minT*/
-
-		this.x1, this.z1,
-		this.x2, this.z1,
-		this.x1, this.z2,
-		this.x2, this.z2
+		this.minS, this.minT,
+		this.maxS, this.minT
 		 
 	];
 
+    this.texCoords = this.nonScaledTexCoords.slice(0);
+
 	this.initGLBuffers();
 };
+
+MyRectangle.prototype.amplify = function (ampS, ampT){
+         
+    this.texCoords = [
+     		this.minS, this.maxT/ampT,
+     		this.maxS/ampS, this.maxT/ampT,
+     		this.minS, this.minT,
+     		this.maxS/ampS, this.minT
+    ];
+	
+	this.updateTexCoordsGLBuffers();
+	
+}

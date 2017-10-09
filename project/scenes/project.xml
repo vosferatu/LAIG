@@ -367,7 +367,7 @@
 
         <DESCENDANTS>
           <LEAF type="triangle" args="0 15 0 0 15 -24 -7 15 -24" />
-          <LEAF type="triangle" args="10 15 0 17 15 -24 10 15 -24" />
+          <LEAF type="triangle" args="10 15 -24 10 15 0 17 15 -24" />
 		    </DESCENDANTS>
 
     </NODE>

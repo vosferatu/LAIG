@@ -64,3 +64,9 @@ MyGraphLeaf.prototype.display = function(){
     }
 
 }
+
+MyGraphLeaf.prototype.amplify = function(ampS, ampT){
+    if(this.shape != null){
+        this.shape.amplify(ampS, ampT);
+    }
+}
