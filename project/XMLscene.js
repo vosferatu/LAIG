@@ -141,6 +141,8 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         this.graph.displayScene();
 
+    
+
     }
 	else
 	{

@@ -3,7 +3,7 @@
  * @constructor
  */
 
-function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap, botcap, minS, maxS, minT, maxT){
+function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap = 0, botcap = 0, minS, maxS, minT, maxT){
 	CGFobject.call(this, scene);
 
 	if(slices == null)
@@ -22,6 +22,8 @@ function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap,
 	this.maxT = maxT || 1.0;
 	this.botradius = botradius;
 	this.topradius = topradius;
+	this.topcap = topcap;
+	this.botcap = botcap;
 
 	this.incS = (this.maxS - this.minS) / this.slices;
 	this.incT = (this.maxT - this.minT) / this.stacks;
@@ -31,7 +33,7 @@ function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap,
 	this.angulo = (2*Math.PI) / this.slices;
 
 	this.top = ((topcap == 1) ? new MyCircle(this.scene, this.slices, this.topradius, this.height) : null);
-	this.bot = ((botcap == 1) ? new MyCircle(this.scene, this.slices, this.botradius, this.height) : null);
+	this.bot = ((botcap == 1) ? new MyCircle(this.scene, this.slices, this.botradius, 0) : null);
 
 	this.initBuffers();
 };
@@ -81,27 +83,35 @@ MyCylinder.prototype.initBuffers = function(){
 		ind++;
 	}
 
-	this.drawCircles();
 	
 	this.primitiveType = this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
 
-MyCylinder.prototype.drawCircles = function (){
 
+
+MyCylinder.prototype.display = function (){
+
+	this.drawElements(this.primitiveType);
+	
 	if(this.top != null){
 		this.scene.pushMatrix();
-			this.scene.rotate(0,1,0,Math.PI);
 			this.top.display();
 		this.scene.popMatrix();
+
 	} 
 
 	if (this.bot != null) {
 		this.scene.pushMatrix();
+			this.scene.rotate(Math.PI, 0,1,0);
 			this.bot.display();
 		this.scene.popMatrix();
+
 	}
+
+
 }
+
 
 MyCylinder.prototype.amplify = function (ampS, ampT){
 }
