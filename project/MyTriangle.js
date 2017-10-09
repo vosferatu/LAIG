@@ -19,7 +19,7 @@ function MyTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, minS=0, maxS=1, m
 	this.maxS = maxS;
 	this.minT = minT;
 	this.maxT = maxT;
-	
+
 	this.initBuffers();
 };
 
@@ -34,25 +34,26 @@ MyTriangle.prototype.initBuffers = function () {
 			];
 
 	this.indices = [
-            0, 2, 1,
-			1, 2, 0
-        ];
+      0, 1, 2
+  ];
 
-   	this.normals = [ 
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1
+	var nx = (this.y2-this.y1)*(this.z3-this.z1) - (this.z2-this.z1)*(this.y3-this.y1);
+	var ny = (this.z2-this.z1)*(this.x3-this.x1) - (this.x2-this.x1)*(this.z3-this.z1);
+	var nz = (this.x2-this.x1)*(this.y3-this.y1) - (this.y2-this.y1)*(this.x3-this.x1);
 
-   	];  
-
-   	this.texCoords = [
-		this.minS, this.maxT,
-		this.maxS, this.maxT,
-		this.minS, this.minT,
-		//this.maxS, this.minT
+    this.normals = [
+    nx, ny, nz,
+    nx, ny, nz,
+    nx, ny, nz
 	];
 
-			
+   	this.texCoords = [
+			this.minS, this.maxT,
+			this.maxS, this.maxT,
+			this.minS, this.minT
+	];
+
+
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
