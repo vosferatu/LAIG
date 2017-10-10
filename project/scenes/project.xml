@@ -102,7 +102,7 @@
     </TEXTURE>
 
     <TEXTURE id="lua">
-      <file path="images/moon.png" />
+      <file path="images/moon.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -231,7 +231,8 @@
            <NODEREF id = "pilar5" />
            <NODEREF id = "pilar6" />
            <NODEREF id = "pilar7" />
-           <NODEREF id = "pilar8" />                 
+           <NODEREF id = "pilar8" />     
+           <NODEREF id = "pilar9" />               
   		</DESCENDANTS>
     </NODE>
 
@@ -239,7 +240,7 @@
 		<MATERIAL id="null" />
 		<TEXTURE id="null" />
 
-		<SCALE sx="10" sy="1" sz="80" />
+		<SCALE sx="10" sy="1" sz="75" />
         <TRANSLATION x="0" y="8" z="0"/>
         <DESCENDANTS>
            <NODEREF id="cubo" />
@@ -333,6 +334,17 @@
            <NODEREF id="pilar" />
   		</DESCENDANTS>
     </NODE>  
+
+    <NODE id="pilar9">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<TRANSLATION x="1" y="0" z="72"/>
+		
+        <DESCENDANTS>
+           <NODEREF id="pilar" />
+  		</DESCENDANTS>
+    </NODE>
 
 
 	<NODE id="pilar">

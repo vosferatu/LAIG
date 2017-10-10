@@ -53,7 +53,12 @@ function MyGraphLeaf(graph, xmlelem) {
                 parseInt(this.arguments[1]),
                 parseInt(this.arguments[2])
             );
-
+            break;
+        case "patch":
+            this.shape = new MyPatch(graph.scene,
+                parseInt(this.arguments[0]),
+                parseInt(this.arguments[1])
+            );
     }
 }
 
