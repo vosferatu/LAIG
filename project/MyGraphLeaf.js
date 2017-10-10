@@ -6,7 +6,7 @@
 function MyGraphLeaf(graph, xmlelem) {
 
     this.graph = graph;
-    this.type = graph.reader.getItem(xmlelem,"type", ["rectangle", "sphere", "cylinder", "triangle"]);
+    this.type = graph.reader.getItem(xmlelem,"type", ["rectangle", "sphere", "cylinder", "triangle", "patch"]);
     this.arguments = graph.reader.getString(xmlelem, 'args').split(' ');
 
     this.shape = null;
@@ -55,9 +55,42 @@ function MyGraphLeaf(graph, xmlelem) {
             );
             break;
         case "patch":
+
+            var u = this.arguments[0];
+            var v = this.arguments[1];
+
+            var cplines = xmlelem.children;
+
+            var x,y,z, w;
+			var tmp = [];
+			var controlPoints = [];
+
+            var j = 0;
+            var i = 0;
+            for (; i < cplines.length; i++){
+                var cpoints = cplines[i].children;
+                tmp = [];
+
+                if(cplines[i].nodeName == "CPLINE"){
+                    
+                    for(;j < cpoints.length; j++){
+                        if(cpoints[j].nodeName == "CPOINT"){
+                            x = graph.reader.getFloat(cpoints[j], 'xx');
+                            y = graph.reader.getFloat(cpoints[j], 'yy');
+                            z = graph.reader.getFloat(cpoints[j], 'zz');
+                            w = graph.reader.getFloat(cpoints[j], 'ww');
+
+                            tmp.push([x,y,z,w]);
+                        }
+                    }
+                    if(tmp != null)
+                        controlPoints.push(tmp);
+                }
+            }
+
             this.shape = new MyPatch(graph.scene,
-                parseInt(this.arguments[0]),
-                parseInt(this.arguments[1])
+                u,
+                v, i, j, controlPoints
             );
     }
 }
