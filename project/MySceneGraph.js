@@ -1452,6 +1452,9 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 
     for(var i = 0 ; i < nodeToProcess.children.length ; i++) {
 
+        /*//Transformation matrix
+        this.scene.multMatrix(nodeToProcess.transformMatrix);*/
+
         this.scene.pushMatrix();
         this.processNode(nodeToProcess.children[i], materialToProcess, textureToProcess);
         this.scene.popMatrix();
@@ -1472,6 +1475,9 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
                 
             materialToApply.apply();
         }
+        
+        /*//Transformation matrix
+        this.scene.multMatrix(nodeToProcess.transformMatrix);*/
         
         nodeToProcess.leaves[i].display();
 
