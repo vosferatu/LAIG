@@ -62,14 +62,15 @@ function MyGraphLeaf(graph, xmlelem) {
             var cplines = xmlelem.children;
 
             var x,y,z, w;
-			var tmp = [];
-			var controlPoints = [];
+			var tmp = new Array();
+			var controlPoints = new Array();
 
             var j = 0;
             var i = 0;
+
             for (; i < cplines.length; i++){
                 var cpoints = cplines[i].children;
-                tmp = [];
+                tmp = new Array();
 
                 if(cplines[i].nodeName == "CPLINE"){
                     
@@ -79,10 +80,16 @@ function MyGraphLeaf(graph, xmlelem) {
                             y = graph.reader.getFloat(cpoints[j], 'yy');
                             z = graph.reader.getFloat(cpoints[j], 'zz');
                             w = graph.reader.getFloat(cpoints[j], 'ww');
+                            
+                            var point = new Array();
+                            point.push(x,y,z,w);
 
-                            tmp.push([x,y,z,w]);
+                            tmp.push(point);
                         }
                     }
+
+                    if(i < cplines.length-1)
+                        j = 0;
                     if(tmp != null)
                         controlPoints.push(tmp);
                 }
@@ -90,7 +97,7 @@ function MyGraphLeaf(graph, xmlelem) {
 
             this.shape = new MyPatch(graph.scene,
                 u,
-                v, i, j, controlPoints
+                v, i-1, j-1, controlPoints
             );
     }
 }
