@@ -30,7 +30,7 @@ MyPatch.prototype.init = function() {
 
 	this.makeSurface(this.degree1, this.degree2, this.cpoints);
 
-	this.surfaces.display();
+	this.display();
 }
 
 MyPatch.prototype.getKnotsVector = function(degree) { // TODO (CGF 0.19.3): add to CGFnurbsSurface
@@ -53,7 +53,9 @@ MyPatch.prototype.makeSurface = function (degree1, degree2, controlvertexes) {
 	for(var i = 0; i < controlvertexes.length; i++){
 		console.log("i = " + i + ": ");
 		for(var j = 0; j < controlvertexes[i].length; j++){
-			console.log(" " + controlvertexes[i][j] + " ");
+			for (var k = 0; k < controlvertexes[i][j].length; k ++){
+				console.log("var = " + controlvertexes[i][j][k] + " j = " + j + " k = " + k + "; ");
+			}	
 		}
 		console.log("\n");
 	}
@@ -64,6 +66,9 @@ MyPatch.prototype.makeSurface = function (degree1, degree2, controlvertexes) {
 	};
 
 	var obj = new CGFnurbsObject(this.scene, getSurfacePoint, this.u, this.v );
+
+	obj.initBuffers();
+
 	this.surfaces.push(obj);		
 }
 
