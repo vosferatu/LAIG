@@ -54,7 +54,7 @@ function MyGraphLeaf(graph, xmlelem) {
                 parseInt(this.arguments[2])
             );
             break;
-        case "patch":
+        case "patch": break;
 
             var u = this.arguments[0];
             var v = this.arguments[1];
@@ -99,6 +99,7 @@ function MyGraphLeaf(graph, xmlelem) {
                 u,
                 v, i-1, j-1, controlPoints
             );
+            break;
     }
 }
 
