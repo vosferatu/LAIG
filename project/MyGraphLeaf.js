@@ -6,7 +6,7 @@
 function MyGraphLeaf(graph, xmlelem) {
 
     this.graph = graph;
-    this.type = graph.reader.getItem(xmlelem,"type", ["rectangle", "sphere", "cylinder", "triangle"]);
+    this.type = graph.reader.getItem(xmlelem,"type", ["rectangle", "sphere", "cylinder", "triangle", "patch"]);
     this.arguments = graph.reader.getString(xmlelem, 'args').split(' ');
 
     this.shape = null;
@@ -54,11 +54,52 @@ function MyGraphLeaf(graph, xmlelem) {
                 parseInt(this.arguments[2])
             );
             break;
-        case "patch":
+        case "patch": break;
+
+            var u = this.arguments[0];
+            var v = this.arguments[1];
+
+            var cplines = xmlelem.children;
+
+            var x,y,z, w;
+			var tmp = new Array();
+			var controlPoints = new Array();
+
+            var j = 0;
+            var i = 0;
+
+            for (; i < cplines.length; i++){
+                var cpoints = cplines[i].children;
+                tmp = new Array();
+
+                if(cplines[i].nodeName == "CPLINE"){
+                    
+                    for(;j < cpoints.length; j++){
+                        if(cpoints[j].nodeName == "CPOINT"){
+                            x = graph.reader.getFloat(cpoints[j], 'xx');
+                            y = graph.reader.getFloat(cpoints[j], 'yy');
+                            z = graph.reader.getFloat(cpoints[j], 'zz');
+                            w = graph.reader.getFloat(cpoints[j], 'ww');
+                            
+                            var point = new Array();
+                            point.push(x,y,z,w);
+
+                            tmp.push(point);
+                        }
+                    }
+
+                    if(i < cplines.length-1)
+                        j = 0;
+                    if(tmp != null)
+                        controlPoints.push(tmp);
+                }
+            }
+
             this.shape = new MyPatch(graph.scene,
-                parseInt(this.arguments[0]),
-                parseInt(this.arguments[1])
+                u,
+                v, i-1, j-1, controlPoints
             );
+            break;
     }
 }
 

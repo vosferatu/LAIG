@@ -19,7 +19,8 @@ function MyTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, minS=0, maxS=1, m
 	this.maxS = maxS;
 	this.minT = minT;
 	this.maxT = maxT;
-
+	this.v = this.minT;
+	
 	this.initBuffers();
 };
 
@@ -53,9 +54,9 @@ MyTriangle.prototype.initBuffers = function () {
     var ang = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c));
     
     this.texCoords = [
-		0, 0,
-		c, 0,
-		c-a*Math.cos(ang), a*Math.sin(ang)
+		c-a*Math.cos(ang), this.v-a*Math.sin(ang),
+		0, this.v,
+		c, this.v
     ];
 
 
@@ -71,9 +72,9 @@ MyTriangle.prototype.amplify = function (ampS, ampT){
     var ang = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2))/(2*a*c));
     
     this.texCoords = [
-		0, 0,
-		c/ampS, 0,
-		(c-a*Math.cos(ang))/ampS, (a*Math.sin(ang))/ampT
+    	(c-a*Math.cos(ang))/ampS, (this.v-a*Math.sin(ang))/ampT,
+		0, this.v,
+		c/ampS, this.v/ampS
     ];
 
     this.updateTexCoordsGLBuffers();

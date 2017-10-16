@@ -4,25 +4,79 @@
  * @constructor
  */
 
-function MyPatch(scene, u, v) {
+function MyPatch(scene, u, v, degree1, degree2, cpoints) {
 	CGFobject.call(this,scene);
 
 	this.u = u;
 	this.v = v;
+
+	this.degree1 = degree1;
+	this.degree2 = degree2;
+	this.cpoints = cpoints;
+
+	console.log("degree1 = " + this.degree1 + "\n");
+	console.log("degree2 = " + this.degree2 + "\n");
 	
-	this.initBuffers();
+	this.surfaces = [];
+
+	this.init();
+
 };
 
 MyPatch.prototype = Object.create(CGFobject.prototype);
 MyPatch.prototype.constructor = MyPatch;
 
-MyPatch.prototype.initBuffers = function() {
+MyPatch.prototype.init = function() {
 
-	this.vertices = new Array();
-	this.normals = new Array();
-	this.indices = new Array();
-	this.texCoords = new Array();
+	this.makeSurface(this.degree1, this.degree2, this.cpoints);
 
-	this.primitiveType = this.scene.gl.TRIANGLES;
- 	this.initGLBuffers();
+	this.display();
+}
+
+MyPatch.prototype.getKnotsVector = function(degree) {
+	
+	var v = new Array();
+	for (var i=0; i<=degree; i++) {
+		v.push(0);
+	}
+	for (var i=0; i<=degree; i++) {
+		v.push(1);
+	}
+	return v;
+}
+
+MyPatch.prototype.makeSurface = function (degree1, degree2, controlvertexes) {
+		
+	var knots1 = this.getKnotsVector(degree1); 
+	var knots2 = this.getKnotsVector(degree2);
+		
+	for(var i = 0; i < controlvertexes.length; i++){
+		console.log("i = " + i + ": ");
+		for(var j = 0; j < controlvertexes[i].length; j++){
+			for (var k = 0; k < controlvertexes[i][j].length; k ++){
+				console.log("var = " + controlvertexes[i][j][k] + " j = " + j + " k = " + k + "; ");
+			}	
+		}
+		console.log("\n");
+	}
+	
+	var nurbsSurface = new CGFnurbsSurface(degree1, degree2, knots1, knots2, controlvertexes);
+	getSurfacePoint = function(u, v) {
+		return nurbsSurface.getPoint(u, v);
+	};
+
+	var obj;
+	obj = new CGFnurbsObject(this.scene, getSurfacePoint, this.u, this.v );
+
+	obj.initBuffers();
+
+	this.surfaces.push(obj);		
+}
+
+MyPatch.prototype.display = function(){
+  	this.surfaces.display();
+}
+
+MyPatch.prototype.amplify = function(ampS, ampT){
+
 }

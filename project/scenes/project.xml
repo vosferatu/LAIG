@@ -184,8 +184,32 @@
             <NODEREF id="predios" />
             <NODEREF id="departamentos" />
             <NODEREF id="lua"/>
+            <NODEREF id="wave_water" />
            
         </DESCENDANTS>
+    </NODE>
+
+	<NODE id="wave_water">
+      <MATERIAL id="null" />
+      <TEXTURE id="lua" />
+
+      <TRANSLATION x="0" y="2.5" z="0" />
+      <DESCENDANTS>
+        <LEAF id="wave" type="patch" args="30 30" >
+          <CPLINE>
+            <CPOINT xx="-5.2" yy="-2.5" zz="0" ww="1"/>
+            <CPOINT xx="2.6" yy="1.8" zz="0" ww="1"/>
+            <CPOINT xx="-5.9" yy="-3.6" zz="0" ww="0.5"/>
+            <CPOINT xx="1.6" yy="-2.5" zz="0" ww="0.3"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-5.2" yy="-2.5" zz="20" ww="1"/>
+            <CPOINT xx="2.6" yy="1.8" zz="20" ww="1"/>
+            <CPOINT xx="-5.9" yy="-3.6" zz="20" ww="0.5"/>
+            <CPOINT xx="1.6" yy="-2.5" zz="20" ww="0.3"/>
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
     </NODE>
 
     <!-- Lua -->
@@ -905,7 +929,7 @@
         <ROTATION axis="x" angle="90" />
 
         <DESCENDANTS>
-			<LEAF type="cylinder" args="4 1 1 20 20" />
+			<LEAF type="cylinder" args="4 1 1 20 20 1 0" />
         </DESCENDANTS>
 
     </NODE>
@@ -1010,4 +1034,4 @@
 
 </NODES>
 
-</SCEN
+</SCENE>
