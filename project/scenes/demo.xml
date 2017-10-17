@@ -192,7 +192,7 @@
     <!-- The lights -->
      <NODE id="luzes">       
         <MATERIAL id="lightMaterial" />    
-        <TEXTURE id="clear" />       			
+        <TEXTURE id="null" />       			
 
         <DESCENDANTS>
             <NODEREF id="luz1" />     	    

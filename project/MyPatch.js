@@ -4,11 +4,11 @@
  * @constructor
  */
 
-function MyPatch(scene, u, v, degree1, degree2, cpoints) {
+function MyPatch(scene, divU, divV, degree1, degree2, cpoints) {
 	CGFobject.call(this,scene);
 
-	this.u = u;
-	this.v = v;
+	this.divU = divU;
+	this.divV = divV;
 
 	this.degree1 = degree1;
 	this.degree2 = degree2;
@@ -17,7 +17,7 @@ function MyPatch(scene, u, v, degree1, degree2, cpoints) {
 	console.log("degree1 = " + this.degree1 + "\n");
 	console.log("degree2 = " + this.degree2 + "\n");
 	
-	this.surfaces = [];
+	this.nurbsObj;
 
 	this.init();
 
@@ -65,16 +65,12 @@ MyPatch.prototype.makeSurface = function (degree1, degree2, controlvertexes) {
 		return nurbsSurface.getPoint(u, v);
 	};
 
-	var obj;
-	obj = new CGFnurbsObject(this.scene, getSurfacePoint, this.u, this.v );
+	this.nurbsObj = new CGFnurbsObject(this.scene, getSurfacePoint, this.divU, this.divV);
 
-	obj.initBuffers();
-
-	this.surfaces.push(obj);		
 }
 
 MyPatch.prototype.display = function(){
-  	this.surfaces.display();
+  	this.nurbsObj.display();
 }
 
 MyPatch.prototype.amplify = function(ampS, ampT){

@@ -54,14 +54,13 @@ function MyGraphLeaf(graph, xmlelem) {
                 parseInt(this.arguments[2])
             );
             break;
-        case "patch": break;
+        case "patch":
 
-            var u = this.arguments[0];
-            var v = this.arguments[1];
+            var divU = parseInt(this.arguments[0]);
+            var divV = parseInt(this.arguments[1]);
 
             var cplines = xmlelem.children;
 
-            var x,y,z, w;
 			var tmp = new Array();
 			var controlPoints = new Array();
 
@@ -76,10 +75,10 @@ function MyGraphLeaf(graph, xmlelem) {
                     
                     for(;j < cpoints.length; j++){
                         if(cpoints[j].nodeName == "CPOINT"){
-                            x = graph.reader.getFloat(cpoints[j], 'xx');
-                            y = graph.reader.getFloat(cpoints[j], 'yy');
-                            z = graph.reader.getFloat(cpoints[j], 'zz');
-                            w = graph.reader.getFloat(cpoints[j], 'ww');
+                            var x = graph.reader.getFloat(cpoints[j], 'xx');
+                            var y = graph.reader.getFloat(cpoints[j], 'yy');
+                            var z = graph.reader.getFloat(cpoints[j], 'zz');
+                            var w = graph.reader.getFloat(cpoints[j], 'ww');
                             
                             var point = new Array();
                             point.push(x,y,z,w);
@@ -95,9 +94,13 @@ function MyGraphLeaf(graph, xmlelem) {
                 }
             }
 
+            var degreeU = i-1;
+            var degreeV = j-1;
+
             this.shape = new MyPatch(graph.scene,
-                u,
-                v, i-1, j-1, controlPoints
+                divU, divV,
+                degreeU, degreeV,
+                controlPoints
             );
             break;
     }
