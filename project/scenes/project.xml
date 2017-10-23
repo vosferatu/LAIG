@@ -119,6 +119,11 @@
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
+    <TEXTURE id="chao_pedra">
+      <file path="images/sidewalk2.jpg" />
+      <amplif_factor s="4" t="4" />
+    </TEXTURE>
+
     <TEXTURE id="wave">
       <file path="images/wave.jpg" />
       <amplif_factor s="1" t="1" />
@@ -196,15 +201,15 @@
 
             <NODEREF id="luzes" />
             <NODEREF id="arvores" />
-            <NODEREF id="chao" />
+            <NODEREF id="relva" />
             <NODEREF id="bancos" />
             <NODEREF id="queijos" />
             <NODEREF id="predios" />
             <NODEREF id="departamentos" />
             <NODEREF id="lua"/>
             <NODEREF id="canteiros" />
-            <NODEREF id="flag" />
-           
+            <NODEREF id="flag" /> 
+          
         </DESCENDANTS>
     </NODE>
 
@@ -387,7 +392,6 @@
       </DESCENDANTS>
     </NODE>
 
-
     <!-- Lua -->
     <NODE id="lua">
         <MATERIAL id="null" />
@@ -423,6 +427,7 @@
 		<TRANSLATION x="-5" y="0" z="-85"/>
 
         <DESCENDANTS>
+           <NODEREF id="chao_cob_queijos" />
            <NODEREF id="teto" />
            <NODEREF id = "pilar1" />
            <NODEREF id = "pilar2" />
@@ -433,6 +438,18 @@
            <NODEREF id = "pilar7" />
            <NODEREF id = "pilar8" />     
            <NODEREF id = "pilar9" />               
+  		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="chao_cob_queijos">
+		<MATERIAL id="null" />
+		<TEXTURE id="chao_pedra" />
+		
+		<TRANSLATION x="0" y="0.02" z="0"/>
+		<ROTATION angle="-90" axis="y"/>
+		<ROTATION angle="-90" axis="x"/>
+        <DESCENDANTS>
+        	<LEAF type="rectangle" args="0 10 75 0" />
   		</DESCENDANTS>
     </NODE>
 
@@ -572,6 +589,18 @@
           <NODEREF id="dep_civil" />
           <NODEREF id="dep_eletro" />
           <NODEREF id="primeiro_andar"/>
+          <NODEREF id="chao_deps"/>
+  		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="chao_deps">
+		<MATERIAL id="null" />
+		<TEXTURE id="chao_pedra" />
+		
+		<TRANSLATION x="0" y="0.02" z="80"/>
+		<ROTATION angle="-90" axis="x"/>
+        <DESCENDANTS>
+        	<LEAF type="rectangle" args="0 80 200 0" />
   		</DESCENDANTS>
     </NODE>
 
@@ -849,7 +878,7 @@
 
 
     <!-- The floor -->
-    <NODE id="chao">
+    <NODE id="relva">
         <MATERIAL id="null" />
         <TEXTURE id="grass" />
 
