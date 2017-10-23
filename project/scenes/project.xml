@@ -78,6 +78,12 @@
         <amplif_factor s="3" t="4" />
     </TEXTURE>
 
+     <!-- feup -->
+    <TEXTURE id="feup">
+        <file path="images/logo-feup.png" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
     <!-- Rocks -->
     <TEXTURE id="rocks">
         <file path="images/rocks.jpg" />
@@ -88,6 +94,13 @@
     <TEXTURE id="vidral">
         <file path="images/vidral.jpg" />
         <amplif_factor s="15" t="10" />
+    </TEXTURE>
+
+
+    <!-- Dirt -->
+    <TEXTURE id="dirt">
+        <file path="images/dirt.jpg" />
+        <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <!-- Street bench -->
@@ -189,35 +202,191 @@
             <NODEREF id="predios" />
             <NODEREF id="departamentos" />
             <NODEREF id="lua"/>
-            <NODEREF id="wave_water" />
+            <NODEREF id="canteiros" />
+            <NODEREF id="flag" />
            
         </DESCENDANTS>
     </NODE>
 
-	<NODE id="wave_water">
-      <MATERIAL id="null" />
-      <TEXTURE id="wave" />
+    <!-- canteiros -->
+    <NODE id="canteiros">
+        <MATERIAL id="null" />
+        <TEXTURE id="dirt" />
 
-      <SCALE sx="30" sy="50" sz="30"/>
-      <TRANSLATION x="0" y="2.5" z="-15" />
+        <DESCENDANTS>
+            <NODEREF id="canteiro1" />
+            <NODEREF id="canteiro2" />
+            <NODEREF id="canteiro3" />
+            <NODEREF id="canteiro4" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- One canteiro -->
+    <NODE id="canteiro1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="70.5" y="0" z="-15" />
+      	<SCALE sx="3" sy="3" sz="3"/>
+
+
+        <DESCENDANTS>
+            <NODEREF id="canteiro" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- second canteiro -->
+    <NODE id="canteiro2">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="70.5" y="0" z="-35" />
+      	<SCALE sx="5" sy="5" sz="5"/>
+
+
+        <DESCENDANTS>
+            <NODEREF id="canteiro" />
+        </DESCENDANTS>
+
+    </NODE>
+
+        <!-- 3rd canteiro -->
+    <NODE id="canteiro3">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="70.5" y="0" z="-55" />
+      	<SCALE sx="2" sy="2" sz="2"/>
+
+
+        <DESCENDANTS>
+            <NODEREF id="canteiro" />
+        </DESCENDANTS>
+
+    </NODE>
+
+            <!-- 4TH canteiro -->
+    <NODE id="canteiro4">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="10" y="0" z="10" />
+      	<SCALE sx="1" sy="1" sz="1"/>
+
+
+        <DESCENDANTS>
+            <NODEREF id="canteiro" />
+        </DESCENDANTS>
+
+    </NODE>
+
+	<NODE id="canteiro">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
       <DESCENDANTS>
-        <LEAF id="wave" type="patch" args="30 30" >
+        <LEAF id="canto" type="patch" args="30 30" >
           <CPLINE>
-            <CPOINT xx="-5.2" yy="-2.5" zz="0" ww="1"/>
-            <CPOINT xx="2.6" yy="1.8" zz="0" ww="1"/>
-            <CPOINT xx="-5.9" yy="-3.6" zz="0" ww="0.5"/>
-            <CPOINT xx="1.6" yy="-2.5" zz="0" ww="0.3"/>
+            <CPOINT xx="-1.5" yy="0.0" zz="-1.5" ww="1"/>
+            <CPOINT xx="-0.5" yy="0.0" zz="-1.5" ww="1"/>
+            <CPOINT xx="0.5" yy="0.0" zz="-1.5" ww="1"/>
+            <CPOINT xx="1.5" yy="0.0" zz="-1.5" ww="1"/>         
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="-5.2" yy="-2.5" zz="20" ww="1"/>
-            <CPOINT xx="2.6" yy="1.8" zz="20" ww="1"/>
-            <CPOINT xx="-5.9" yy="-3.6" zz="20" ww="0.5"/>
-            <CPOINT xx="1.6" yy="-2.5" zz="20" ww="0.3"/>
+            <CPOINT xx="-1.5" yy="0.0" zz="-0.5" ww="1"/>
+            <CPOINT xx="-0.5" yy="0.5" zz="-0.5" ww="1"/>
+            <CPOINT xx="0.5" yy="0.5" zz="-0.5" ww="1"/>
+            <CPOINT xx="1.5" yy="0.0" zz="-0.5" ww="1"/>          
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-1.5" yy="0.0" zz="0.5" ww="1"/>
+            <CPOINT xx="-0.5" yy="0.5" zz="0.5" ww="1"/>
+            <CPOINT xx="0.5" yy="0.5" zz="0.5" ww="1"/>
+            <CPOINT xx="1.5" yy="0.0" zz="0.5" ww="1"/>
+          </CPLINE>           
+          <CPLINE>
+            <CPOINT xx="-1.5" yy="0.0" zz="1.5" ww="1"/>
+            <CPOINT xx="-0.5" yy="0.0" zz="1.5" ww="1"/>
+            <CPOINT xx="0.5" yy="0.0" zz="1.5" ww="1"/>
+            <CPOINT xx="1.5" yy="0.0" zz="1.5" ww="1"/>         
           </CPLINE>
         </LEAF>
       </DESCENDANTS>
     </NODE>
+
+
+     <!-- flag -->
+    <NODE id="flag">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="10" y="0" z="10" />
+
+        <DESCENDANTS>
+            <NODEREF id="bandeira" />
+            <NODEREF id="pole" />
+            <NODEREF id="poletop" />
+        </DESCENDANTS>
+
+    </NODE>
+
+
+    <NODE id="pole">
+        <MATERIAL id="lightPostMaterial" />
+        <TEXTURE id="null" />
+
+        <SCALE sx="0.1" sy="1" sz="0.1" />
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+					<LEAF id="cylinder2" type="cylinder" args="12 1 1 20 20 1 1" />
+        </DESCENDANTS>
+
+    </NODE>
+
+        <!-- pole top -->
+     <NODE id="poletop">
+        <MATERIAL id="trunkTreeMaterial" />
+        <TEXTURE id="null" />
+
+		<TRANSLATION x="0" y="12" z="0" />
+        <SCALE sx="0.1" sy="0.1" sz="0.1" />
+
+        <DESCENDANTS>
+			<LEAF type="sphere" args="1 32 32"/>       		
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="bandeira">
+      <MATERIAL id="null" />
+      <TEXTURE id="feup" />
+
+ 	  <TRANSLATION x="0" y="9" z="0" />
+      <SCALE sx="5" sy="3" sz="5"/>
+
+      <DESCENDANTS>
+        <LEAF id="bandeira" type="patch" args="30 30" >
+           <CPLINE>
+            <CPOINT xx="0" yy="1" zz="0" ww="1"/>
+            <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
+            <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
+            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>   
+            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>        
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="0" zz="0" ww="1"/>
+            <CPOINT xx="0.25" yy="0.0" zz="0.25" ww="1"/>
+            <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
+            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>   
+            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>        
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
+    </NODE>
+
 
     <!-- Lua -->
     <NODE id="lua">
