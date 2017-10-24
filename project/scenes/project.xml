@@ -80,7 +80,7 @@
 
      <!-- feup -->
     <TEXTURE id="feup">
-        <file path="images/logo-feup.png" />
+        <file path="images/feup.png" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -222,7 +222,6 @@
             <NODEREF id="canteiro1" />
             <NODEREF id="canteiro2" />
             <NODEREF id="canteiro3" />
-            <NODEREF id="canteiro4" />
         </DESCENDANTS>
 
     </NODE>
@@ -270,14 +269,15 @@
             <NODEREF id="canteiro" />
         </DESCENDANTS>
 
+
     </NODE>
 
             <!-- 4TH canteiro -->
     <NODE id="canteiro4">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="dirt" />
 
-        <TRANSLATION x="10" y="0" z="10" />
+        <!--<TRANSLATION x="10" y="0" z="10" />-->
       	<SCALE sx="1" sy="1" sz="1"/>
 
 
@@ -326,13 +326,17 @@
     <NODE id="flag">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
+		
 
         <TRANSLATION x="10" y="0" z="10" />
+        <SCALE sx="3" sy="3" sz="3"/>
 
         <DESCENDANTS>
             <NODEREF id="bandeira" />
             <NODEREF id="pole" />
             <NODEREF id="poletop" />
+            <NODEREF id="canteiro4" />
+            
         </DESCENDANTS>
 
     </NODE>
@@ -369,25 +373,54 @@
       <MATERIAL id="null" />
       <TEXTURE id="feup" />
 
- 	  <TRANSLATION x="0" y="9" z="0" />
+ 	  <TRANSLATION x="0" y="5" z="0" />
       <SCALE sx="5" sy="3" sz="5"/>
 
       <DESCENDANTS>
-        <LEAF id="bandeira" type="patch" args="30 30" >
-           <CPLINE>
+        <LEAF id="bandeiraTras" type="patch" args="30 30" >
+          <CPLINE>
             <CPOINT xx="0" yy="1" zz="0" ww="1"/>
-            <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
-            <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
-            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>   
-            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>        
+            <CPOINT xx="0" yy="0" zz="0" ww="1"/>
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="0" zz="0" ww="1"/>
+            <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
             <CPOINT xx="0.25" yy="0.0" zz="0.25" ww="1"/>
-            <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
-            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>   
-            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>        
           </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
+            <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>   
+            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>   
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>        
+            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>        
+          </CPLINE>         	
+        </LEAF>
+
+        <LEAF id="bandeiraFrente" type="patch" args="30 30" >
+          <CPLINE>
+            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>        
+            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>        
+          </CPLINE> 
+          <CPLINE>
+            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>   
+            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>   
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
+            <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
+            <CPOINT xx="0.25" yy="0.0" zz="0.25" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="1" zz="0" ww="1"/>
+            <CPOINT xx="0" yy="0" zz="0" ww="1"/>
+          </CPLINE>        	
         </LEAF>
       </DESCENDANTS>
     </NODE>
