@@ -24,7 +24,7 @@ function MyAnimation(graph, xmlelem) {
     break;
 
     default:
-    console.log("MyAnimationConstructor I shouldn't get here");
+      console.log("MyAnimationConstructor I shouldn't get here");
     break;
   }
 
