@@ -455,15 +455,15 @@
         <MATERIAL id="null" />
         <TEXTURE id="lua" />
 
-		<TRANSLATION x="-40" y="100" z="-100"/>
+		      <TRANSLATION x="-40" y="100" z="-100"/>
 
-    <ANIMATIONREFS>
-      <ANIMATIONREF id="linear">
-    </ANIMATIONREFS>
+          <ANIMATIONREFS>
+            <ANIMATIONREF id="linear">
+          </ANIMATIONREFS>
 
-        <DESCENDANTS>
-          <LEAF type="sphere" args="5 32 32"/>
-        </DESCENDANTS>
+          <DESCENDANTS>
+            <LEAF type="sphere" args="5 32 32"/>
+          </DESCENDANTS>
     </NODE>
 
 
