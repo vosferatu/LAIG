@@ -5,7 +5,9 @@
 
 function MyAnimation(graph, args) {
   this.graph = graph;
-  this.type = arg[0]; //identify type of Animation; later on with lsx update
+  this.type = args[0]; //identify type of Animation; later on with lsx update
+
+  this.animationMatrix = [];
 
   this.animation = null;//stores linear or circular or bezier or combo animations
 
@@ -28,11 +30,10 @@ function MyAnimation(graph, args) {
       break;
 
     default:
-      console.log("MyAnimationConstructor I shouldn't get here");
+      console.log("MyAnimationConstructor I shouldn't get here - type wrong");
     break;
   }
-
-	this.initBuffers();
+  
 };
 
 MyAnimation.prototype.update = function(currTime) {

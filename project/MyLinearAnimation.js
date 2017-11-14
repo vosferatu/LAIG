@@ -4,12 +4,14 @@
  * @constructor
  */
 
-function MyLinearAnimation(scene, args) {
+function MyLinearAnimation(scene, speed, controlPoints) {
   CGFobject.call(this,scene);
 
-  this.speed = 10;
+  this.scene = scene;
 
-  this.animation = null;//stores linear or circular or bezier or combo animations
+  this.speed = speed;
+  this.controlPoints = controlPoints;
+  
 };
 
 MyLinearAnimation.prototype.update = function(currTime) {

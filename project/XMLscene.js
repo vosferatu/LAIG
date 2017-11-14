@@ -165,5 +165,7 @@ XMLscene.prototype.display = function() {
 XMLScene.prototype.update = function(currTime) {
   var elapsed = (currTime-this.startTime)/1000;
   this.startTime = currTime;
-	 //pass currTime to objects
+     //pass currTime to objects
+   this.graph.update(currTime);
+
 }

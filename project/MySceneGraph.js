@@ -1567,6 +1567,7 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 
     //Transformation matrix
     this.scene.multMatrix(nodeToProcess.transformMatrix);
+    this.scene.multMatrix(nodeToProcess.animationsMatrix);
 
     //Material
     var materialToProcess = nodeToProcess.materialID == "null" ? materialId : nodeToProcess.materialID;
@@ -1608,4 +1609,10 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 
     }
 
+}
+
+MySceneGraph.prototype.update = function (currTime){
+    for (let i = 0; i < animations.length; i++) {
+        animations[i].update(currTime);        
+    }
 }
