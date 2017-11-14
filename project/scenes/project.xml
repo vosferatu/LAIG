@@ -181,6 +181,31 @@
 
 </MATERIALS>
 
+<!-- The animations -->
+<ANIMATIONS>
+
+  <ANIMATION id="linear" speed="2.5" type="linear">
+    <controlpoint xx="0" yy="0" zz="0" />
+    <controlpoint xx="0" yy="0" zz="15" />
+  </ANIMATION>
+
+  <ANIMATION id="circular" speed="2.5" type="circular"
+    centerx="0" centery="0" centerz="0" radius="3"
+    startang="50" rotang="150"/>
+
+  <ANIMATION id="bezier" speed="5" type="bezier">
+    <controlpoint xx="0" yy="0" zz="0" /> <!--P1-->
+    <controlpoint xx="-2" yy="3" zz="3" /> <!--P2-->
+  ​  <controlpoint xx="4" yy="10" zz="5" /> <!--P3-->
+    <controlpoint xx="0" yy="-1" zz="7" /> <!--P4-->
+  </ANIMATION>
+  ​​
+  <ANIMATION id="combo" type="combo">
+    <SPANREF id="circular" />
+    <SPANREF id="linear" />
+  </ANIMATION>
+
+</ANIMATIONS>
 
 <!-- The leaves -->
 <LEAVES>
@@ -208,8 +233,8 @@
             <NODEREF id="departamentos" />
             <NODEREF id="lua"/>
             <NODEREF id="canteiros" />
-            <NODEREF id="flag" /> 
-          
+            <NODEREF id="flag" />
+
         </DESCENDANTS>
     </NODE>
 
@@ -297,25 +322,25 @@
             <CPOINT xx="-1.5" yy="0.0" zz="-1.5" ww="1"/>
             <CPOINT xx="-0.5" yy="0.0" zz="-1.5" ww="1"/>
             <CPOINT xx="0.5" yy="0.0" zz="-1.5" ww="1"/>
-            <CPOINT xx="1.5" yy="0.0" zz="-1.5" ww="1"/>         
+            <CPOINT xx="1.5" yy="0.0" zz="-1.5" ww="1"/>
           </CPLINE>
           <CPLINE>
             <CPOINT xx="-1.5" yy="0.0" zz="-0.5" ww="1"/>
             <CPOINT xx="-0.5" yy="0.5" zz="-0.5" ww="1"/>
             <CPOINT xx="0.5" yy="0.5" zz="-0.5" ww="1"/>
-            <CPOINT xx="1.5" yy="0.0" zz="-0.5" ww="1"/>          
+            <CPOINT xx="1.5" yy="0.0" zz="-0.5" ww="1"/>
           </CPLINE>
           <CPLINE>
             <CPOINT xx="-1.5" yy="0.0" zz="0.5" ww="1"/>
             <CPOINT xx="-0.5" yy="0.5" zz="0.5" ww="1"/>
             <CPOINT xx="0.5" yy="0.5" zz="0.5" ww="1"/>
             <CPOINT xx="1.5" yy="0.0" zz="0.5" ww="1"/>
-          </CPLINE>           
+          </CPLINE>
           <CPLINE>
             <CPOINT xx="-1.5" yy="0.0" zz="1.5" ww="1"/>
             <CPOINT xx="-0.5" yy="0.0" zz="1.5" ww="1"/>
             <CPOINT xx="0.5" yy="0.0" zz="1.5" ww="1"/>
-            <CPOINT xx="1.5" yy="0.0" zz="1.5" ww="1"/>         
+            <CPOINT xx="1.5" yy="0.0" zz="1.5" ww="1"/>
           </CPLINE>
         </LEAF>
       </DESCENDANTS>
@@ -326,7 +351,7 @@
     <NODE id="flag">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-		
+
 
         <TRANSLATION x="10" y="0" z="10" />
         <SCALE sx="3" sy="3" sz="3"/>
@@ -336,7 +361,7 @@
             <NODEREF id="pole" />
             <NODEREF id="poletop" />
             <NODEREF id="canteiro4" />
-            
+
         </DESCENDANTS>
 
     </NODE>
@@ -364,7 +389,7 @@
         <SCALE sx="0.1" sy="0.1" sz="0.1" />
 
         <DESCENDANTS>
-			<LEAF type="sphere" args="1 32 32"/>       		
+			<LEAF type="sphere" args="1 32 32"/>
         </DESCENDANTS>
 
     </NODE>
@@ -391,23 +416,23 @@
             <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>   
-            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>   
+            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>
+            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>        
-            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>        
-          </CPLINE>         	
+            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>
+            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>
+          </CPLINE>
         </LEAF>
 
         <LEAF id="bandeiraFrente" type="patch" args="30 30" >
           <CPLINE>
-            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>        
-            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>        
-          </CPLINE> 
+            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>
+            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>
+          </CPLINE>
           <CPLINE>
-            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>   
-            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>   
+            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>
+            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>
           </CPLINE>
           <CPLINE>
             <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
@@ -420,17 +445,21 @@
           <CPLINE>
             <CPOINT xx="0" yy="1" zz="0" ww="1"/>
             <CPOINT xx="0" yy="0" zz="0" ww="1"/>
-          </CPLINE>        	
+          </CPLINE>
         </LEAF>
       </DESCENDANTS>
     </NODE>
 
     <!-- Lua -->
-    <NODE id="lua">
+    <NODE id="lua" selectable="tt">
         <MATERIAL id="null" />
         <TEXTURE id="lua" />
 
 		<TRANSLATION x="-40" y="100" z="-100"/>
+
+    <ANIMATIONREFS>
+      <ANIMATIONREF id="linear">
+    </ANIMATIONREFS>
 
         <DESCENDANTS>
           <LEAF type="sphere" args="5 32 32"/>
@@ -455,7 +484,7 @@
 	<NODE id="cobertura_queijos">
 		<MATERIAL id="null" />
 		<TEXTURE id="null" />
-	
+
 		<ROTATION axis="y" angle="32.5" />
 		<TRANSLATION x="-5" y="0" z="-85"/>
 
@@ -469,15 +498,15 @@
            <NODEREF id = "pilar5" />
            <NODEREF id = "pilar6" />
            <NODEREF id = "pilar7" />
-           <NODEREF id = "pilar8" />     
-           <NODEREF id = "pilar9" />               
+           <NODEREF id = "pilar8" />
+           <NODEREF id = "pilar9" />
   		</DESCENDANTS>
     </NODE>
 
     <NODE id="chao_cob_queijos">
 		<MATERIAL id="null" />
 		<TEXTURE id="chao_pedra" />
-		
+
 		<TRANSLATION x="0" y="0.02" z="0"/>
 		<ROTATION angle="-90" axis="y"/>
 		<ROTATION angle="-90" axis="x"/>
@@ -513,7 +542,7 @@
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="1" y="0" z="18"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
@@ -524,7 +553,7 @@
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="9" y="0" z="1"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
@@ -535,18 +564,18 @@
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="9" y="0" z="18"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
-    </NODE>    
-  
+    </NODE>
+
     <NODE id="pilar5">
 		<MATERIAL id="null" />
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="1" y="0" z="36"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
@@ -557,18 +586,18 @@
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="9" y="0" z="36"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
-    </NODE>        
+    </NODE>
 
     <NODE id="pilar7">
 		<MATERIAL id="null" />
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="1" y="0" z="54"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
@@ -579,18 +608,18 @@
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="9" y="0" z="54"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
-    </NODE>  
+    </NODE>
 
     <NODE id="pilar9">
 		<MATERIAL id="null" />
 		<TEXTURE id="null" />
 
 		<TRANSLATION x="1" y="0" z="72"/>
-		
+
         <DESCENDANTS>
            <NODEREF id="pilar" />
   		</DESCENDANTS>
@@ -629,7 +658,7 @@
     <NODE id="chao_deps">
 		<MATERIAL id="null" />
 		<TEXTURE id="chao_pedra" />
-		
+
 		<TRANSLATION x="0" y="0.02" z="80"/>
 		<ROTATION angle="-90" axis="x"/>
         <DESCENDANTS>
@@ -777,9 +806,9 @@
         <TEXTURE id="null" />
 
         <SCALE sx="7.5" sy="15" sz="7.5"/>
-        <ROTATION axis="y" angle="-12"/>     
+        <ROTATION axis="y" angle="-12"/>
         <ROTATION axis="x" angle="-90"/>
-   
+
 
         <DESCENDANTS>
         	<LEAF type="cylinder" args="1 1 1 9 9 1 1" />
@@ -1048,7 +1077,7 @@
     <NODE id="banco2">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-		
+
         <TRANSLATION x="70" y="0" z="-45" />
         <ROTATION axis="y" angle="90"/>
 
@@ -1133,10 +1162,10 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-		
+
         <TRANSLATION x="70" y="0" z="-55" />
         <SCALE sx="1.4" sy="1.4" sz="1.4"/>
-		
+
 
         <DESCENDANTS>
             <NODEREF id="arvore" />
@@ -1150,7 +1179,7 @@
         <TEXTURE id="null" />
 
         <TRANSLATION x="0" y="4" z="0" />
-		
+
 
         <DESCENDANTS>
             <NODEREF id="troncoArvore" />
@@ -1181,7 +1210,7 @@
 
 
         <DESCENDANTS>
-			<LEAF type="sphere" args="1 32 32"/>       		
+			<LEAF type="sphere" args="1 32 32"/>
         </DESCENDANTS>
 
     </NODE>

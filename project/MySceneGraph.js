@@ -7,7 +7,8 @@ var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
 var LEAVES_INDEX = 5;
-var NODES_INDEX = 6;
+var ANIMATIONS_INDEX = 6;
+var NODES_INDEX = 7;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -139,6 +140,18 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
             return error;
     }
 
+    // <ANIMATIONS>
+    if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
+        return "tag <ANIMATIONS> missing";
+    else {
+        if (index != ANIMATIONS_INDEX)
+            this.onXMLMinorError("tag <ANIMATIONS> out of order");
+
+        if ((error = this.parseAnimations(nodes[index])) != null )
+            return error;
+    }
+
+
     // <NODES>
     if ((index = nodeNames.indexOf("NODES")) == -1)
         return "tag <NODES> missing";
@@ -149,7 +162,6 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if ((error = this.parseNodes(nodes[index])) != null )
             return error;
     }
-
 }
 
 /**
@@ -1158,6 +1170,52 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     console.log("Parsed materials");
 }
 
+/**
+ * Parses the <ANIMATIONS> block.
+ */
+MySceneGraph.prototype.parseAnimations = function(animationsNode) {
+
+    this.animations = [];
+    // Traverses nodes.
+    var children = animationsNode.children;
+
+    for (var i = 0; i < children.length; i++) {
+        var nodeName = children[i].nodeName;
+        if (nodeName == "ANIMATION") {
+            // Retrieves node ID.
+            var animationID = this.reader.getString(children[i], 'id');
+            if (animationID == null )
+                return "failed to retrieve animation ID";
+            // Checks if ID is valid.
+            if (this.animations[animationID] != null )
+                return "animation ID must be unique (conflict: ID = " + animationID + ")";
+
+            var type;
+
+            var speed = this.reader.getFloat(children[i], 'speed');
+            if (speed == null || isNaN(speed)){
+              type = this.reader.getString(children[i], 'type', ['linear', 'circular', 'bezier', 'combo']);
+              if (type != 'combo')
+                  return "failed to retrieve animation speed";
+            }
+
+            type = this.reader.getString(children[i], 'type', ['linear', 'circular', 'bezier', 'combo']);
+            if (type == null){
+              return "failed to retrieve animation type";
+            }
+
+            this.log("Processing animation "+animationID);
+
+            if(type == 'circular')
+              this.animations[animationID] = new MyAnimation(this,children[i]));
+            else this.animations[animationID] = new MyAnimation(this,children[i].children));
+        }
+    }
+
+    console.log("Parsed animations");
+    return null;
+}
+
 
 /**
  * Parses the <NODES> block.
@@ -1432,17 +1490,17 @@ MySceneGraph.prototype.displayScene = function() {
 
 
 MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
-  
+
     var nodeToProcess = this.nodes[nodeID];
 
     if(nodeToProcess == null){
         this.log("error - the node " + nodeID + " doesn't exist");
         return "the nodes doesn't exist.";
-    }    
+    }
 
     //Transformation matrix
     this.scene.multMatrix(nodeToProcess.transformMatrix);
-    
+
     //Material
     var materialToProcess = nodeToProcess.materialID == "null" ? materialId : nodeToProcess.materialID;
 
@@ -1462,7 +1520,7 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
     }
 
     for(var i = 0; i < nodeToProcess.leaves.length ; i++) {
-        
+
         if(materialToProcess != null) {
 
              var materialToApply = this.materials[materialToProcess];
@@ -1472,13 +1530,13 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
                 materialToApply.setTexture(textureToApply[0]);
                 nodeToProcess.leaves[i].amplify(textureToApply[1], textureToApply[2]);
              }
-                
+
             materialToApply.apply();
         }
-        
+
         /*//Transformation matrix
         this.scene.multMatrix(nodeToProcess.transformMatrix);*/
-        
+
         nodeToProcess.leaves[i].display();
 
     }
