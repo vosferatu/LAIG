@@ -3,25 +3,29 @@
  * @constructor
  */
 
-function MyAnimation(graph, xmlelem) {
+function MyAnimation(graph, args) {
   this.graph = graph;
-  this.type; //identify type of Animation; later on with lsx update
-  this.arguments = graph.reader.getString(xmlelem, 'args').split(' ');
+  this.type = arg[0]; //identify type of Animation; later on with lsx update
 
   this.animation = null;//stores linear or circular or bezier or combo animations
 
-  switch(this.type){
-    case "linear":
-    break;
 
+  switch(this.type){
     case "circular":
-    break;
+        this.animation = new MyCircularAnimation(graph.scene, args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+      break;
+
+    case "linear":
+      this.animation = new MyLinearAnimation(graph.scene, args[1], args[2]);
+      break;
 
     case "bezier":
-    break;
+      this.animation = new MyBezierAnimation(graph.scene, args[1], args[2]);
+      break;
 
     case "combo":
-    break;
+      this.animation = new MyComboAnimation(graph.scene, args[1]);
+      break;
 
     default:
       console.log("MyAnimationConstructor I shouldn't get here");
