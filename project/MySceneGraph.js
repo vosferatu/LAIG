@@ -1438,6 +1438,28 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             }
 
             // Retrieves information about children.
+            var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+            var animationRefs = nodeSpecs[animationsIndex].children;
+
+            for (var j = 0; j < animationRefs.length; j++) {
+                if (animationRefs[j].nodeName == "ANIMATIONREF"){
+
+                    var curId = this.reader.getString(animationRefs[j], 'id');
+
+                    this.log("   AnimationREF: "+curId);
+
+                    if (curId == null )
+                        this.onXMLMinorError("unable to parse animationREF id");
+                    else if (this.animations[curId] == null)
+                        return "this animation does not exist";
+                    this.nodes[nodeID].addAnimation(curId);
+                }
+                else this.onXMLMinorError("unknown tag <" + animationRefs[j].nodeName + ">");
+            }
+
+
+
+            // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
             if (descendantsIndex == -1)
                 return "an intermediate node must have descendants";
@@ -1446,12 +1468,11 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             var sizeChildren = 0;
             for (var j = 0; j < descendants.length; j++) {
-                if (descendants[j].nodeName == "NODEREF")
-				{
+                if (descendants[j].nodeName == "NODEREF"){
 
-					var curId = this.reader.getString(descendants[j], 'id');
+					          var curId = this.reader.getString(descendants[j], 'id');
 
-					this.log("   Descendant: "+curId);
+					          this.log("   Descendant: "+curId);
 
                     if (curId == null )
                         this.onXMLMinorError("unable to parse descendant id");
@@ -1462,24 +1483,22 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                         sizeChildren++;
                     }
                 }
-                else
-					if (descendants[j].nodeName == "LEAF")
-					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
+                else if (descendants[j].nodeName == "LEAF"){
+						            var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
 
-						if (type != null)
-							this.log("   Leaf: "+ type);
-						else
-							this.warn("Error in leaf");
+						            if (type != null)
+							              this.log("   Leaf: "+ type);
+						            else
+							              this.warn("Error in leaf");
 
-						//parse leaf
-						this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
+						            //parse leaf
+						            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
                         sizeChildren++;
-					}
-					else
-						this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
-
+					          }
+					          else
+						        this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
             }
+
             if (sizeChildren == 0)
                 return "at least one descendant must be defined for each intermediate node";
         }
