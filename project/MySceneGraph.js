@@ -1192,17 +1192,17 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
 
             this.log("Processing animation "+animationID);
 
-            var type;
-            var speed = this.reader.getFloat(children[i], 'speed');
-            if (speed == null || isNaN(speed)){
-              type = this.reader.getString(children[i], 'type', ['linear', 'circular', 'bezier', 'combo']);
-              if (type != 'combo')
-                  return "failed to retrieve animation speed";
-            }
-
+            var type; var speed;
             type = this.reader.getString(children[i], 'type', ['linear', 'circular', 'bezier', 'combo']);
+
             if (type == null){
               return "failed to retrieve animation type";
+            }
+
+            if(type != 'combo'){
+                speed = this.reader.getFloat(children[i], 'speed');
+                if (speed == null || isNaN(speed))
+                  return "failed to retrieve animation speed";
             }
 
             var args = [];
@@ -1248,7 +1248,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
 
               case "combo":
                 var anims = children[i].children;
-                var combos;
+                var combos = [];
                 for(let i = 0; i < anims.length; i++){
                     if(anims[i].nodeName == SPANREF){
 
@@ -1261,9 +1261,8 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
                           return "a node may not be a child of its own";
                           else if(this.animations[animationID].type == 'combo')
                                   return "combo can't have combo";
-                    }
-
-                  combos.push(this.animations[animationID]);
+                              else combos.push(this.animations[animationID]);
+                      }
                 }
                 args.push(combos);
                 break;
@@ -1322,7 +1321,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS", "DESCENDANTS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1439,25 +1438,25 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Retrieves information about children.
             var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
-            var animationRefs = nodeSpecs[animationsIndex].children;
+            if (animationsIndex != -1){
+              var animationRefs = nodeSpecs[animationsIndex].children;
 
-            for (var j = 0; j < animationRefs.length; j++) {
-                if (animationRefs[j].nodeName == "ANIMATIONREF"){
+              for (var j = 0; j < animationRefs.length; j++) {
+                  if (animationRefs[j].nodeName == "ANIMATIONREF"){
 
-                    var curId = this.reader.getString(animationRefs[j], 'id');
+                      var curId = this.reader.getString(animationRefs[j], 'id');
 
-                    this.log("   AnimationREF: "+curId);
+                      this.log("   AnimationREF: "+curId);
 
-                    if (curId == null )
-                        this.onXMLMinorError("unable to parse animationREF id");
-                    else if (this.animations[curId] == null)
-                        return "this animation does not exist";
-                    this.nodes[nodeID].addAnimation(curId);
-                }
+                      if (curId == null )
+                          this.onXMLMinorError("unable to parse animationREF id");
+                      else if (this.animations[curId] == null)
+                            return "this animation does not exist";
+                      this.nodes[nodeID].addAnimation(curId);
+                    }
                 else this.onXMLMinorError("unknown tag <" + animationRefs[j].nodeName + ">");
             }
-
-
+          }
 
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
@@ -1632,6 +1631,6 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 
 MySceneGraph.prototype.update = function (currTime){
     for (let i = 0; i < animations.length; i++) {
-        animations[i].update(currTime);        
+        animations[i].update(currTime);
     }
 }
