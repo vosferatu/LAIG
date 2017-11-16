@@ -23,6 +23,8 @@ function MySceneGraph(filename, scene) {
 
     this.nodes = [];
 
+    this.animations = [];
+
     this.idRoot = null;                    // The id of the root element.
 
     this.axisCoords = [];
@@ -1174,8 +1176,6 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
  * Parses the <ANIMATIONS> block.
  */
 MySceneGraph.prototype.parseAnimations = function(animationsNode) {
-
-    this.animations = [];
     // Traverses nodes.
     var children = animationsNode.children;
 
@@ -1457,7 +1457,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else this.onXMLMinorError("unknown tag <" + animationRefs[j].nodeName + ">");
             }
           }
-
+          console.log(specsNames);
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
             if (descendantsIndex == -1)
@@ -1630,7 +1630,7 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 }
 
 MySceneGraph.prototype.update = function (currTime){
-    for (let i = 0; i < animations.length; i++) {
-        animations[i].update(currTime);
+    for (let i = 0; i < this.animations.length; i++) {
+        this.animations[i].update(currTime);
     }
 }

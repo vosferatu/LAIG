@@ -458,7 +458,7 @@
 		      <TRANSLATION x="-40" y="100" z="-100"/>
 
           <ANIMATIONREFS>
-            <ANIMATIONREF id="linear">
+            <ANIMATIONREF id="linear" />
           </ANIMATIONREFS>
 
           <DESCENDANTS>
