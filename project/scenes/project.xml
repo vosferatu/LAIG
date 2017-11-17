@@ -458,7 +458,7 @@
 		      <TRANSLATION x="-40" y="100" z="-100"/>
 
           <ANIMATIONREFS>
-            <ANIMATIONREF id="linear">
+            <ANIMATIONREF id="linear" />
           </ANIMATIONREFS>
 
           <DESCENDANTS>
@@ -516,14 +516,14 @@
     </NODE>
 
     <NODE id="teto">
-		<MATERIAL id="null" />
-		<TEXTURE id="null" />
+		    <MATERIAL id="null" />
+		    <TEXTURE id="null" />
 
-		<SCALE sx="10" sy="1" sz="75" />
+		    <SCALE sx="10" sy="1" sz="75" />
         <TRANSLATION x="0" y="8" z="0"/>
         <DESCENDANTS>
            <NODEREF id="cubo" />
-  		</DESCENDANTS>
+  		  </DESCENDANTS>
     </NODE>
 
     <NODE id="pilar1">
