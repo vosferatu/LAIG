@@ -4,12 +4,18 @@
  * @constructor
  */
 
-function MyComboAnimation(scene, args) {
+function MyComboAnimation(scene, animations) {
   CGFobject.call(this,scene);
 
-  this.animation = null;//stores linear or circular or bezier or combo animations
+  this.animations = animations;
 };
 
 MyComboAnimation.prototype.update = function(currTime) {
 
+  for (let i = 0; i < animations.length; i++) {
+    const anim = animations[i];
+
+    anim.update(currTime);
+    
+  }
 }

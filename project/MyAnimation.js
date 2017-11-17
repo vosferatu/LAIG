@@ -7,8 +7,6 @@ function MyAnimation(graph, args) {
   this.graph = graph;
   this.type = args[0]; //identify type of Animation; later on with lsx update
 
-  this.animationMatrix = [];
-
   this.animation = null;//stores linear or circular or bezier or combo animations
 
 
