@@ -356,6 +356,10 @@
         <TRANSLATION x="10" y="0" z="10" />
         <SCALE sx="3" sy="3" sz="3"/>
 
+        <ANIMATIONREFS>
+            <ANIMATIONREF id="circular" />
+        </ANIMATIONREFS>
+
         <DESCENDANTS>
             <NODEREF id="bandeira" />
             <NODEREF id="pole" />
