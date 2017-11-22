@@ -54,18 +54,18 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
 MyGraphNode.prototype.update = function (currTime) {
 
     var elapsedTime = currTime;
-    
-    for (let i = 0; i < this.animations.length; i++) {
-        var currAnimation = this.animations[i];
 
-        if(elapsedTime > this.currAnimation.time){
-            elapsedTime -= this.currAnimation.time;
+    for (let i = 0; i < this.animations.length; i++) {
+        var currAnimation = this.graph.animations[this.animations[i]];
+
+        if(elapsedTime > currAnimation.animation.time){
+            elapsedTime -= currAnimation.animation.time;
             continue;
         }
 
         mat4.copy(this.animationsMatrix, currAnimation.getMatrix(elapsedTime));
 
         break;
-        
+
     }
 }
