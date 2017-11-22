@@ -23,7 +23,7 @@ function MySceneGraph(filename, scene) {
 
     this.nodes = [];
 
-    this.animations = [];
+    this.animations = new Array();
 
     this.idRoot = null;                    // The id of the root element.
 
@@ -91,8 +91,10 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
     if ((index = nodeNames.indexOf("INITIALS")) == -1)
         return "tag <INITIALS> missing";
     else {
-        if (index != INITIALS_INDEX)
+        if (index != INITIALS_INDEX){
             this.onXMLMinorError("tag <INITIALS> out of order");
+            console.log('INDEX INITIALS: ' + index);
+        }
 
         if ((error = this.parseInitials(nodes[index])) != null )
             return error;
@@ -1207,8 +1209,9 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
 
             var args = [];
             args.push(type);
-            switch(this.type){
-              case "circular":
+
+            switch(type){
+              case 'circular':
                   args.push(speed);
                   args.push(this.reader.getFloat(children[i], 'centerx'));
                   args.push(this.reader.getFloat(children[i], 'centery'));
@@ -1269,13 +1272,22 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
 
               default:
                 console.log("MyAnimationConstructor I shouldn't get here");
-              break;
+                break;
             }
 
 
             if((this.animations[animationID] = new MyAnimation(this,args)) == null)
               return "failed to retrieve animation";
+            
+            this.log("Processed animation " + animationID);
+            console.log(this.animations);
+
         }
+        
+        console.log("ITERATION: ");
+        console.log(this.animations);
+        console.log(this.animations.length);
+        console.log(Object.keys(this.animations).length);
     }
 
     console.log("Parsed animations");
@@ -1317,7 +1329,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
-
+    
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
@@ -1630,7 +1642,23 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 }
 
 MySceneGraph.prototype.update = function (currTime){
-    for (let i = 0; i < this.animations.length; i++) {
-        this.animations[i].update(currTime);
+
+    if(this.idRoot != null)
+        this.updateNodes(currTime, this.idRoot);
+    
+}
+
+MySceneGraph.prototype.updateNodes = function (currTime, nodeID){
+
+    var nodeToUpdate = this.nodes[nodeID];
+    // console.log("update node "+ nodeID);
+
+    nodeToUpdate.update(currTime);
+
+    for (var i = 0; i < nodeToUpdate.children.length; i++) {
+
+        this.scene.pushMatrix();
+        this.updateNodes(currTime, nodeToUpdate.children[i]);
+        this.scene.popMatrix();
     }
 }

@@ -34,6 +34,6 @@ function MyAnimation(graph, args) {
   
 };
 
-MyAnimation.prototype.update = function(currTime) {
-  this.animation.update(currTime);
+MyAnimation.prototype.getMatrix = function(currTime) {
+  return this.animation.getMatrix(currTime);
 }

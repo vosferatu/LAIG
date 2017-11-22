@@ -168,8 +168,8 @@ XMLscene.prototype.update = function(currTime) {
     //pass currTime to objects
     this.graph.update(elapsed);
 
-    console.log("StartTime: " + this.startTime);
+  /*   console.log("StartTime: " + this.startTime);
     console.log("CurrTime: " + currTime);
-    console.log("Elapsed: " + elapsed);
+    console.log("Elapsed: " + elapsed);  */
 
 }

@@ -147,10 +147,23 @@
 
 </MATERIALS>
 
-
 <!-- The leaves -->
 <LEAVES>
 </LEAVES>
+
+<!-- The animations -->
+<ANIMATIONS>
+
+  <ANIMATION id="circular" speed="2.5" type="circular"
+    centerx="0" centery="0" centerz="0" radius="3"
+    startang="50" rotang="150"/>
+
+  <ANIMATION id="linear" speed="2.5" type="linear">
+    <controlpoint xx="0" yy="0" zz="0" />
+    <controlpoint xx="0" yy="0" zz="15" />
+  </ANIMATION>
+
+</ANIMATIONS>
 
 
 <!-- The nodes -->

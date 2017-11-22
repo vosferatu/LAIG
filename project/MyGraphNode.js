@@ -51,15 +51,21 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
     this.leaves.push(leaf);
 }
 
-/*MyGraphNode.prototype.display = function () {
+MyGraphNode.prototype.update = function (currTime) {
 
-  console.log("display do node");
+    var elapsedTime = currTime;
+    
+    for (let i = 0; i < this.animations.length; i++) {
+        var currAnimation = this.animations[i];
 
-  for (var i = 0; i < this.children.length; i++){
-      this.children[i].display();
-  }
+        if(elapsedTime > this.currAnimation.time){
+            elapsedTime -= this.currAnimation.time;
+            continue;
+        }
 
-  for (var i = 0; i < this.leaves.length; i++) {
-    this.leaves[i].display();
-  }
-}*/
+        mat4.copy(this.animationsMatrix, currAnimation.getMatrix(elapsedTime));
+
+        break;
+        
+    }
+}
