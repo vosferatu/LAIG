@@ -370,10 +370,6 @@
         <MATERIAL id="null" />
         <TEXTURE id="clear" />
 
-        <ANIMATIONREFS>
-          <ANIMATIONREF id="circular" />
-        </ANIMATIONREFS>
-
         <DESCENDANTS>
             <NODEREF id="arvore1" />
             <NODEREF id="arvore2" />
@@ -387,6 +383,10 @@
         <TEXTURE id="null" />
 
         <TRANSLATION x="-2" y="0" z="5" />
+
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="circular" />
+        </ANIMATIONREFS>
 
         <DESCENDANTS>
             <NODEREF id="arvore" />

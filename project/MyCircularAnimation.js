@@ -23,8 +23,6 @@ function MyCircularAnimation(scene, speed, centerx, centery, centerz, radius, st
 
   //this.time = this.rotang/this.angularSpeed;
   this.time = this.dist/this.speed;
-
-  console.log("time: " + this.time);
 };
 
 MyCircularAnimation.prototype.getMatrix = function(deltaTime) {
