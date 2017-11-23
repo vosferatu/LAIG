@@ -164,12 +164,17 @@ XMLscene.prototype.display = function() {
 
 XMLscene.prototype.update = function(currTime) {
     var elapsed = (currTime-this.startTime)/1000;
-    //this.startTime = currTime;
-    //pass currTime to objects
+
     this.graph.update(elapsed);
 
-  /*   console.log("StartTime: " + this.startTime);
-    console.log("CurrTime: " + currTime);
-    console.log("Elapsed: " + elapsed);  */
-
 }
+
+// Converts from degrees to radians.
+Math.degToRad = function (degrees) {
+    return degrees * Math.PI / 180;
+};
+
+// Converts from radians to degrees.
+Math.radToDeg = function (radians) {
+    return radians * 180 / Math.PI;
+};

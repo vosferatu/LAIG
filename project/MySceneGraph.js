@@ -26,6 +26,7 @@ function MySceneGraph(filename, scene) {
     this.animations = new Array();
 
     this.idRoot = null;                    // The id of the root element.
+    this.firstUpdate = true;
 
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
@@ -1177,119 +1178,128 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 /**
  * Parses the <ANIMATIONS> block.
  */
-MySceneGraph.prototype.parseAnimations = function(animationsNode) {
+MySceneGraph.prototype.parseAnimations = function (animationsNode) {
     // Traverses nodes.
     var children = animationsNode.children;
 
-    for (var i = 0; i < children.length; i++) {
+    console.log(children);
+    var i;
+    for (i = 0; i < children.length; i++) {
         var nodeName = children[i].nodeName;
+        console.log("ITERATION: " + i);
+        console.log("children.length: " + children.length);
+
         if (nodeName == "ANIMATION") {
             // Retrieves node ID.
             var animationID = this.reader.getString(children[i], 'id');
-            if (animationID == null )
+            if (animationID == null)
                 return "failed to retrieve animation ID";
             // Checks if ID is valid.
-            if (this.animations[animationID] != null )
+            if (this.animations[animationID] != null)
                 return "animation ID must be unique (conflict: ID = " + animationID + ")";
 
-            this.log("Processing animation "+animationID);
+            this.log("Processing animation " + animationID);
 
-            var type; var speed;
+            var type;
+            var speed;
             type = this.reader.getString(children[i], 'type', ['linear', 'circular', 'bezier', 'combo']);
 
-            if (type == null){
-              return "failed to retrieve animation type";
+            if (type == null) {
+                return "failed to retrieve animation type";
             }
 
-            if(type != 'combo'){
+            if (type != 'combo') {
                 speed = this.reader.getFloat(children[i], 'speed');
                 if (speed == null || isNaN(speed))
-                  return "failed to retrieve animation speed";
+                    return "failed to retrieve animation speed";
             }
 
             var args = [];
             args.push(type);
 
-            switch(type){
-              case 'circular':
-                  args.push(speed);
-                  args.push(this.reader.getFloat(children[i], 'centerx'));
-                  args.push(this.reader.getFloat(children[i], 'centery'));
-                  args.push(this.reader.getFloat(children[i], 'centerz'));
-                  args.push(this.reader.getFloat(children[i], 'radius'));
-                  args.push(this.reader.getFloat(children[i], 'startang'));
-                  args.push(this.reader.getFloat(children[i], 'rotang'));
-                  for(let i = 0; i < 6; i++){
-                    if (args[i] == null)
-                      return "failed to retrieve circular animation args";
-                  }
-                break;
+            switch (type) {
+                case 'circular':
+                    args.push(speed);
+                    args.push(this.reader.getFloat(children[i], 'centerx'));
+                    args.push(this.reader.getFloat(children[i], 'centery'));
+                    args.push(this.reader.getFloat(children[i], 'centerz'));
+                    args.push(this.reader.getFloat(children[i], 'radius'));
+                    args.push(this.reader.getFloat(children[i], 'startang'));
+                    args.push(this.reader.getFloat(children[i], 'rotang'));
+                    for (let j = 0; j < 6; j++) {
+                        if (args[j] == null)
+                            return "failed to retrieve circular animation args";
+                    }
+                    break;
 
-              case "linear":
-              case "bezier":
-                args.push(speed);
-                var anims = children[i].children;
-                var controlPoints = [];
-                var point = [];
-                for (var i = 0; i < anims.length; i++) {
-                  if(anims[i].nodeName != 'controlpoint')
-                    return "no controlpoint";
+                case "linear":
+                case "bezier":
+                    console.log("Linear or bezier");
+                    args.push(speed);
+                    var anims = children[i].children;
+                    
+                    var controlPoints = [];
+                    var point = [];
+                    for (var j = 0; j < anims.length; j++) {
+                        if (anims[j].nodeName != 'controlpoint')
+                            return "no controlpoint";
 
-                  point.push(this.reader.getFloat(anims[i], 'xx'));
-                  point.push(this.reader.getFloat(anims[i], 'yy'));
-                  point.push(this.reader.getFloat(anims[i], 'zz'));
+                        point.push(this.reader.getFloat(anims[j], 'xx'));
+                        point.push(this.reader.getFloat(anims[j], 'yy'));
+                        point.push(this.reader.getFloat(anims[j], 'zz'));
 
-                  for (var i = 0; i < point.length; i++) {
-                    if (point[i] == null || isNaN(point[i]))
-                      return "something wrong in args of animation " + animationID;
-                  }
-                  controlPoints.push(point);
-                }
+                        for (var k = 0; k < point.length; k++) {
+                            if (point[k] == null || isNaN(point[k]))
+                                return "something wrong in args of animation " + animationID;
+                        }
+                        controlPoints.push(point);
+                    }
 
-                args.push(controlPoints);
-                break;
+                    args.push(controlPoints);
+                    break;
 
-              case "combo":
-                var anims = children[i].children;
-                var combos = [];
-                for(let i = 0; i < anims.length; i++){
-                    if(anims[i].nodeName == SPANREF){
+                case "combo":
+                    var anims = children[i].children;
+                    console.log("ANIMS: ");
+                    console.log(anims);
+                    var combos = [];
+                    for (let j = 0; j < anims.length; j++) {
+                        if (anims[j].nodeName == 'SPANREF') {
 
-                      var curId = this.reader.getString(anims, 'id');
-                      this.log("   Spanref: "+curId);
+                            var curId = this.reader.getString(anims[j], 'id');
+                            this.log("   Spanref: " + curId);
 
-                      if (curId == null )
-                          this.onXMLMinorError("unable to parse spanref id");
-                      else if (curId == animationID)
-                          return "a node may not be a child of its own";
-                          else if(this.animations[animationID].type == 'combo')
-                                  return "combo can't have combo";
-                              else combos.push(this.animations[animationID]);
-                      }
-                }
-                args.push(combos);
-                break;
+                            if (curId == null)
+                                this.onXMLMinorError("unable to parse spanref id");
+                            else if (curId == animationID)
+                                return "a node may not be a child of its own";
+                            else if (this.animations[curId].type == 'combo')
+                                return "combo can't have combo";
+                            else combos.push(this.animations[curId]);
+                        }
+                    }
+                    args.push(combos);
+                    break;
 
-              default:
-                console.log("MyAnimationConstructor I shouldn't get here");
-                break;
+                default:
+                    console.log("MyAnimationConstructor I shouldn't get here");
+                    break;
             }
 
 
-            if((this.animations[animationID] = new MyAnimation(this,args)) == null)
-              return "failed to retrieve animation";
-            
+            if ((this.animations[animationID] = new MyAnimation(this, args)) == null)
+                return "failed to retrieve animation";
+
             this.log("Processed animation " + animationID);
             console.log(this.animations);
 
         }
-        
-        console.log("ITERATION: ");
+
         console.log(this.animations);
         console.log(this.animations.length);
         console.log(Object.keys(this.animations).length);
     }
-
+    console.log("I: " + i);
     console.log("Parsed animations");
     return null;
 }
@@ -1577,9 +1587,14 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-	// entry point for graph rendering
-	// remove log below to avoid performance issues
 
+    // Make sure that the animations only start when graph is being rendered
+    if(this.firstUpdate){
+        var d = new Date();
+        this.scene.startTime = d.getTime();
+        this.firstUpdate = false;
+    }
+    
     this.processNode(this.idRoot, null, null);
 
 }
@@ -1607,9 +1622,6 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 
 
     for(var i = 0 ; i < nodeToProcess.children.length ; i++) {
-
-        /*//Transformation matrix
-        this.scene.multMatrix(nodeToProcess.transformMatrix);*/
 
         this.scene.pushMatrix();
         this.processNode(nodeToProcess.children[i], materialToProcess, textureToProcess);
@@ -1645,13 +1657,12 @@ MySceneGraph.prototype.update = function (currTime){
 
     if(this.idRoot != null)
         this.updateNodes(currTime, this.idRoot);
-    
+
 }
 
 MySceneGraph.prototype.updateNodes = function (currTime, nodeID){
 
     var nodeToUpdate = this.nodes[nodeID];
-    // console.log("update node "+ nodeID);
 
     nodeToUpdate.update(currTime);
 

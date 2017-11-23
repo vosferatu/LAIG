@@ -56,7 +56,9 @@ MyGraphNode.prototype.update = function (currTime) {
     var elapsedTime = currTime;
 
     for (let i = 0; i < this.animations.length; i++) {
-        var currAnimation = this.graph.animations[this.animations[i]];
+
+        var animationID = this.animations[i];
+        var currAnimation = this.graph.animations[animationID];
 
         if(elapsedTime > currAnimation.animation.time){
             elapsedTime -= currAnimation.animation.time;

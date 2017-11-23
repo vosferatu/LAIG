@@ -11,6 +11,7 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 
   this.speed = speed;
   this.controlPoints = controlPoints;
+<<<<<<< HEAD
 
   var totalDist = 0;
 
@@ -26,6 +27,10 @@ function dist(a, b){
   return (Math.sqrt( (Math.pow(a[0]-b[0],2)) + (Math.pow(a[1]-b[1],2)) + (Math.pow(a[2]-b[2],2)) ));
 }
 
-MyLinearAnimation.prototype.update = function(currTime) {
+MyLinearAnimation.prototype.getMatrix = function (deltaTime) {
 
+  var animationMatrix = mat4.create();
+  mat4.identity(animationMatrix);
+
+  return animationMatrix;
 }

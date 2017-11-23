@@ -181,35 +181,40 @@
 
 </MATERIALS>
 
-<!-- The animations -->
-<ANIMATIONS>
-
-  <ANIMATION id="linear" speed="2.5" type="linear">
-    <controlpoint xx="0" yy="0" zz="0" />
-    <controlpoint xx="0" yy="0" zz="15" />
-  </ANIMATION>
-
-  <ANIMATION id="circular" speed="2.5" type="circular"
-    centerx="0" centery="0" centerz="0" radius="3"
-    startang="50" rotang="150"/>
-
-  <ANIMATION id="bezier" speed="5" type="bezier">
-    <controlpoint xx="0" yy="0" zz="0" /> <!--P1-->
-    <controlpoint xx="-2" yy="3" zz="3" /> <!--P2-->
-  ​  <controlpoint xx="4" yy="10" zz="5" /> <!--P3-->
-    <controlpoint xx="0" yy="-1" zz="7" /> <!--P4-->
-  </ANIMATION>
-  ​​
-  <ANIMATION id="combo" type="combo">
-    <SPANREF id="circular" />
-    <SPANREF id="linear" />
-  </ANIMATION>
-
-</ANIMATIONS>
-
 <!-- The leaves -->
 <LEAVES>
 </LEAVES>
+
+
+<!-- The animations -->
+<ANIMATIONS>
+
+    <ANIMATION id="circular1" speed="2.5" type="circular"
+        centerx="0" centery="0" centerz="0" radius="2.5"
+        startang="0" rotang="-360"/>
+
+    <ANIMATION id="circular2" speed="2.5" type="circular"
+        centerx="5" centery="0" centerz="0" radius="2.5"
+        startang="180" rotang="-360"/>
+
+    <ANIMATION id="linear" speed="2.5" type="linear">
+        <controlpoint xx="0" yy="0" zz="0" />
+        <controlpoint xx="0" yy="0" zz="15" />
+    </ANIMATION>
+
+    <ANIMATION id="bezier" speed="5" type="bezier">
+        <controlpoint xx="0" yy="0" zz="0" /> <!--P1-->
+        <controlpoint xx="-2" yy="3" zz="3" /> <!--P2-->
+    ​    <controlpoint xx="4" yy="10" zz="5" /> <!--P3-->
+        <controlpoint xx="0" yy="-1" zz="7" /> <!--P4-->
+    </ANIMATION>
+    ​​
+    <ANIMATION id="combo" type="combo">
+        <SPANREF id="circular1" />
+        <SPANREF id="linear" />
+    </ANIMATION>
+
+</ANIMATIONS>
 
 
 <!-- The nodes -->
@@ -353,11 +358,12 @@
         <TEXTURE id="null" />
 
 
-        <TRANSLATION x="10" y="0" z="10" />
+        <!-- <TRANSLATION x="10" y="0" z="10" /> -->
         <SCALE sx="3" sy="3" sz="3"/>
 
         <ANIMATIONREFS>
-            <ANIMATIONREF id="circular" />
+            <ANIMATIONREF id="circular1" />
+            <ANIMATIONREF id="circular2" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>
@@ -953,13 +959,13 @@
         <ROTATION axis="x" angle="-90" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="-25 25 25 -25" />
-				</DESCENDANTS>
+            <LEAF  type="rectangle" args="-25 25 25 -25" />
+        </DESCENDANTS>
 
     </NODE>
 
     <!-- The lights -->
-     <NODE id="luzes">
+    <NODE id="luzes">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="clear" />
 
