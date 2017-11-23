@@ -11,8 +11,7 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 
   this.speed = speed;
   this.controlPoints = controlPoints;
-<<<<<<< HEAD
-
+  
   var totalDist = 0;
 
   for(let i = 0; i < this.controlPoints.length; i++){
