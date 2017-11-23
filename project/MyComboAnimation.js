@@ -10,12 +10,11 @@ function MyComboAnimation(scene, animations) {
   this.animations = animations;
 };
 
-MyComboAnimation.prototype.update = function(currTime) {
+MyComboAnimation.prototype.getMatrix = function (deltaTime) {
 
-  for (let i = 0; i < animations.length; i++) {
-    const anim = animations[i];
+  var animationMatrix = mat4.create();
+  mat4.identity(animationMatrix);
 
-    anim.update(currTime);
-    
-  }
+  return animationMatrix;
+
 }

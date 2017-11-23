@@ -18,19 +18,22 @@ function MyCircularAnimation(scene, speed, centerx, centery, centerz, radius, st
   this.rotang = rotang;
 
   this.angularSpeed = this.speed / this.radius;
-  
+
+  this.time = Math.degToRad(Math.abs(this.rotang))/this.angularSpeed;
+
 };
 
 MyCircularAnimation.prototype.getMatrix = function(deltaTime) {
 
-  var currAngle = this.startang + this.angularSpeed * deltaTime;
+  var currAngleRad = this.angularSpeed * deltaTime * (this.rotang > 0 ? 1 : -1);
 
   var animationMatrix = mat4.create();
   mat4.identity(animationMatrix);
 
-  mat4.translate(animationMatrix, animationMatrix, [-centerx, -centery, -centerz]);
-  mat4.rotate(animationMatrix, animationMatrix, currAngle, this.scene.axisCoords['y']);
-  mat4.translate(animationMatrix, animationMatrix, [centerx, centery, centerz]);
+  mat4.translate(animationMatrix, animationMatrix, [this.centerx, this.centery, this.centerz]);
+  mat4.rotate(animationMatrix, animationMatrix, currAngleRad, this.scene.graph.axisCoords['y']);
+  mat4.rotate(animationMatrix, animationMatrix, Math.degToRad(this.startang), this.scene.graph.axisCoords['y']);
+  mat4.translate(animationMatrix, animationMatrix, [this.radius, 0, 0]);
 
   return animationMatrix;
 
