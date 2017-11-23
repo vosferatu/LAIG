@@ -54,7 +54,7 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
 MyGraphNode.prototype.update = function (currTime) {
 
     var elapsedTime = currTime;
-    
+
     for (let i = 0; i < this.animations.length; i++) {
 
         var animationID = this.animations[i];
@@ -68,6 +68,6 @@ MyGraphNode.prototype.update = function (currTime) {
         mat4.copy(this.animationsMatrix, currAnimation.getMatrix(elapsedTime));
 
         break;
-        
+
     }
 }
