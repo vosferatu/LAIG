@@ -1329,16 +1329,26 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
         else if (nodeName == "NODE") {
             // Retrieves node ID.
             var nodeID = this.reader.getString(children[i], 'id');
+            var nodeSelectableStr = this.reader.getString(children[i], 'selectable', false);
+
             if (nodeID == null )
                 return "failed to retrieve node ID";
+
             // Checks if ID is valid.
             if (this.nodes[nodeID] != null )
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
-            this.log("Processing node "+nodeID);
+            this.log("Processing node "+ nodeID);
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+
+            if (nodeSelectableStr == null || nodeSelectableStr == 'false')
+                this.nodes[nodeID].selectable = false;
+            else{
+                this.nodes[nodeID].selectable = true;
+                this.scene.selectableNodes.push(nodeID);
+            }
     
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1479,7 +1489,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else this.onXMLMinorError("unknown tag <" + animationRefs[j].nodeName + ">");
             }
           }
-          console.log(specsNames);
+          console.log("SPECNAMES: " + specsNames);
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
             if (descendantsIndex == -1)
@@ -1620,6 +1630,10 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
     //Texture
     var textureToProcess = nodeToProcess.textureID == "null" ? textureId : nodeToProcess.textureID;
 
+    //Shader
+    if(this.scene.selectedHighlightNode == nodeID){
+        this.scene.setActiveShader(this.scene.shader);
+    }
 
     for(var i = 0 ; i < nodeToProcess.children.length ; i++) {
 
@@ -1649,6 +1663,10 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 
         nodeToProcess.leaves[i].display();
 
+    }
+
+    if (this.scene.selectedHighlightNode == nodeID) {
+        this.scene.setActiveShader(this.scene.defaultShader);
     }
 
 }

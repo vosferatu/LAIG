@@ -13,6 +13,11 @@ function XMLscene(interface) {
 
     var d = new Date();
     this.startTime = d.getTime();
+
+    this.selectableNodes = new Array();
+    this.selectedHighlightIndex = 0;
+    this.selectedHighlightNode = null;
+    this.highlightNodeRendered = false;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -36,6 +41,9 @@ XMLscene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
 
     this.setUpdatePeriod(20); //sets ms update time
+
+    this.shader = new CGFshader(this.gl, "shaders/myShader_vertex.glsl", "shaders/myShader_fragment.glsl");
+
 
 }
 
@@ -96,8 +104,9 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-    // Adds lights group.
+    // Adds menu elements.
     this.interface.addLightsGroup(this.graph.lights);
+    this.interface.addHighlightSelection(this.graph.selectableNodes);
 }
 
 /**
@@ -146,6 +155,7 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         this.graph.displayScene();
 
+        this.highlightNodeRendered = false;
 
 
     }
@@ -166,6 +176,16 @@ XMLscene.prototype.update = function(currTime) {
     var elapsed = (currTime-this.startTime)/1000;
 
     this.graph.update(elapsed);
+
+    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex]
+
+    //Update deltaHighLight
+    let newDelta = Math.cos(currTime / 250.0) / 2 + 0.5;
+
+    this.shader.setUniformsValues({
+        deltaHighlight : newDelta
+    });
+
 
 }
 

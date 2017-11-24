@@ -353,7 +353,7 @@
 
 
      <!-- flag -->
-    <NODE id="flag">
+    <NODE id="flag" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -461,7 +461,7 @@
     </NODE>
 
     <!-- Lua -->
-    <NODE id="lua" selectable="tt">
+    <NODE id="lua" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="lua" />
 
