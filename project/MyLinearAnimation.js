@@ -11,11 +11,14 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 
   this.speed = speed;
   this.controlPoints = controlPoints;
+
+  this.dists = [];
   
   var totalDist = 0;
 
-  for(let i = 0; i < this.controlPoints.length; i++){
+  for(let i = 0; i < this.controlPoints.length-1; i++){
     totalDist += dist(this.controlPoints[i], this.controlPoints[i+1]);
+    this.dists.push(totalDist);
   }
 
   this.time = totalDist / this.speed;
@@ -23,6 +26,7 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 };
 
 function dist(a, b){
+  console.log(a); console.log(b);
   return (Math.sqrt( (Math.pow(a[0]-b[0],2)) + (Math.pow(a[1]-b[1],2)) + (Math.pow(a[2]-b[2],2)) ));
 }
 
