@@ -1236,23 +1236,24 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                 case "bezier":
                     console.log("Linear or bezier");
                     args.push(speed);
-                    var anims = children[i].children;
+                    var points = children[i].children;
                     
                     var controlPoints = [];
                     var point = [];
-                    for (var j = 0; j < anims.length; j++) {
-                        if (anims[j].nodeName != 'controlpoint')
+                    for (let j = 0; j < points.length; j++) {
+                        if (points[j].nodeName != 'controlpoint')
                             return "no controlpoint";
 
-                        point.push(this.reader.getFloat(anims[j], 'xx'));
-                        point.push(this.reader.getFloat(anims[j], 'yy'));
-                        point.push(this.reader.getFloat(anims[j], 'zz'));
+                        point.push(this.reader.getFloat(points[j], 'xx'));
+                        point.push(this.reader.getFloat(points[j], 'yy'));
+                        point.push(this.reader.getFloat(points[j], 'zz'));
 
-                        for (var k = 0; k < point.length; k++) {
+                        for (let k = 0; k < point.length; k++) {
                             if (point[k] == null || isNaN(point[k]))
                                 return "something wrong in args of animation " + animationID;
                         }
                         controlPoints.push(point);
+                        point = [];
                     }
 
                     args.push(controlPoints);

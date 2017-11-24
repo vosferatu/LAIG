@@ -11,11 +11,14 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 
   this.speed = speed;
   this.controlPoints = controlPoints;
+
+  this.dists = [];
   
   var totalDist = 0;
 
-  for(let i = 0; i < this.controlPoints.length; i++){
+  for(let i = 0; i < this.controlPoints.length-1; i++){
     totalDist += dist(this.controlPoints[i], this.controlPoints[i+1]);
+    this.dists.push(totalDist);
   }
 
   this.time = totalDist / this.speed;
@@ -27,6 +30,7 @@ function dist(a, b){
 }
 
 MyLinearAnimation.prototype.getMatrix = function (deltaTime) {
+  console.log(deltaTime);
 
   var animationMatrix = mat4.create();
   mat4.identity(animationMatrix);
