@@ -34,17 +34,32 @@ MyInterface.prototype.init = function(application) {
  */
 MyInterface.prototype.addLightsGroup = function(lights) {
 
-    var group = this.gui.addFolder("Lights");
-    group.open();
-
-    // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
-    // e.g. this.option1=true; this.option2=false;
+    var groupLights = this.gui.addFolder("Lights");
+    groupLights.open();
 
     for (var key in lights) {
         if (lights.hasOwnProperty(key)) {
             this.scene.lightValues[key] = lights[key][0];
-            group.add(this.scene.lightValues, key);
+            groupLights.add(this.scene.lightValues, key);
         }
     }
+}
+
+MyInterface.prototype.addHighlightSelection = function(selectableNodes){
+
+    var groupHighlight = this.gui.addFolder("Selecting Objects");
+    groupHighlight.open();
+
+    var dictSelectableNodes = {};
+
+    for (let i = 0; i < this.scene.selectableNodes.length; i++) {
+        let selectableNodeID = this.scene.selectableNodes[i];
+
+        dictSelectableNodes[selectableNodeID] = i;
+    }
+
+    console.log("DICT SELECTABEL: ");
+    console.log(dictSelectableNodes);
+    this.gui.add(this.scene, 'selectedHighlightIndex', dictSelectableNodes).name('Highlighting Object');
 }
 
