@@ -42,7 +42,7 @@ XMLscene.prototype.init = function(application) {
 
     this.setUpdatePeriod(20); //sets ms update time
 
-    this.shader = new CGFshader(this.gl, "shaders/myShader_vertex.glsl", "shaders/myShader_fragment.glsl");
+    this.shader = new CGFshader(this.gl, "shaders/myShader.vert", "shaders/myShader.frag");
 
 
 }
@@ -183,7 +183,8 @@ XMLscene.prototype.update = function(currTime) {
     let newDelta = Math.cos(currTime / 250.0) / 2 + 0.5;
 
     this.shader.setUniformsValues({
-        deltaHighlight : newDelta
+        timeFactor : newDelta,
+        selectedColor : [1.0,0,0,0]
     });
 
 
