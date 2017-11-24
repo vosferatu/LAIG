@@ -26,11 +26,11 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 };
 
 function dist(a, b){
-  console.log(a); console.log(b);
   return (Math.sqrt( (Math.pow(a[0]-b[0],2)) + (Math.pow(a[1]-b[1],2)) + (Math.pow(a[2]-b[2],2)) ));
 }
 
 MyLinearAnimation.prototype.getMatrix = function (deltaTime) {
+  console.log(deltaTime);
 
   var animationMatrix = mat4.create();
   mat4.identity(animationMatrix);
