@@ -17,7 +17,15 @@ function XMLscene(interface) {
     this.selectableNodes = new Array();
     this.selectedHighlightIndex = 0;
     this.selectedHighlightNode = null;
-    this.highlightNodeRendered = false;
+    
+    this.selectedColorIndex = 0;
+    this.selectableColors = [
+        [1, 0, 0, 1],
+        [0, 1, 0, 1],  
+        [0, 0, 1, 1],  
+        [1, 0.5, 0, 1],
+        [0.75, 0, 0.75, 1],  
+    ];
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -177,14 +185,16 @@ XMLscene.prototype.update = function(currTime) {
 
     this.graph.update(elapsed);
 
-    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex]
+    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex];
+    this.selectedColor = this.selectableColors[this.selectedColorIndex];
 
     //Update deltaHighLight
     let newDelta = Math.cos(currTime / 250.0) / 2 + 0.5;
 
+
     this.shader.setUniformsValues({
         timeFactor : newDelta,
-        selectedColor : [1.0,0,0,0]
+        selectedColor : this.selectedColor
     });
 
 
@@ -199,3 +209,25 @@ Math.degToRad = function (degrees) {
 Math.radToDeg = function (radians) {
     return radians * 180 / Math.PI;
 };
+
+Math.getDistanceBetweenTwoPoins = function (point1, point2) {
+
+    let deltaX = point2[0] - point1[0];
+    let deltaY = point2[1] - point1[1];
+    let deltaZ = point2[2] - point1[2];
+
+    return Math.hypot(deltaX, deltaY, deltaZ);
+}
+
+Math.midPoint = function (point1, point2) {
+
+    let sum = point1.map(function (num, i) {
+        return num + point2[i];
+    });
+
+    let midPoint = sum.map(function (num, i) {
+        return num / 2;
+    })
+
+    return midPoint;
+}

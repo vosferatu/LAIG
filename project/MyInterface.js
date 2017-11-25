@@ -58,8 +58,14 @@ MyInterface.prototype.addHighlightSelection = function(selectableNodes){
         dictSelectableNodes[selectableNodeID] = i;
     }
 
-    console.log("DICT SELECTABEL: ");
-    console.log(dictSelectableNodes);
     this.gui.add(this.scene, 'selectedHighlightIndex', dictSelectableNodes).name('Highlighting Object');
+
+    this.gui.add(this.scene, 'selectedColorIndex', {
+        "Red" : 0,
+        "Green" : 1,
+        "Blue" : 2,
+        "Orange" : 3,
+        "Purple" : 4
+    }).name('Selected Color');
 }
 

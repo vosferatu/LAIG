@@ -30,7 +30,6 @@ function dist(a, b){
 }
 
 MyLinearAnimation.prototype.getMatrix = function (deltaTime) {
-  console.log(deltaTime);
 
   var animationMatrix = mat4.create();
   mat4.identity(animationMatrix);

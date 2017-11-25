@@ -19,7 +19,7 @@ void main() {
 	{
 		vec4 textureColor = texture2D(uSampler, vTextureCoord);
 
-		vec4 highlightColor;
+		vec4 highlightColor = vec4(0,0,0,1.0);
 		highlightColor.r = (1.0-timeFactor)*textureColor.r + timeFactor*selectedColor.r; 
 		highlightColor.g = (1.0-timeFactor)*textureColor.g + timeFactor*selectedColor.g; 
 		highlightColor.b = (1.0-timeFactor)*textureColor.b + timeFactor*selectedColor.b;
