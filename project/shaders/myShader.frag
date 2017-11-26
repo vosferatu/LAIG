@@ -24,7 +24,7 @@ void main() {
 		highlightColor.g = (1.0-timeFactor)*textureColor.g + timeFactor*selectedColor.g; 
 		highlightColor.b = (1.0-timeFactor)*textureColor.b + timeFactor*selectedColor.b;
 		
-		gl_FragColor = highlightColor * vFinalColor;
+		gl_FragColor = highlightColor * vFinalColor * textureColor;
 	}
 	else
 		gl_FragColor = vFinalColor;

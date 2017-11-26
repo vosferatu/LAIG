@@ -18,7 +18,8 @@ function XMLscene(interface) {
     this.selectedHighlightIndex = 0;
     this.selectedHighlightNode = null;
     
-    this.selectedColorIndex = 0;
+    this.selectedColor = [1,0,0,1];
+    this.selectedColorInterface = [255, 0, 0, 1];
     this.selectableColors = [
         [1, 0, 0, 1],
         [0, 1, 0, 1],  
@@ -186,11 +187,12 @@ XMLscene.prototype.update = function(currTime) {
     this.graph.update(elapsed);
 
     this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex-1];
-    this.selectedColor = this.selectableColors[this.selectedColorIndex];
+    this.selectedColor = this.selectedColorInterface.map(function(value,i){
+        return i!=3 ? value/255.0 : value;
+    });
 
     //Update deltaHighLight
     let newDelta = Math.cos(currTime / 250.0) / 2 + 0.5;
-
 
     this.shader.setUniformsValues({
         timeFactor: newDelta,
