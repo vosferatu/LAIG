@@ -193,8 +193,8 @@ XMLscene.prototype.update = function(currTime) {
 
 
     this.shader.setUniformsValues({
-        timeFactor : newDelta,
-        selectedColor : this.selectedColor
+        timeFactor: newDelta,
+        selectedColor: this.selectedColor
     });
 
 

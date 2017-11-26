@@ -1182,9 +1182,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
     // Traverses nodes.
     var children = animationsNode.children;
 
-    console.log(children);
-    var i;
-    for (i = 0; i < children.length; i++) {
+    for (let i = 0; i < children.length; i++) {
         var nodeName = children[i].nodeName;
 
         if (nodeName == "ANIMATION") {
@@ -1273,7 +1271,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                                 return "a node may not be a child of its own";
                             else if (this.animations[curId].type == 'combo')
                                 return "combo can't have combo";
-                            else combos.push(this.animations[curId]);
+                            else combos.push(curId);
                         }
                     }
                     args.push(combos);
