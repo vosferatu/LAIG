@@ -21,9 +21,6 @@ MyComboAnimation.prototype.getMatrix = function (currTime) {
 
   var elapsedTime = (currTime > this.time ? this.time : currTime);
 
-  console.log(this.time);
-  console.log(currTime);
-  console.log(elapsedTime);
   for (let i = 0; i < this.animations.length; i++) {
 
     var animationID = this.animations[i];
@@ -50,8 +47,6 @@ MyComboAnimation.prototype.timeAllAnimations = function(){
   
   for (let i = 0; i < this.animations.length; i++) {
     let currAnimation = this.scene.graph.animations[this.animations[i]];
-    console.log("currAnimation");
-    console.log(currAnimation);
 
     sum += currAnimation.animation.time;
   }

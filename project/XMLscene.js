@@ -20,13 +20,15 @@ function XMLscene(interface) {
     
     this.selectedColor = [1,0,0,1];
     this.selectedColorInterface = [255, 0, 0, 1];
+
+    /* this.selectedColorIndex = 0;
     this.selectableColors = [
         [1, 0, 0, 1],
         [0, 1, 0, 1],  
         [0, 0, 1, 1],  
         [1, 0.5, 0, 1],
         [0.75, 0, 0.75, 1],  
-    ];
+    ]; */
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -187,6 +189,8 @@ XMLscene.prototype.update = function(currTime) {
     this.graph.update(elapsed);
 
     this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex-1];
+    
+    console.log(this.selectedColorInterface);
     this.selectedColor = this.selectedColorInterface.map(function(value,i){
         return i!=3 ? value/255.0 : value;
     });

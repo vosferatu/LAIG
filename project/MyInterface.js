@@ -60,6 +60,14 @@ MyInterface.prototype.addHighlightSelection = function(selectableNodes){
 
     groupHighlight.add(this.scene, 'selectedHighlightIndex', dictSelectableNodes).name('Object');
 
+    /* this.gui.add(this.scene, 'selectedColorIndex', {
+        "Red" : 0,
+        "Green" : 1,
+        "Blue" : 2,
+        "Orange" : 3,
+        "Purple" : 4
+    }).name('Selected Color'); */
+
     groupHighlight.addColor(this.scene, 'selectedColorInterface').name("Color");
 
 }
