@@ -1186,8 +1186,6 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
     var i;
     for (i = 0; i < children.length; i++) {
         var nodeName = children[i].nodeName;
-        console.log("ITERATION: " + i);
-        console.log("children.length: " + children.length);
 
         if (nodeName == "ANIMATION") {
             // Retrieves node ID.
@@ -1261,8 +1259,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
                 case "combo":
                     var anims = children[i].children;
-                    console.log("ANIMS: ");
-                    console.log(anims);
+
                     var combos = [];
                     for (let j = 0; j < anims.length; j++) {
                         if (anims[j].nodeName == 'SPANREF') {
@@ -1292,15 +1289,9 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                 return "failed to retrieve animation";
 
             this.log("Processed animation " + animationID);
-            console.log(this.animations);
-
         }
 
-        console.log(this.animations);
-        console.log(this.animations.length);
-        console.log(Object.keys(this.animations).length);
     }
-    console.log("I: " + i);
     console.log("Parsed animations");
     return null;
 }

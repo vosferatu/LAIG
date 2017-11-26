@@ -205,9 +205,9 @@
 
     <ANIMATION id="bezier" speed="5" type="bezier">
         <controlpoint xx="0" yy="0" zz="0" /> <!--P1-->
-        <controlpoint xx="-2" yy="3" zz="3" /> <!--P2-->
-    ​    <controlpoint xx="4" yy="10" zz="5" /> <!--P3-->
-        <controlpoint xx="0" yy="-1" zz="7" /> <!--P4-->
+        <controlpoint xx="10" yy="5" zz="0" /> <!--P2-->
+    ​    <controlpoint xx="10" yy="10" zz="10" /> <!--P3-->
+        <controlpoint xx="0" yy="0" zz="10" /> <!--P4-->
     </ANIMATION>
     ​​
     <ANIMATION id="combo" type="combo">
@@ -358,13 +358,13 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-		<ROTATION axis="y" angle="-90" />
+		<!-- <ROTATION axis="y" angle="-90" />
 
         <TRANSLATION x="10" y="0" z="10" />
-        <SCALE sx="3" sy="3" sz="3"/>
+        <SCALE sx="3" sy="3" sz="3"/> -->
 
         <ANIMATIONREFS>
-            <ANIMATIONREF id="linear" />
+            <ANIMATIONREF id="bezier" />
         </ANIMATIONREFS>
 
         <DESCENDANTS>
@@ -409,7 +409,7 @@
       <MATERIAL id="null" />
       <TEXTURE id="feup" />
 
- 	  <TRANSLATION x="0" y="5" z="0" />
+ 	  <TRANSLATION x="0" y="9" z="0" />
       <SCALE sx="5" sy="3" sz="5"/>
 
       <DESCENDANTS>

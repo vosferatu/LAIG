@@ -50,12 +50,12 @@ MyInterface.prototype.addHighlightSelection = function(selectableNodes){
     var groupHighlight = this.gui.addFolder("Selecting Objects");
     groupHighlight.open();
 
-    var dictSelectableNodes = {};
+    var dictSelectableNodes = {"Select a node" : 0};
 
     for (let i = 0; i < this.scene.selectableNodes.length; i++) {
         let selectableNodeID = this.scene.selectableNodes[i];
 
-        dictSelectableNodes[selectableNodeID] = i;
+        dictSelectableNodes[selectableNodeID] = i+1;
     }
 
     this.gui.add(this.scene, 'selectedHighlightIndex', dictSelectableNodes).name('Highlighting Object');

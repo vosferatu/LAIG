@@ -185,7 +185,7 @@ XMLscene.prototype.update = function(currTime) {
 
     this.graph.update(elapsed);
 
-    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex];
+    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex-1];
     this.selectedColor = this.selectableColors[this.selectedColorIndex];
 
     //Update deltaHighLight
