@@ -1479,7 +1479,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else this.onXMLMinorError("unknown tag <" + animationRefs[j].nodeName + ">");
             }
           }
-          console.log("SPECNAMES: " + specsNames);
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
             if (descendantsIndex == -1)

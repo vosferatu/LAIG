@@ -57,8 +57,6 @@ MyLinearAnimation.prototype.getMatrixSimpleLinear = function (deltaTime, point1,
   mat4.translate(animationMatrix, animationMatrix, result);
   mat4.rotate(animationMatrix, animationMatrix, rotation, this.scene.graph.axisCoords['y']);
 
-  console.log(animationMatrix);
-
   return animationMatrix;
 }
 
