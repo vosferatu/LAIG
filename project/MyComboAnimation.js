@@ -15,7 +15,6 @@ function MyComboAnimation(scene, animations) {
 
 MyComboAnimation.prototype.getMatrix = function (currTime) {
 
-  console.log("COMBO GETMATRIX");
   var animationMatrix = mat4.create();
   mat4.identity(animationMatrix);
 

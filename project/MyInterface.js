@@ -60,15 +60,18 @@ MyInterface.prototype.addHighlightSelection = function(selectableNodes){
 
     groupHighlight.add(this.scene, 'selectedHighlightIndex', dictSelectableNodes).name('Object');
 
-    /* this.gui.add(this.scene, 'selectedColorIndex', {
+    groupHighlight.add(this.scene, 'selectedColorIndex', {
         "Red" : 0,
         "Green" : 1,
         "Blue" : 2,
         "Orange" : 3,
         "Purple" : 4
-    }).name('Selected Color'); */
+    }).name('Selected Color');
 
-    groupHighlight.addColor(this.scene, 'selectedColorInterface').name("Color");
+    // Due to a bug in the color interface of dat.GUI, it was not possible to use 
+    // it for highlight color selection:
+
+    // groupHighlight.addColor(this.scene, 'selectedColorInterface').name("Color");
 
 }
 

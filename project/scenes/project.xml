@@ -190,30 +190,65 @@
 <ANIMATIONS>
 
     <ANIMATION id="circular1" speed="2.5" type="circular"
-        centerx="0" centery="0" centerz="2.5" radius="2.5"
-        startang="180" rotang="-90"/>
+        centerx="0" centery="0" centerz="5" radius="5"
+        startang="90" rotang="-90"/>
 
     <ANIMATION id="circular2" speed="2.5" type="circular"
         centerx="5" centery="0" centerz="0" radius="2.5"
         startang="180" rotang="-360"/>
 
-    <ANIMATION id="linear" speed="5" type="linear">
-        <controlpoint xx="0" yy="0" zz="0" />
-        <controlpoint xx="10" yy="0" zz="0" />
-        <controlpoint xx="0" yy="0" zz="15" />
+    <ANIMATION id="luaTransl" speed="2.5" type="circular"
+        centerx="0" centery="100" centerz="0" radius="150"
+        startang="120" rotang="1080"/> 
+        
+    <ANIMATION id="luaRot" speed="0.002" type="circular"
+        centerx="0" centery="0" centerz="0" radius="0.01"
+        startang="0" rotang="8640"/>
+
+    <ANIMATION id="linear" speed="2.5" type="linear">
+        <controlpoint xx="5" yy="0" zz="5" />
+        <controlpoint xx="5" yy="0" zz="7" />
+        <controlpoint xx="4" yy="0" zz="9" />
+        <controlpoint xx="3" yy="0" zz="10" />
+        <controlpoint xx="1" yy="0" zz="11" />
+        <controlpoint xx="-1" yy="0" zz="11" />
+        <controlpoint xx="-3" yy="0" zz="10" />
+        <controlpoint xx="-4" yy="0" zz="9" />
+        <controlpoint xx="-5" yy="0" zz="7" />
     </ANIMATION>
 
     <ANIMATION id="bezier" speed="5" type="bezier">
-        <controlpoint xx="0" yy="0" zz="0" /> <!--P1-->
-        <controlpoint xx="10" yy="5" zz="0" /> <!--P2-->
-    ​    <controlpoint xx="10" yy="10" zz="10" /> <!--P3-->
-        <controlpoint xx="0" yy="0" zz="10" /> <!--P4-->
+        <controlpoint xx="-5" yy="0" zz="7" />
+        <controlpoint xx="-3" yy="5" zz="5" /> <!--P2-->
+    ​    <controlpoint xx="1" yy="10" zz="2" /> <!--P3-->
+        <controlpoint xx="10" yy="0" zz="10" /> <!--P4-->
     </ANIMATION>
     ​​
     <ANIMATION id="combo" type="combo">
         <SPANREF id="circular1" />
         <SPANREF id="linear" />
     </ANIMATION>
+
+    <ANIMATION id="flagDown" speed="0.5" type="linear">
+        <controlpoint xx="0" yy="0" zz="0" />
+        <controlpoint xx="0" yy="-2" zz="0.001" />
+    </ANIMATION>
+
+    <ANIMATION id="flagUp" speed="0.5" type="linear">
+        <controlpoint xx="0" yy="-2" zz="0" />
+        <controlpoint xx="0" yy="0" zz="0" />
+    </ANIMATION>
+
+    <ANIMATION id="flagAnim" type="combo">
+        <SPANREF id="flagDown" />
+        <SPANREF id="flagUp" />
+        <SPANREF id="flagDown" />
+        <SPANREF id="flagUp" />
+        <SPANREF id="flagDown" />
+        <SPANREF id="flagUp" />
+    </ANIMATION>
+
+
 
 </ANIMATIONS>
 
@@ -308,7 +343,6 @@
         <MATERIAL id="null" />
         <TEXTURE id="dirt" />
 
-        <!--<TRANSLATION x="10" y="0" z="10" />-->
       	<SCALE sx="1" sy="1" sz="1"/>
 
 
@@ -358,12 +392,11 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-		<!-- <ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="10" y="0" z="10" />
-        <SCALE sx="3" sy="3" sz="3"/> -->
+        <SCALE sx="3" sy="3" sz="3"/>
 
         <ANIMATIONREFS>
             <ANIMATIONREF id="combo" />
+            <ANIMATIONREF id="bezier"/>
         </ANIMATIONREFS>
 
         <DESCENDANTS>
@@ -405,59 +438,63 @@
     </NODE>
 
     <NODE id="bandeira">
-      <MATERIAL id="null" />
-      <TEXTURE id="feup" />
+        <MATERIAL id="null" />
+        <TEXTURE id="feup" />
 
- 	  <TRANSLATION x="0" y="9" z="0" />
-      <SCALE sx="5" sy="3" sz="5"/>
+        <TRANSLATION x="0" y="9" z="0" />
+        <SCALE sx="5" sy="3" sz="5"/>
 
-      <DESCENDANTS>
-        <LEAF id="bandeiraTras" type="patch" args="30 30" >
-          <CPLINE>
-            <CPOINT xx="0" yy="1" zz="0" ww="1"/>
-            <CPOINT xx="0" yy="0" zz="0" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
-            <CPOINT xx="0.25" yy="0.0" zz="0.25" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
-            <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>
-            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>
-            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>
-          </CPLINE>
-        </LEAF>
+        <ANIMATIONREFS>
+            <ANIMATIONREF id="flagAnim" />
+        </ANIMATIONREFS>   
 
-        <LEAF id="bandeiraFrente" type="patch" args="30 30" >
-          <CPLINE>
-            <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>
-            <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>
-            <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
-            <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
-            <CPOINT xx="0.25" yy="0.0" zz="0.25" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0" yy="1" zz="0" ww="1"/>
-            <CPOINT xx="0" yy="0" zz="0" ww="1"/>
-          </CPLINE>
-        </LEAF>
-      </DESCENDANTS>
+        <DESCENDANTS>
+            <LEAF id="bandeiraTras" type="patch" args="30 30" >
+            <CPLINE>
+                <CPOINT xx="0" yy="1" zz="0" ww="1"/>
+                <CPOINT xx="0" yy="0" zz="0" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
+                <CPOINT xx="0.25" yy="0.0" zz="0.25" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
+                <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>
+                <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>
+                <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>
+            </CPLINE>
+            </LEAF>
+
+            <LEAF id="bandeiraFrente" type="patch" args="30 30" >
+            <CPLINE>
+                <CPOINT xx="1" yy="1.0" zz="0" ww="1"/>
+                <CPOINT xx="1" yy="0.0" zz="0" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="0.75" yy="1.0" zz="-0.25" ww="1"/>
+                <CPOINT xx="0.75" yy="0.0" zz="-0.25" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="0.5" yy="1.0" zz="0" ww="1"/>
+                <CPOINT xx="0.5" yy="0.0" zz="0" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="0.25" yy="1.0" zz="0.25" ww="1"/>
+                <CPOINT xx="0.25" yy="0.0" zz="0.25" ww="1"/>
+            </CPLINE>
+            <CPLINE>
+                <CPOINT xx="0" yy="1" zz="0" ww="1"/>
+                <CPOINT xx="0" yy="0" zz="0" ww="1"/>
+            </CPLINE>
+            </LEAF>
+        </DESCENDANTS>
     </NODE>
 
     <!-- Lua -->
@@ -465,10 +502,24 @@
         <MATERIAL id="null" />
         <TEXTURE id="lua" />
 
-		      <TRANSLATION x="-40" y="100" z="-100"/>
-
+            <ANIMATIONREFS>
+                <ANIMATIONREF id="luaTransl"/>
+            </ANIMATIONREFS>
           <DESCENDANTS>
-            <LEAF type="sphere" args="5 32 32"/>
+            <NODEREF id="luaRot"/>
+          </DESCENDANTS>
+    </NODE>
+
+    <NODE id="luaRot">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+		      <!-- <TRANSLATION x="-40" y="100" z="-100"/> -->
+            <ANIMATIONREFS>
+                <ANIMATIONREF id="luaRot"/>
+            </ANIMATIONREFS>
+          <DESCENDANTS>
+            <LEAF type="sphere" args="5 32 32"/>            
           </DESCENDANTS>
     </NODE>
 
@@ -1002,7 +1053,7 @@
     </NODE>
 
     <!-- The third light -->
-    <NODE id="luz3">
+    <NODE id="luz3" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -1150,7 +1201,7 @@
     </NODE>
 
     <!-- Another tree -->
-    <NODE id="arvore2">
+    <NODE id="arvore2" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 

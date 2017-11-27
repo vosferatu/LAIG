@@ -19,16 +19,18 @@ function XMLscene(interface) {
     this.selectedHighlightNode = null;
     
     this.selectedColor = [1,0,0,1];
-    this.selectedColorInterface = [255, 0, 0, 1];
 
-    /* this.selectedColorIndex = 0;
+    // MyInterface.js:71
+    // this.selectedColorInterface = new Array(255,0,0,1);
+
+    this.selectedColorIndex = 0;
     this.selectableColors = [
         [1, 0, 0, 1],
         [0, 1, 0, 1],  
         [0, 0, 1, 1],  
         [1, 0.5, 0, 1],
         [0.75, 0, 0.75, 1],  
-    ]; */
+    ];
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -188,12 +190,15 @@ XMLscene.prototype.update = function(currTime) {
 
     this.graph.update(elapsed);
 
-    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex-1];
+    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex - 1];
+    this.selectedColor = this.selectableColors[this.selectedColorIndex];
     
-    console.log(this.selectedColorInterface);
+
+    // MyInterface.js:71
+    /* console.log(this.selectedColorInterface);
     this.selectedColor = this.selectedColorInterface.map(function(value,i){
         return i!=3 ? value/255.0 : value;
-    });
+    }); */
 
     //Update deltaHighLight
     let newDelta = Math.cos(currTime / 250.0) / 2 + 0.5;
