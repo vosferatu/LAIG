@@ -194,8 +194,8 @@
         startang="90" rotang="-90"/>
 
     <ANIMATION id="circular2" speed="2.5" type="circular"
-        centerx="5" centery="0" centerz="0" radius="2.5"
-        startang="180" rotang="-360"/>
+        centerx="4" centery="0" centerz="8" radius="4"
+        startang="180" rotang="-180"/>
 
     <ANIMATION id="luaTransl" speed="2.5" type="circular"
         centerx="0" centery="100" centerz="0" radius="150"
@@ -217,16 +217,29 @@
         <controlpoint xx="-5" yy="0" zz="7" />
     </ANIMATION>
 
-    <ANIMATION id="bezier" speed="5" type="bezier">
-        <controlpoint xx="-5" yy="0" zz="7" />
+    <ANIMATION id="bezier1" speed="5" type="bezier">
+        <controlpoint xx="-5" yy="0" zz="7" /> <!--P1-->
         <controlpoint xx="-3" yy="5" zz="5" /> <!--P2-->
     ​    <controlpoint xx="1" yy="10" zz="2" /> <!--P3-->
         <controlpoint xx="10" yy="0" zz="10" /> <!--P4-->
     </ANIMATION>
+
+    <ANIMATION id="bezier2" speed="5" type="bezier">
+        <controlpoint xx="10" yy="0" zz="10" /> <!--P1-->
+        <controlpoint xx="5" yy="0" zz="15" /> <!--P2-->
+    ​    <controlpoint xx="0" yy="0" zz="12" /> <!--P3-->
+    ​    <controlpoint xx="0" yy="0" zz="8" /> <!--P4-->
+    </ANIMATION>
     ​​
-    <ANIMATION id="combo" type="combo">
+    <ANIMATION id="combo1" type="combo">
         <SPANREF id="circular1" />
         <SPANREF id="linear" />
+    </ANIMATION>
+
+    <ANIMATION id="combo2" type="combo">
+        <SPANREF id="bezier1" />
+        <SPANREF id="bezier2" />
+        <SPANREF id="circular2" />
     </ANIMATION>
 
     <ANIMATION id="flagDown" speed="0.5" type="linear">
@@ -395,8 +408,8 @@
         <SCALE sx="3" sy="3" sz="3"/>
 
         <ANIMATIONREFS>
-            <ANIMATIONREF id="combo" />
-            <ANIMATIONREF id="bezier"/>
+            <ANIMATIONREF id="combo1" />
+            <ANIMATIONREF id="combo2"/>
         </ANIMATIONREFS>
 
         <DESCENDANTS>
