@@ -35,7 +35,7 @@ MyInterface.prototype.init = function(application) {
 MyInterface.prototype.addLightsGroup = function(lights) {
 
     var groupLights = this.gui.addFolder("Lights");
-    groupLights.open();
+    groupLights.close();
 
     for (var key in lights) {
         if (lights.hasOwnProperty(key)) {

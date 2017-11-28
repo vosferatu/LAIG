@@ -83,8 +83,5 @@ MyBezierAnimation.prototype.getBezierInstantPoint = function(t){
       Math.pow(t, 3) * this.controlPoints[3][i];
   }
   
-    // console.log(resultPoint);
-
-  
   return resultPoint;
 }

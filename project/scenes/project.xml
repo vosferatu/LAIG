@@ -284,7 +284,6 @@
             <NODEREF id="bancos" />
             <NODEREF id="queijos" />
             <NODEREF id="predios" />
-            <NODEREF id="departamentos" />
             <NODEREF id="lua"/>
             <NODEREF id="canteiros" />
             <NODEREF id="flag" />
