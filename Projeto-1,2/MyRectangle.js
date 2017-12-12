@@ -29,7 +29,7 @@ MyRectangle.prototype.initBuffers = function () {
 		this.x1, this.z1, 0,
 		this.x2, this.z1, 0,
 		this.x1, this.z2, 0,
-		this.x2, thiz.z2, 0
+		this.x2, this.z2, 0
 			];
 
 	this.indices = [
