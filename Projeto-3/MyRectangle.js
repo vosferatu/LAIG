@@ -14,8 +14,8 @@ function MyRectangle(scene, x1, z1, x2, z2, minS=0, maxS=1, minT=0, maxT=1) {
 
 	this.minS = x1;
 	this.maxS = x2;
-	this.minT = z2;
-	this.maxT = z1;
+	this.minT = z1;
+	this.maxT = z2;
 
 	this.initBuffers();
 };
@@ -26,11 +26,11 @@ MyRectangle.prototype.constructor=MyRectangle;
 
 MyRectangle.prototype.initBuffers = function () {
 	this.vertices = [
-            this.x1, this.z1, 0,
-            this.x2, this.z1, 0,
-            this.x1, this.z2, 0,
-            this.x2, this.z2, 0
-			];
+		this.x1, 0, this.z1,
+		this.x2, 0, this.z1, 
+		this.x1, 0, this.z2, 
+		this.x2, 0, this.z2 
+	];
 
 	this.indices = [
 		0, 2, 1, 

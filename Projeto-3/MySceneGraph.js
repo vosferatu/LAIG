@@ -1603,7 +1603,7 @@ MySceneGraph.prototype.displayScene = function() {
 
 
 
-MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
+MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId, pickingId) {
     
     var nodeToProcess = this.nodes[nodeID];
 
@@ -1623,10 +1623,8 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
     var textureToProcess = nodeToProcess.textureID == "null" ? textureId : nodeToProcess.textureID;
 
     //Pickable objects
-    var newPickingId = this.scene.selectableNodes.indexOf(nodeID);
-    if(newPickingId != -1){
-        this.scene.registerForPick(newPickingId, null);
-    }
+    var newPickingId = this.scene.selectableNodes.indexOf(nodeID) + 1;
+    var pickingIdToProcess = newPickingId == 0 ? pickingId : newPickingId;
 
     //Shader
     if(this.scene.selectedHighlightNode == nodeID){
@@ -1636,7 +1634,7 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
     for(var i = 0 ; i < nodeToProcess.children.length ; i++) {
 
         this.scene.pushMatrix();
-        this.processNode(nodeToProcess.children[i], materialToProcess, textureToProcess);
+        this.processNode(nodeToProcess.children[i], materialToProcess, textureToProcess, pickingIdToProcess);
         this.scene.popMatrix();
 
     }
@@ -1656,6 +1654,9 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
             materialToApply.apply();
         }
 
+        if (pickingIdToProcess != -1) {
+            this.scene.registerForPick(pickingIdToProcess, nodeToProcess.leaves[i]);
+        }
         nodeToProcess.leaves[i].display();
 
     }
@@ -1663,10 +1664,6 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId) {
 
     if (this.scene.selectedHighlightNode == nodeID) {
         this.scene.setActiveShader(this.scene.defaultShader);
-    }
-
-    if (newPickingId != -1) {
-        this.scene.registerForPick(0, null);
     }
 
 }

@@ -1,4 +1,9 @@
 var DEGREE_TO_RAD = Math.PI / 180;
+var BOARD_WIDTH = 7;
+var BOARD_HEIGHT = 9;
+
+var WHITE_TILE_TX = "whitetile.jpg"
+var BLACK_TILE_TX = "blacktile.jpg"
 
 /**
  * XMLscene class, representing the scene that is to be rendered.
@@ -59,7 +64,7 @@ XMLscene.prototype.init = function(application) {
 
     this.shader = new CGFshader(this.gl, "shaders/myShader.vert", "shaders/myShader.frag");
 
-
+    this.initBoardComponents();
 }
 
 /**
@@ -101,6 +106,23 @@ XMLscene.prototype.initLights = function() {
  */
 XMLscene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+}
+
+XMLscene.prototype.initBoardComponents = function (){
+
+    this.whiteTileTx = new CGFtexture(this, "./scenes/images/" + WHITE_TILE_TX);
+    this.blackTileTx = new CGFtexture(this, "./scenes/images/" + BLACK_TILE_TX);
+    
+    this.tiles = [];
+
+    for (let i = 0; i < BOARD_HEIGHT; i++) {
+
+        this.tiles[i] = [];
+
+        for (let j = 0; j < BOARD_WIDTH; j++) {
+            this.tiles[i][j] = new MyRectangle(this, i, j, i + 1, j + 1);
+        }
+    }
 }
 
 /* Handler called when the graph is finally loaded.
@@ -170,6 +192,9 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         this.graph.displayScene();
 
+        this.displayPickingTiles();
+
+        
         this.highlightNodeRendered = false;
 
 
@@ -185,6 +210,25 @@ XMLscene.prototype.display = function() {
 
     // ---- END Background, camera and axis setup
 
+}
+
+XMLscene.prototype.displayPickingTiles = function(){
+    for (let i = 0; i < this.tiles.length; i++) {
+        const rowTiles = this.tiles[i];
+        for (let j = 0; j < rowTiles.length; j++) {
+            const tile = rowTiles[j];
+            let pickingId = 10 * (i + 1) + (j + 1);
+            this.registerForPick(pickingId, tile);
+
+            var whitetileFlag = (7 * i + j) % 2
+            if (whitetileFlag)
+                this.whiteTileTx.bind(0);
+            else    
+                this.blackTileTx.bind(0);
+
+            tile.display();
+        }
+    }
 }
 
 XMLscene.prototype.update = function(currTime) {
@@ -218,7 +262,8 @@ XMLscene.prototype.logPicking = function () {
         if (this.pickResults != null && this.pickResults.length > 0) {
             for (var i = 0; i < this.pickResults.length; i++) {
                 var customId = this.pickResults[i][1];
-                console.log("Picked object: with pick id " + customId);
+                if(customId)
+                    console.log("Picked object: with pick id " + customId);
             }
             this.pickResults.splice(0, this.pickResults.length);
         }
