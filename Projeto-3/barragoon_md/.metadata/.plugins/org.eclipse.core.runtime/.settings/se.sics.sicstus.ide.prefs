@@ -1,0 +1,3 @@
+P_SICSTUS_INSTALLS=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<vmInstalls>\r\n<vmInstall default\="true" library\="C\:\\Program Files (x86)\\SICStus Prolog VC14 4.3.5\\library" location\="C\:\\Program Files (x86)\\SICStus Prolog VC14 4.3.5\\bin\\sicstus.exe" name\="sicstus.exe" trusted\="true" verified\="true"/>\r\n</vmInstalls>
+P_SICSTUS_PATH=C\:\\Program Files (x86)\\SICStus Prolog VC14 4.3.5\\bin\\sicstus.exe
+eclipse.preferences.version=1
