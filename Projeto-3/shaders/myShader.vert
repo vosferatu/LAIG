@@ -3,7 +3,6 @@ attribute vec3 aVertexNormal;
 attribute vec2 aTextureCoord;
 
 uniform bool uUseTexture;
-uniform float timeFactor;
 
 struct lightProperties {
     vec4 position;                  // Default: (0, 0, 1, 0)
@@ -109,7 +108,7 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
 void main() {
 
     // Transformed Vertex position
-    vec4 vertex = uMVMatrix * vec4(aVertexPosition * (1.0 + 0.5*timeFactor), 1.0);
+    vec4 vertex = uMVMatrix * vec4(aVertexPosition, 1.0);
 
     // Transformed normal position
 	vec3 N = normalize(vec3(uNMatrix * vec4(aVertexNormal, 1.0)));

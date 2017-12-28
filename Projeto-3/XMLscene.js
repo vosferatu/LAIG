@@ -2,9 +2,6 @@ var DEGREE_TO_RAD = Math.PI / 180;
 var BOARD_WIDTH = 7;
 var BOARD_HEIGHT = 9;
 
-var WHITE_TILE_TX = "whitetile.jpg"
-var BLACK_TILE_TX = "blacktile.jpg"
-
 /**
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
@@ -105,24 +102,22 @@ XMLscene.prototype.initLights = function() {
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function() {
-    this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+
+    // direction: 0, -0.7193394899368286, -0.6946586966514587, 0
+    // far: 500
+    // fov: 0.7
+    // near: 0.1
+    // position: -0.6684833765029907, 4.384912967681885, 2.4064443111419678, 0
+    // target: -0.6684833765029907, 1.8929692506790161, 0, 0
+
+    this.camera = new CGFcamera(0.7,0.1,500,vec3.fromValues(-0.7, 4.5, 2.5),vec3.fromValues(-0.7, 2, 0));
 }
 
 XMLscene.prototype.initBoardComponents = function (){
 
-    this.whiteTileTx = new CGFtexture(this, "./scenes/images/" + WHITE_TILE_TX);
-    this.blackTileTx = new CGFtexture(this, "./scenes/images/" + BLACK_TILE_TX);
-    
-    this.tiles = [];
+    this.table = new MyTable(this, 13, 12, 0.7, 5);
+    this.board = new MyGameBoard(this);
 
-    for (let i = 0; i < BOARD_HEIGHT; i++) {
-
-        this.tiles[i] = [];
-
-        for (let j = 0; j < BOARD_WIDTH; j++) {
-            this.tiles[i][j] = new MyRectangle(this, i, j, i + 1, j + 1);
-        }
-    }
 }
 
 /* Handler called when the graph is finally loaded.
@@ -192,9 +187,8 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         this.graph.displayScene();
 
-        this.displayPickingTiles();
+        this.displayBoardComponents();
 
-        
         this.highlightNodeRendered = false;
 
 
@@ -212,26 +206,20 @@ XMLscene.prototype.display = function() {
 
 }
 
-XMLscene.prototype.displayPickingTiles = function(){
-    for (let i = 0; i < this.tiles.length; i++) {
-        const rowTiles = this.tiles[i];
-        for (let j = 0; j < rowTiles.length; j++) {
-            const tile = rowTiles[j];
-            let pickingId = 10 * (i + 1) + (j + 1);
-            this.registerForPick(pickingId, tile);
 
-            var whitetileFlag = (7 * i + j) % 2
-            if (whitetileFlag)
-                this.whiteTileTx.bind(0);
-            else    
-                this.blackTileTx.bind(0);
+XMLscene.prototype.displayBoardComponents = function () {
+    this.pushMatrix();
+    this.translate(1.5,5,0);
+    this.rotate(Math.degToRad(90), 0,1,0);
+    this.board.display();
+    this.popMatrix();
 
-            tile.display();
-        }
-    }
+    this.pushMatrix();
+    this.table.display();
+    this.popMatrix();
+
 }
-
-XMLscene.prototype.update = function(currTime) {
+XMLscene.prototype.update = function (currTime) {
     var elapsed = (currTime-this.startTime)/1000;
 
     this.graph.update(elapsed);
@@ -239,12 +227,6 @@ XMLscene.prototype.update = function(currTime) {
     this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex - 1];
     this.selectedColor = this.selectableColors[this.selectedColorIndex];
     
-
-    // MyInterface.js:71
-    /* console.log(this.selectedColorInterface);
-    this.selectedColor = this.selectedColorInterface.map(function(value,i){
-        return i!=3 ? value/255.0 : value;
-    }); */
 
     //Update deltaHighLight
     let newDelta = Math.cos(currTime / 250.0) / 2 + 0.5;
@@ -254,8 +236,9 @@ XMLscene.prototype.update = function(currTime) {
         selectedColor: this.selectedColor
     });
 
-
+    
 }
+
 
 XMLscene.prototype.logPicking = function () {
     if (this.pickMode == false) {
@@ -263,6 +246,7 @@ XMLscene.prototype.logPicking = function () {
             for (var i = 0; i < this.pickResults.length; i++) {
                 var customId = this.pickResults[i][1];
                 if(customId)
+                    this.board.selectedTile = customId;
                     console.log("Picked object: with pick id " + customId);
             }
             this.pickResults.splice(0, this.pickResults.length);

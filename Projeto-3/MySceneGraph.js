@@ -1587,6 +1587,7 @@ MySceneGraph.generateRandomString = function(length) {
  */
 MySceneGraph.prototype.displayScene = function() {
 
+    this.scene.pushMatrix();
     // Make sure that the animations only start when graph is being rendered
     if(this.firstUpdate){
         var d = new Date();
@@ -1598,6 +1599,8 @@ MySceneGraph.prototype.displayScene = function() {
     this.scene.clearPickRegistration();
 
     this.processNode(this.idRoot, null, null);
+
+    this.scene.popMatrix();
 
 }
 
@@ -1648,6 +1651,7 @@ MySceneGraph.prototype.processNode = function(nodeID, materialId, textureId, pic
              if(textureToProcess != null && textureToProcess != "clear") {
                 var textureToApply = this.textures[textureToProcess];
                 materialToApply.setTexture(textureToApply[0]);
+                // textureToApply[0].bind(0);
                 nodeToProcess.leaves[i].amplify(textureToApply[1], textureToApply[2]);
              }
 
