@@ -2,6 +2,21 @@ var DEGREE_TO_RAD = Math.PI / 180;
 var BOARD_WIDTH = 7;
 var BOARD_HEIGHT = 9;
 
+var BLACK_PLAYER_PIECE_TX = "darkWood.jpg";
+var WHITE_PLAYER_PIECE_TX = "lightWood.jpg";
+var BLACK_2_DOTS_TX = "black2Dots.jpg";
+var WHITE_2_DOTS_TX = "white2Dots.jpg";
+var BLACK_3_DOTS_TX = "black3Dots.jpg";
+var WHITE_3_DOTS_TX = "white3Dots.jpg";
+var BLACK_4_DOTS_TX = "black4Dots.jpg";
+var WHITE_4_DOTS_TX = "white4Dots.jpg";
+var BG_ALL_DIRECTIONS_TX = "allDirectionsBG.jpg";
+var BG_ONE_DIRECTION_TX = "oneDirectionBG.jpg";
+var BG_TWO_DIRECTIONS_TX = "twoDirectionsBG.jpg";
+var BG_TURN_RIGHT_TX = "turnRightBG.jpg";
+var BG_TURN_LEFT_TX = "turnLeftBG.jpg";
+var BG_CROSS_TX = "crossBG.jpg";
+
 /**
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
@@ -113,18 +128,42 @@ XMLscene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.7,0.1,500,vec3.fromValues(-0.7, 4.5, 2.5),vec3.fromValues(-0.7, 2, 0));
 }
 
+/**
+ * Initializes the board components.
+ */
 XMLscene.prototype.initBoardComponents = function (){
+
+    this.blackPlayerPieceTx = new CGFtexture(this, "./scenes/images/" + BLACK_PLAYER_PIECE_TX);
+    this.whitePlayerPieceTx = new CGFtexture(this, "./scenes/images/" + WHITE_PLAYER_PIECE_TX);
+
+    this.black2DotsTx = new CGFtexture(this, "./scenes/images/" + BLACK_2_DOTS_TX);
+    this.white2DotsTx = new CGFtexture(this, "./scenes/images/" + WHITE_2_DOTS_TX);
+
+    this.black3DotsTx = new CGFtexture(this, "./scenes/images/" + BLACK_3_DOTS_TX);
+    this.white3DotsTx = new CGFtexture(this, "./scenes/images/" + WHITE_3_DOTS_TX);
+
+    this.black4DotsTx = new CGFtexture(this, "./scenes/images/" + BLACK_4_DOTS_TX);
+    this.white4DotsTx = new CGFtexture(this, "./scenes/images/" + WHITE_4_DOTS_TX);
+
+    this.bgAllDirectionsTx = new CGFtexture(this, "./scenes/images/" + BG_ALL_DIRECTIONS_TX);
+    this.bgOneDirectionTx = new CGFtexture(this, "./scenes/images/" + BG_ONE_DIRECTION_TX);
+    this.bgTwoDirectionsTx = new CGFtexture(this, "./scenes/images/" + BG_TWO_DIRECTIONS_TX);
+    this.bgTurnRightTx = new CGFtexture(this, "./scenes/images/" + BG_TURN_RIGHT_TX);
+    this.bgTurnLeftTx = new CGFtexture(this, "./scenes/images/" + BG_TURN_LEFT_TX);
+    this.bgCrossTx = new CGFtexture(this, "./scenes/images/" + BG_CROSS_TX);
 
     this.table = new MyTable(this, 13, 12, 0.7, 5);
     this.board = new MyGameBoard(this);
+
+    //TESTING
+    this.bg = new MyBarragoonPiece(this);
 
 }
 
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
-XMLscene.prototype.onGraphLoaded = function()
-{
+XMLscene.prototype.onGraphLoaded = function(){
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
     this.axis = new CGFaxis(this,this.graph.referenceLength);
@@ -185,10 +224,11 @@ XMLscene.prototype.display = function() {
         }
 
         // Displays the scene.
-        this.graph.displayScene();
+        // this.graph.displayScene();
 
+        // this.bg.display();
         this.displayBoardComponents();
-
+        // this.board.display();
         this.highlightNodeRendered = false;
 
 
@@ -219,6 +259,7 @@ XMLscene.prototype.displayBoardComponents = function () {
     this.popMatrix();
 
 }
+
 XMLscene.prototype.update = function (currTime) {
     var elapsed = (currTime-this.startTime)/1000;
 
@@ -238,7 +279,6 @@ XMLscene.prototype.update = function (currTime) {
 
     
 }
-
 
 XMLscene.prototype.logPicking = function () {
     if (this.pickMode == false) {

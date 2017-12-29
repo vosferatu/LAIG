@@ -29,6 +29,8 @@ serialInclude([
     'primitives/MyGameBoard.js',
     'primitives/MyCube.js',
     'primitives/MyQuad.js',
+    'primitives/MyPlayerPiece.js',
+    'primitives/MyBarragoonPiece.js',
     'animations/MyAnimation.js',
     'animations/MyBezierAnimation.js',
     'animations/MyCircularAnimation.js',
