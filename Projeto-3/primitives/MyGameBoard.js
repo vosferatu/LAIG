@@ -179,19 +179,21 @@ MyGameBoard.prototype.displayTiles = function(){
             this.scene.pushMatrix();
 
             const tile = rowTiles[j];
-            let pickingId = 10 * (i + 1) + (j + 1);
-            this.scene.registerForPick(pickingId, tile);
-
-
-
+            
+            // Texture
             let whitetileFlag = (7 * i + j) % 2;
             if (whitetileFlag)
                 this.whiteTileTx.bind();
             else
                 this.blackTileTx.bind();
 
+            // Picking    
+            let pickingId = 10 * (i + 1) + (j + 1);
+
             if (this.selectedTile == pickingId)
                 this.scene.setActiveShader(this.scene.shader);
+
+            this.scene.registerForPick(pickingId, tile);
 
             tile.display();
 

@@ -223,6 +223,10 @@ XMLscene.prototype.display = function() {
             }
         }
 
+
+        this.logPicking();
+        this.clearPickRegistration();
+
         // Displays the scene.
         // this.graph.displayScene();
 

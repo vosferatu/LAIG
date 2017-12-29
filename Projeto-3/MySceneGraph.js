@@ -1595,9 +1595,6 @@ MySceneGraph.prototype.displayScene = function() {
         this.firstUpdate = false;
     }
     
-    this.scene.logPicking();
-    this.scene.clearPickRegistration();
-
     this.processNode(this.idRoot, null, null);
 
     this.scene.popMatrix();
