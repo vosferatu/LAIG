@@ -1,2 +1,0 @@
-eclipse.preferences.version=1
-org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<launchPerspectives>\r\n<launchPerspective configurationType\="se.sics.sicstus.launching.launchConfigurationType1" mode\="debug" perspective\="se.sics.sicstus.perspective.id.prologDebug"/>\r\n<launchPerspective configurationType\="se.sics.sicstus.launching.launchConfigurationType1" mode\="debug,run" perspective\="se.sics.sicstus.perspective.id.prologDebug"/>\r\n</launchPerspectives>\r\n
