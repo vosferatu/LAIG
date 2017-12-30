@@ -125,7 +125,7 @@ XMLscene.prototype.initCameras = function() {
     // position: -0.6684833765029907, 4.384912967681885, 2.4064443111419678, 0
     // target: -0.6684833765029907, 1.8929692506790161, 0, 0
 
-    this.camera = new CGFcamera(0.7,0.1,500,vec3.fromValues(-0.7, 4.5, 2.5),vec3.fromValues(-0.7, 2, 0));
+    this.camera = new CGFcamera(0.5,0.1,500,vec3.fromValues(-0.2,10,5.5),vec3.fromValues(-0.2,0,-2.5));
 }
 
 /**
@@ -228,11 +228,9 @@ XMLscene.prototype.display = function() {
         this.clearPickRegistration();
 
         // Displays the scene.
-        // this.graph.displayScene();
+        this.graph.displayScene();
 
-        // this.bg.display();
         this.displayBoardComponents();
-        // this.board.display();
         this.highlightNodeRendered = false;
 
 
@@ -248,10 +246,22 @@ XMLscene.prototype.display = function() {
 
     // ---- END Background, camera and axis setup
 
+    console.log("\n\n\nCAMERA LOG \n");
+    console.log("direction" + this.camera.direction);
+    console.log("far" + this.camera.far);
+    console.log("fov" + this.camera.fov);
+    console.log("near" + this.camera.near);
+    console.log("position" + this.camera.position);
+    console.log("target" + this.camera.target);
 }
 
 
 XMLscene.prototype.displayBoardComponents = function () {
+
+
+    this.pushMatrix();
+    this.scale(2,2,2);
+
     this.pushMatrix();
     this.translate(1.5,5,0);
     this.rotate(Math.degToRad(90), 0,1,0);
@@ -260,6 +270,8 @@ XMLscene.prototype.displayBoardComponents = function () {
 
     this.pushMatrix();
     this.table.display();
+    this.popMatrix();
+
     this.popMatrix();
 
 }
