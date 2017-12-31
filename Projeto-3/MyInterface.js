@@ -45,20 +45,20 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
-MyInterface.prototype.addHighlightSelection = function(selectableNodes){
+MyInterface.prototype.addHighlightSelection = function(/* selectableNodes */){
 
     var groupHighlight = this.gui.addFolder("Selecting Objects");
     groupHighlight.open();
 
-    var dictSelectableNodes = {"Select a node" : 0};
+    // var dictSelectableNodes = {"Select a node" : 0};
 
-    for (let i = 0; i < this.scene.selectableNodes.length; i++) {
-        let selectableNodeID = this.scene.selectableNodes[i];
+    // for (let i = 0; i < this.scene.selectableNodes.length; i++) {
+    //     let selectableNodeID = this.scene.selectableNodes[i];
 
-        dictSelectableNodes[selectableNodeID] = i+1;
-    }
+    //     dictSelectableNodes[selectableNodeID] = i+1;
+    // }
 
-    groupHighlight.add(this.scene, 'selectedHighlightIndex', dictSelectableNodes).name('Object');
+    // groupHighlight.add(this.scene, 'selectedHighlightIndex', dictSelectableNodes).name('Object');
 
     groupHighlight.add(this.scene, 'selectedColorIndex', {
         "Red" : 0,

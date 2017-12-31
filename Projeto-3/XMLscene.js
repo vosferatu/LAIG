@@ -32,10 +32,10 @@ function XMLscene(interface) {
     this.startTime = d.getTime();
 
     this.selectableNodes = new Array();
-    this.selectedHighlightIndex = 0;
-    this.selectedHighlightNode = null;
-    
-    this.selectedColor = [1,0,0,1];
+    // this.selectedHighlightIndex = 0;
+    // this.selectedHighlightNode = null;
+
+    this.selectedColor = [1, 0, 0, 1];
 
     // MyInterface.js:71
     // this.selectedColorInterface = new Array(255,0,0,1);
@@ -43,10 +43,10 @@ function XMLscene(interface) {
     this.selectedColorIndex = 0;
     this.selectableColors = [
         [1, 0, 0, 1],
-        [0, 1, 0, 1],  
-        [0, 0, 1, 1],  
+        [0, 1, 0, 1],
+        [0, 0, 1, 1],
         [1, 0.5, 0, 1],
-        [0.75, 0, 0.75, 1],  
+        [0.75, 0, 0.75, 1],
     ];
 
     this.setPickEnabled(true);
@@ -58,7 +58,7 @@ XMLscene.prototype.constructor = XMLscene;
 /**
  * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
  */
-XMLscene.prototype.init = function(application) {
+XMLscene.prototype.init = function (application) {
     CGFscene.prototype.init.call(this, application);
 
     this.initCameras();
@@ -82,14 +82,14 @@ XMLscene.prototype.init = function(application) {
 /**
  * Initializes the scene lights with the values read from the LSX file.
  */
-XMLscene.prototype.initLights = function() {
+XMLscene.prototype.initLights = function () {
     var i = 0;
     // Lights index.
 
     // Reads the lights from the scene graph.
     for (var key in this.graph.lights) {
         if (i >= 8)
-            break;              // Only eight lights allowed by WebGL.
+            break; // Only eight lights allowed by WebGL.
 
         if (this.graph.lights.hasOwnProperty(key)) {
             var light = this.graph.lights[key];
@@ -116,7 +116,7 @@ XMLscene.prototype.initLights = function() {
 /**
  * Initializes the scene cameras.
  */
-XMLscene.prototype.initCameras = function() {
+XMLscene.prototype.initCameras = function () {
 
     // direction: 0, -0.7193394899368286, -0.6946586966514587, 0
     // far: 500
@@ -125,13 +125,13 @@ XMLscene.prototype.initCameras = function() {
     // position: -0.6684833765029907, 4.384912967681885, 2.4064443111419678, 0
     // target: -0.6684833765029907, 1.8929692506790161, 0, 0
 
-    this.camera = new CGFcamera(0.5,0.1,500,vec3.fromValues(-0.2,10,5.5),vec3.fromValues(-0.2,0,-2.5));
+    this.camera = new CGFcamera(0.5, 0.1, 500, vec3.fromValues(-0.2, 10, 5.5), vec3.fromValues(-0.2, 0, -2.5));
 }
 
 /**
  * Initializes the board components.
  */
-XMLscene.prototype.initBoardComponents = function (){
+XMLscene.prototype.initBoardComponents = function () {
 
     this.blackPlayerPieceTx = new CGFtexture(this, "./scenes/images/" + BLACK_PLAYER_PIECE_TX);
     this.whitePlayerPieceTx = new CGFtexture(this, "./scenes/images/" + WHITE_PLAYER_PIECE_TX);
@@ -163,13 +163,13 @@ XMLscene.prototype.initBoardComponents = function (){
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
-XMLscene.prototype.onGraphLoaded = function(){
+XMLscene.prototype.onGraphLoaded = function () {
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
-    this.axis = new CGFaxis(this,this.graph.referenceLength);
+    this.axis = new CGFaxis(this, this.graph.referenceLength);
 
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
-    this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
+        this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
 
     this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
@@ -177,13 +177,13 @@ XMLscene.prototype.onGraphLoaded = function(){
 
     // Adds menu elements.
     this.interface.addLightsGroup(this.graph.lights);
-    this.interface.addHighlightSelection(this.graph.selectableNodes);
+    this.interface.addHighlightSelection( /* this.graph.selectableNodes */ );
 }
 
 /**
  * Displays the scene.
  */
-XMLscene.prototype.display = function() {
+XMLscene.prototype.display = function () {
     // ---- BEGIN Background, camera and axis setup
 
     // Clear image and depth buffer everytime we update the scene
@@ -199,13 +199,12 @@ XMLscene.prototype.display = function() {
 
     this.pushMatrix();
 
-    if (this.graph.loadedOk)
-    {
+    if (this.graph.loadedOk) {
         // Applies initial transformations.
         this.multMatrix(this.graph.initialTransforms);
 
-		// Draw axis
-		this.axis.display();
+        // Draw axis
+        this.axis.display();
 
         var i = 0;
         for (var key in this.lightValues) {
@@ -213,8 +212,7 @@ XMLscene.prototype.display = function() {
                 if (this.lightValues[key]) {
                     this.lights[i].setVisible(true);
                     this.lights[i].enable();
-                }
-                else {
+                } else {
                     this.lights[i].setVisible(false);
                     this.lights[i].disable();
                 }
@@ -234,25 +232,15 @@ XMLscene.prototype.display = function() {
         this.highlightNodeRendered = false;
 
 
+    } else {
+        // Draw axis
+        this.axis.display();
     }
-	else
-	{
-		// Draw axis
-		this.axis.display();
-	}
 
 
     this.popMatrix();
 
     // ---- END Background, camera and axis setup
-
-    console.log("\n\n\nCAMERA LOG \n");
-    console.log("direction" + this.camera.direction);
-    console.log("far" + this.camera.far);
-    console.log("fov" + this.camera.fov);
-    console.log("near" + this.camera.near);
-    console.log("position" + this.camera.position);
-    console.log("target" + this.camera.target);
 }
 
 
@@ -260,15 +248,16 @@ XMLscene.prototype.displayBoardComponents = function () {
 
 
     this.pushMatrix();
-    this.scale(2,2,2);
+    this.scale(2, 2, 2);
 
     this.pushMatrix();
-    this.translate(1.5,5,0);
-    this.rotate(Math.degToRad(90), 0,1,0);
+    this.translate(1.5, 5, 0);
+    this.rotate(Math.degToRad(90), 0, 1, 0);
     this.board.display();
     this.popMatrix();
 
     this.pushMatrix();
+    this.clearPickRegistration();
     this.table.display();
     this.popMatrix();
 
@@ -277,13 +266,13 @@ XMLscene.prototype.displayBoardComponents = function () {
 }
 
 XMLscene.prototype.update = function (currTime) {
-    var elapsed = (currTime-this.startTime)/1000;
+    var elapsed = (currTime - this.startTime) / 1000;
 
     this.graph.update(elapsed);
 
-    this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex - 1];
+    // this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex - 1];
     this.selectedColor = this.selectableColors[this.selectedColorIndex];
-    
+
 
     //Update deltaHighLight
     let newDelta = Math.cos(currTime / 250.0) / 2 + 0.5;
@@ -293,7 +282,7 @@ XMLscene.prototype.update = function (currTime) {
         selectedColor: this.selectedColor
     });
 
-    
+
 }
 
 XMLscene.prototype.logPicking = function () {
@@ -301,9 +290,15 @@ XMLscene.prototype.logPicking = function () {
         if (this.pickResults != null && this.pickResults.length > 0) {
             for (var i = 0; i < this.pickResults.length; i++) {
                 var customId = this.pickResults[i][1];
-                if(customId)
-                    this.board.selectedTile = customId;
+                if (customId) {
+                    if (this.board.selectedTile != -1 && this.board.isEmpty(customId)) {
+                        this.board.move(this.board.selectedTile, customId);
+                        this.board.selectedTile = -1;
+                    } else if (!this.board.isEmpty(customId)) {
+                        this.board.selectedTile = customId;
+                    }
                     console.log("Picked object: with pick id " + customId);
+                }
             }
             this.pickResults.splice(0, this.pickResults.length);
         }
@@ -340,4 +335,19 @@ Math.midPoint = function (point1, point2) {
     })
 
     return midPoint;
+}
+
+Math.idToIndex = function (id) {
+
+    let result = [];
+
+    result[0] = Math.floor(id / 10) - 1;
+    result[1] = id % 10 - 1;
+
+    return result;
+}
+
+Math.indexToId = function (row, column) {
+
+    return (row + 1) * 10 + (column + 1);
 }

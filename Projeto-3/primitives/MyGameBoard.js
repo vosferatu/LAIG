@@ -173,22 +173,22 @@ MyGameBoard.prototype.display = function () {
 }
 
 MyGameBoard.prototype.displayTiles = function(){
-    for (let i = 0; i < this.tiles.length; i++) {
-        const rowTiles = this.tiles[i];
-        for (let j = 0; j < rowTiles.length; j++) {
+    for (let row = 0; row < this.tiles.length; row++) {
+        const rowTiles = this.tiles[row];
+        for (let column = 0; column < rowTiles.length; column++) {
             this.scene.pushMatrix();
 
-            const tile = rowTiles[j];
+            const tile = rowTiles[column];
             
             // Texture
-            let whitetileFlag = (7 * i + j) % 2;
+            let whitetileFlag = (7 * row + column) % 2;
             if (whitetileFlag)
                 this.whiteTileTx.bind();
             else
                 this.blackTileTx.bind();
 
             // Picking    
-            let pickingId = 10 * (i + 1) + (j + 1);
+            let pickingId = Math.indexToId(row, column);
 
             if (this.selectedTile == pickingId)
                 this.scene.setActiveShader(this.scene.shader);
@@ -208,22 +208,47 @@ MyGameBoard.prototype.displayTiles = function(){
 
 MyGameBoard.prototype.displayPieces = function () {
 
-    for (let i = 0; i < this.board.length; i++) {
-        const rowBoard = this.board[i];
-        for (let j = 0; j < rowBoard.length; j++) {
+    for (let row = 0; row < this.board.length; row++) {
+        const rowBoard = this.board[row];
+        for (let column = 0; column < rowBoard.length; column++) {
 
-            const piece = rowBoard[j];
+            const piece = rowBoard[column];
             if(piece == -1) continue;
 
             this.scene.pushMatrix();
 
-            let pickingId = 10 * (i + 1) + (j + 1);
+            let pickingId = Math.indexToId(row, column);
             this.scene.registerForPick(pickingId, piece);
 
-            this.scene.translate(i-4, 0, j-3);
+            this.scene.translate(row-4, 0, column-3);
             this.pieces[piece].display();
             this.scene.popMatrix();
 
         }
     }
 }
+
+MyGameBoard.prototype.isEmpty = function(id){
+    let index = Math.idToIndex(id);
+
+    let row = index[0];
+    let column = index[1];
+
+    return this.board[row][column] == EE;
+}
+
+MyGameBoard.prototype.move = function(src, dest){
+
+    if(this.isEmpty(src) || !this.isEmpty(dest))
+        return;
+
+    let srcIndex = Math.idToIndex(src);
+    let destIndex = Math.idToIndex(dest);
+
+    let piece = this.board[srcIndex[0]][srcIndex[1]];
+
+    this.board[srcIndex[0]][srcIndex[1]] = EE;
+    this.board[destIndex[0]][destIndex[1]] = piece;
+    
+}
+

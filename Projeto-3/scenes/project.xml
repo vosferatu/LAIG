@@ -399,7 +399,7 @@
 
 
      <!-- flag -->
-    <NODE id="flag" selectable="true">
+    <NODE id="flag" selectable="false">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -510,7 +510,7 @@
     </NODE>
 
     <!-- Lua -->
-    <NODE id="lua" selectable="true">
+    <NODE id="lua" selectable="false">
         <MATERIAL id="null" />
         <TEXTURE id="lua" />
 
@@ -1049,7 +1049,7 @@
     </NODE>
 
     <!-- The third light -->
-    <NODE id="luz3" selectable="true">
+    <NODE id="luz3" selectable="false">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
@@ -1197,7 +1197,7 @@
     </NODE>
 
     <!-- Another tree -->
-    <NODE id="arvore2" selectable="true">
+    <NODE id="arvore2" selectable="false">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
