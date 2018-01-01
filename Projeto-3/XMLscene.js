@@ -251,8 +251,7 @@ XMLscene.prototype.displayBoardComponents = function () {
     this.scale(2, 2, 2);
 
     this.pushMatrix();
-    this.translate(1.5, 5, 0);
-    this.rotate(Math.degToRad(90), 0, 1, 0);
+    this.translate(1.5, 5, -1);
     this.board.display();
     this.popMatrix();
 
@@ -294,7 +293,9 @@ XMLscene.prototype.logPicking = function () {
                 var customId = this.pickResults[i][1];
                 if (customId) {
                     if (this.board.selectedTile != -1 && this.board.isEmpty(customId)) {
-                        this.board.move(this.board.selectedTile, customId);
+                        this.board.dest = customId;
+                        this.board.src = this.board.selectedTile;
+                        this.board.requestMove();
                         this.board.selectedTile = -1;
                     } else if (!this.board.isEmpty(customId)) {
                         this.board.selectedTile = customId;
@@ -352,4 +353,14 @@ Math.idToIndex = function (id) {
 Math.indexToId = function (row, column) {
 
     return (row + 1) * 10 + (column + 1);
+}
+
+Math.idToNum = function (id) {
+
+    let result = [];
+
+    result[0] = Math.floor(id / 10);
+    result[1] = id % 10;
+
+    return result;
 }
