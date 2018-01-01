@@ -252,8 +252,7 @@ XMLscene.prototype.displayBoardComponents = function () {
     this.scale(2, 2, 2);
 
     this.pushMatrix();
-    this.translate(1.5, 5, 0);
-    this.rotate(Math.degToRad(90), 0, 1, 0);
+    this.translate(2.5, 5, -1);
     this.board.display();
     this.popMatrix();
 
@@ -285,7 +284,9 @@ XMLscene.prototype.update = function (currTime) {
         selectedColor: this.selectedColor
     });
 
-
+    if(this.board.selectedTile == 11){
+        this.board.requestMove();
+    }
 }
 
 XMLscene.prototype.logPicking = function () {
@@ -295,7 +296,9 @@ XMLscene.prototype.logPicking = function () {
                 var customId = this.pickResults[i][1];
                 if (customId) {
                     if (this.board.selectedTile != -1 && this.board.isEmpty(customId)) {
-                        this.board.move(this.board.selectedTile, customId);
+                        this.board.dest = customId;
+                        this.board.src = this.board.selectedTile;
+                        this.board.requestMove();
                         this.board.selectedTile = -1;
                     } else if (!this.board.isEmpty(customId)) {
                         this.board.selectedTile = customId;
@@ -364,4 +367,14 @@ Math.randomInt = function (min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+Math.idToNum = function (id) {
+
+    let result = [];
+
+    result[0] = Math.floor(id / 10);
+    result[1] = id % 10;
+
+    return result;
 }

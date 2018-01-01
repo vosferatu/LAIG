@@ -29,6 +29,11 @@ function MyGameBoard(scene) {
     this.initPieces();
 
     this.setInitialBoard();
+    this.requestInitialBoard();
+
+    this.currentPlayer = 1;
+    this.dest = -1;
+    this.src = -1;
 
     this.selectedTile = -1;
     this.animations = [];
@@ -54,13 +59,13 @@ MyGameBoard.prototype.initTiles = function(){
         this.tiles[i] = [];
 
         for (let j = 0; j < BOARD_WIDTH; j++) {
-            this.tiles[i][j] = new MyRectangle(this.scene, i, j, i + 1, j + 1);
+            this.tiles[i][j] = new MyRectangle(this.scene, j, i, j + 1, i + 1);
         }
     }
 }
 
 MyGameBoard.prototype.initBoardStructure = function(){
-    
+
     function MyBoardStructure(scene) {
         CGFobject.call(this, scene);
 
@@ -75,36 +80,37 @@ MyGameBoard.prototype.initBoardStructure = function(){
 
         // BASE
         this.scene.pushMatrix();
-        this.scene.scale(10,0.3,8);
+        this.scene.translate(-1, 0, 1);
+        this.scene.scale(8,0.3,10);
         this.scene.translate(0, 0.5, 0);
         this.cube.display();
         this.scene.popMatrix();
 
         //SIDES
         this.scene.pushMatrix();
-        this.scene.translate(0, 0, 3.75);
-        this.scene.scale(10, 0.5, 0.5);
+        this.scene.translate(-1, 0, 5.75);
+        this.scene.scale(8, 0.5, 0.5);
         this.scene.translate(0, 0.5, 0);
         this.cube.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0, 0, -3.75);
-        this.scene.scale(10, 0.5, 0.5);
+        this.scene.translate(-1, 0, -3.75);
+        this.scene.scale(8, 0.5, 0.5);
         this.scene.translate(0, 0.5, 0);
         this.cube.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(4.75, 0, 0);
-        this.scene.scale(0.5, 0.5, 7);
+        this.scene.translate(2.75, 0, 1);
+        this.scene.scale(0.5, 0.5, 9);
         this.scene.translate(0, 0.5, 0);
         this.cube.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-4.75, 0, 0);
-        this.scene.scale(0.5, 0.5, 7);
+        this.scene.translate(-4.75, 0, 1);
+        this.scene.scale(0.5, 0.5, 9);
         this.scene.translate(0, 0.5, 0);
         this.cube.display();
         this.scene.popMatrix();
@@ -148,15 +154,15 @@ MyGameBoard.prototype.initPieces = function () {
 
 MyGameBoard.prototype.setInitialBoard = function (){
     this.board = [
-        [EE, B4, B3, EE, B3, B4, EE],
-        [EE, EE, B2, B3, B2, EE, EE],
+        [EE, W4, W3, EE, W3, W4, EE],
+        [EE, EE, W2, W3, W2, EE, EE],
         [EE, EE, EE, EE, EE, EE, EE],
         [EE, BG, EE, EE, EE, BG, EE],
         [BG, EE, BG, EE, BG, EE, BG],
         [EE, BG, EE, EE, EE, BG, EE],
-        [W3, EE, EE, EE, EE, EE, EE],
-        [EE, EE, W2, W3, W2, EE, EE],
-        [EE, W4, W3, EE, W3, W4, EE]        
+        [EE, EE, EE, EE, EE, EE, EE],
+        [EE, EE, B2, B3, B2, EE, EE],
+        [EE, B4, B3, EE, B3, B4, EE]
     ];
 
 }
@@ -191,7 +197,7 @@ MyGameBoard.prototype.display = function () {
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-    this.scene.translate(-1.75, 0, -6);
+    this.scene.translate(-7, 0, -0.75);
     this.displayOutsideBarragoons();
     this.scene.popMatrix();
 
@@ -205,7 +211,7 @@ MyGameBoard.prototype.displayTiles = function(){
             this.scene.pushMatrix();
 
             const tile = rowTiles[column];
-            
+
             // Texture
             let whitetileFlag = (7 * row + column) % 2;
             if (whitetileFlag)
@@ -213,7 +219,7 @@ MyGameBoard.prototype.displayTiles = function(){
             else
                 this.blackTileTx.bind();
 
-            // Picking    
+            // Picking
             let pickingId = Math.indexToId(row, column);
 
             if (this.selectedTile == pickingId)
@@ -246,7 +252,7 @@ MyGameBoard.prototype.displayPieces = function () {
             let pickingId = Math.indexToId(row, column);
             this.scene.registerForPick(pickingId, piece);
 
-            this.scene.translate(row - 4, 0, column - 3);
+            this.scene.translate(column - 4, 0, row - 3);
 
             if (this.animations[pickingId] != null){
 
@@ -267,7 +273,7 @@ MyGameBoard.prototype.displayOutsideBarragoons = function () {
     
     for (let i = 0; i < this.outsideBGnumber; i++) {
         this.scene.pushMatrix();
-        this.scene.translate(Math.floor(i / 3)/2, 0, (i % 3)/2);
+        this.scene.translate((i % 3) / 2, 0, Math.floor(i / 3) / 2);
 
         let index = this.outsideBGOrientations[i];
         this.barragoonPiece.display(this.barragoonPiece.possibleOrientations[index]);
@@ -277,6 +283,7 @@ MyGameBoard.prototype.displayOutsideBarragoons = function () {
 
 
 MyGameBoard.prototype.isEmpty = function(id){
+    if(id < 0 || id === undefined) return true;
     let index = Math.idToIndex(id);
 
     let row = index[0];
@@ -285,25 +292,36 @@ MyGameBoard.prototype.isEmpty = function(id){
     return this.board[row][column] == EE;
 }
 
-MyGameBoard.prototype.move = function(src, dest){
-
-    if(this.isEmpty(src) || !this.isEmpty(dest))
+MyGameBoard.prototype.move = function(){
+    if(this.isEmpty(this.src))
         return;
 
-    let srcIndex = Math.idToIndex(src);
-    let destIndex = Math.idToIndex(dest);
+    let srcIndex = Math.idToIndex(this.src);
+    let destIndex = Math.idToIndex(this.dest);
 
     let piece = this.board[srcIndex[0]][srcIndex[1]];
 
     this.board[srcIndex[0]][srcIndex[1]] = EE;
     this.board[destIndex[0]][destIndex[1]] = piece;
 
+
     let controlPoints = [];
     controlPoints.push([srcIndex[0] - destIndex[0], 0, srcIndex[1] - destIndex[1]]);
     controlPoints.push([0, 0, 0]);
     let movingAnimation = new MyLinearAnimation(this.scene, 0.3, controlPoints);
 
-    this.animations[dest] = [movingAnimation, movingAnimation.getMatrix(0)];
+    this.animations[this.dest] = [movingAnimation, movingAnimation.getMatrix(0)];
     
-}
 
+    this.dest = -1;
+    this.src = -1;
+    if(this.currentPlayer == 1){
+        this.currentPlayer = 2;
+    } else {
+        this.currentPlayer = 1;
+    }
+
+    if(!this.isEmpty(this.dest)){
+        //comeu. animar peça comida
+    }
+}
