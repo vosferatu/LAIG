@@ -282,7 +282,9 @@ XMLscene.prototype.update = function (currTime) {
         selectedColor: this.selectedColor
     });
 
-
+    if(this.board.selectedTile == 11){
+        this.board.requestMove();
+    }
 }
 
 XMLscene.prototype.logPicking = function () {

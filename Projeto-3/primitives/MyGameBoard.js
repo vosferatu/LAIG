@@ -30,9 +30,10 @@ function MyGameBoard(scene) {
     this.initPieces();
 
     this.setInitialBoard();
+    this.requestInitialBoard();
 
     this.selectedTile = -1;
-    
+
 };
 
 MyGameBoard.prototype = Object.create(CGFobject.prototype);
@@ -60,7 +61,7 @@ MyGameBoard.prototype.initTiles = function(){
 }
 
 MyGameBoard.prototype.initBoardStructure = function(){
-    
+
     function MyBoardStructure(scene) {
         CGFobject.call(this, scene);
 
@@ -149,7 +150,7 @@ MyGameBoard.prototype.setInitialBoard = function (){
         [EE, BG, EE, EE, EE, BG, EE],
         [EE, EE, EE, EE, EE, EE, EE],
         [EE, EE, W2, W3, W2, EE, EE],
-        [EE, W4, W3, EE, W3, W4, EE]        
+        [EE, W4, W3, EE, W3, W4, EE]
     ];
 
 }
@@ -179,7 +180,7 @@ MyGameBoard.prototype.displayTiles = function(){
             this.scene.pushMatrix();
 
             const tile = rowTiles[column];
-            
+
             // Texture
             let whitetileFlag = (7 * row + column) % 2;
             if (whitetileFlag)
@@ -187,7 +188,7 @@ MyGameBoard.prototype.displayTiles = function(){
             else
                 this.blackTileTx.bind();
 
-            // Picking    
+            // Picking
             let pickingId = Math.indexToId(row, column);
 
             if (this.selectedTile == pickingId)
@@ -249,6 +250,5 @@ MyGameBoard.prototype.move = function(src, dest){
 
     this.board[srcIndex[0]][srcIndex[1]] = EE;
     this.board[destIndex[0]][destIndex[1]] = piece;
-    
-}
 
+}
