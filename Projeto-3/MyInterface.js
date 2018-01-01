@@ -32,9 +32,9 @@ MyInterface.prototype.init = function(application) {
 /**
  * Adds a folder containing the IDs of the lights passed as parameter.
  */
-MyInterface.prototype.addLightsGroup = function(lights) {
+MyInterface.prototype.addLightsGroup = function (lights, src = this.gui) {
 
-    var groupLights = this.gui.addFolder("Lights");
+    var groupLights = src.addFolder("Lights");
     groupLights.close();
 
     for (var key in lights) {
@@ -45,10 +45,10 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
-MyInterface.prototype.addHighlightSelection = function(/* selectableNodes */){
+MyInterface.prototype.addHighlightSelection = function (/* selectableNodes, */src = this.gui){
 
-    var groupHighlight = this.gui.addFolder("Selecting Objects");
-    groupHighlight.open();
+    var groupHighlight = src.addFolder("Selecting tiles");
+    groupHighlight.close();
 
     // var dictSelectableNodes = {"Select a node" : 0};
 
@@ -75,3 +75,16 @@ MyInterface.prototype.addHighlightSelection = function(/* selectableNodes */){
 
 }
 
+MyInterface.prototype.addGameOptions = function (src = this.gui) {
+    var groupGameOptions = src.addFolder("Game Options");
+    groupGameOptions.open();
+
+    groupGameOptions.add(this.scene, "newGame").name("New Game");
+
+    groupGameOptions.add(this.scene, "player1", { Human: true, Computer: false }).name("Player 1");
+    groupGameOptions.add(this.scene, "player2", { Human: true, Computer: false }).name("Player 2");
+    groupGameOptions.add(this.scene, "difficulty", { Random: false, Smart: true }).name("Difficulty");
+
+    this.addLightsGroup(this.scene.graph.lights, groupGameOptions);
+    this.addHighlightSelection(groupGameOptions);
+}

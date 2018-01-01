@@ -49,6 +49,11 @@ function XMLscene(interface) {
         [0.75, 0, 0.75, 1],
     ];
 
+    this.player1 = true;
+    this.player2 = true;
+    this.difficulty = true;
+    
+
     this.setPickEnabled(true);
 }
 
@@ -152,11 +157,8 @@ XMLscene.prototype.initBoardComponents = function () {
     this.bgTurnLeftTx = new CGFtexture(this, "./scenes/images/" + BG_TURN_LEFT_TX);
     this.bgCrossTx = new CGFtexture(this, "./scenes/images/" + BG_CROSS_TX);
 
-    this.table = new MyTable(this, 13, 12, 0.7, 5);
+    this.table = new MyTable(this, 15, 12, 0.7, 5);
     this.board = new MyGameBoard(this);
-
-    //TESTING
-    this.bg = new MyBarragoonPiece(this);
 
 }
 
@@ -176,8 +178,7 @@ XMLscene.prototype.onGraphLoaded = function () {
     this.initLights();
 
     // Adds menu elements.
-    this.interface.addLightsGroup(this.graph.lights);
-    this.interface.addHighlightSelection( /* this.graph.selectableNodes */ );
+    this.interface.addGameOptions();
 }
 
 /**
@@ -258,6 +259,7 @@ XMLscene.prototype.displayBoardComponents = function () {
 
     this.pushMatrix();
     this.clearPickRegistration();
+    this.translate(1.5, 0, 0);
     this.table.display();
     this.popMatrix();
 
@@ -269,6 +271,7 @@ XMLscene.prototype.update = function (currTime) {
     var elapsed = (currTime - this.startTime) / 1000;
 
     this.graph.update(elapsed);
+    this.board.update(elapsed);
 
     // this.selectedHighlightNode = this.selectableNodes[this.selectedHighlightIndex - 1];
     this.selectedColor = this.selectableColors[this.selectedColorIndex];
@@ -303,6 +306,10 @@ XMLscene.prototype.logPicking = function () {
             this.pickResults.splice(0, this.pickResults.length);
         }
     }
+}
+
+XMLscene.prototype.newGame = function (){
+    this.board.setInitialBoard();
 }
 
 // Converts from degrees to radians.
@@ -350,4 +357,11 @@ Math.idToIndex = function (id) {
 Math.indexToId = function (row, column) {
 
     return (row + 1) * 10 + (column + 1);
+}
+
+
+Math.randomInt = function (min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }

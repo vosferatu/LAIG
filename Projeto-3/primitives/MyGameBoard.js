@@ -8,7 +8,6 @@
 
 var WHITE_TILE_TX = "whitetile.jpg"
 var BLACK_TILE_TX = "blacktile.jpg"
-// var SELECTED_TILE_TX = "selectedtile.jpg"
 var STRUCTURE_TX = "wood.jpg";
 
 var EE = -1;
@@ -32,6 +31,7 @@ function MyGameBoard(scene) {
     this.setInitialBoard();
 
     this.selectedTile = -1;
+    this.animations = [];
     
 };
 
@@ -137,6 +137,13 @@ MyGameBoard.prototype.initPieces = function () {
         this.black4DotsPlayerPiece,
         this.barragoonPiece
     );
+
+    this.outsideBGnumber = 24;
+    this.outsideBGOrientations = [];
+
+    for (let i = 0; i < this.outsideBGnumber; i++) {
+        this.outsideBGOrientations.push(Math.randomInt(0, this.barragoonPiece.possibleOrientations.length));
+    }
 }
 
 MyGameBoard.prototype.setInitialBoard = function (){
@@ -147,12 +154,26 @@ MyGameBoard.prototype.setInitialBoard = function (){
         [EE, BG, EE, EE, EE, BG, EE],
         [BG, EE, BG, EE, BG, EE, BG],
         [EE, BG, EE, EE, EE, BG, EE],
-        [EE, EE, EE, EE, EE, EE, EE],
+        [W3, EE, EE, EE, EE, EE, EE],
         [EE, EE, W2, W3, W2, EE, EE],
         [EE, W4, W3, EE, W3, W4, EE]        
     ];
 
 }
+
+MyGameBoard.prototype.update = function (currTime){
+    var elapsedTime = currTime;
+
+    for (let i = 0; i < this.animations.length; i++) {
+
+        if (this.animations[i] == null) continue;
+
+        let newMatrix = this.animations[i][0].getMatrix(elapsedTime);
+        this.animations[i][1] = newMatrix;
+
+    }
+}
+
 MyGameBoard.prototype.display = function () {
 
     this.scene.pushMatrix();
@@ -167,6 +188,11 @@ MyGameBoard.prototype.display = function () {
     this.scene.pushMatrix();
     this.scene.translate(-4.5,0.31,-3.5);
     this.displayTiles();
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    this.scene.translate(-1.75, 0, -6);
+    this.displayOutsideBarragoons();
     this.scene.popMatrix();
 
 
@@ -220,13 +246,35 @@ MyGameBoard.prototype.displayPieces = function () {
             let pickingId = Math.indexToId(row, column);
             this.scene.registerForPick(pickingId, piece);
 
-            this.scene.translate(row-4, 0, column-3);
+            this.scene.translate(row - 4, 0, column - 3);
+
+            if (this.animations[pickingId] != null){
+
+                this.scene.multMatrix(this.animations[pickingId][1]);
+
+            }
+
             this.pieces[piece].display();
             this.scene.popMatrix();
 
         }
     }
 }
+
+
+
+MyGameBoard.prototype.displayOutsideBarragoons = function () {
+    
+    for (let i = 0; i < this.outsideBGnumber; i++) {
+        this.scene.pushMatrix();
+        this.scene.translate(Math.floor(i / 3)/2, 0, (i % 3)/2);
+
+        let index = this.outsideBGOrientations[i];
+        this.barragoonPiece.display(this.barragoonPiece.possibleOrientations[index]);
+        this.scene.popMatrix();
+    }
+}
+
 
 MyGameBoard.prototype.isEmpty = function(id){
     let index = Math.idToIndex(id);
@@ -249,6 +297,13 @@ MyGameBoard.prototype.move = function(src, dest){
 
     this.board[srcIndex[0]][srcIndex[1]] = EE;
     this.board[destIndex[0]][destIndex[1]] = piece;
+
+    let controlPoints = [];
+    controlPoints.push([srcIndex[0] - destIndex[0], 0, srcIndex[1] - destIndex[1]]);
+    controlPoints.push([0, 0, 0]);
+    let movingAnimation = new MyLinearAnimation(this.scene, 0.3, controlPoints);
+
+    this.animations[dest] = [movingAnimation, movingAnimation.getMatrix(0)];
     
 }
 

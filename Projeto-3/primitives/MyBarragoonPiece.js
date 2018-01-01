@@ -9,7 +9,14 @@
 function MyBarragoonPiece(scene) {
     CGFobject.call(this, scene);
 
-    this.orientation = null;
+    this.possibleOrientations = [
+        "cross",
+        "oneLeft", "oneRight", "oneTop", "oneBottom", 
+        "twoHorizontal", "twoVertical", 
+        "turnRightLeft", "turnRightRight", "turnRightTop", "turnRightBottom", 
+        "turnLeftLeft", "turnLeftRight", "turnLeftTop", "turnLeftBottom", 
+        "allDirections"
+    ];
 
     this.side = new MyQuad(this.scene);
     
@@ -20,9 +27,11 @@ MyBarragoonPiece.prototype = Object.create(CGFobject.prototype);
 MyBarragoonPiece.prototype.constructor = MyBarragoonPiece;
 
 
-MyBarragoonPiece.prototype.display = function () {
+MyBarragoonPiece.prototype.display = function (orientation = "cross") {
+
     this.scene.scale(0.5, 0.5, 0.5);
     this.scene.translate(0,0.5,0);
+    this.rotateOrientation(orientation);
 
     this.scene.pushMatrix();
     this.scene.translate(0, -0.5, 0);
@@ -68,7 +77,32 @@ MyBarragoonPiece.prototype.display = function () {
     this.scene.popMatrix();
 
 }
+MyBarragoonPiece.prototype.rotateOrientation = function (orientation) {
 
+    switch(orientation){
+        case "allDirections": this.scene.rotate(Math.degToRad(180), 1, 0, 0); break;
+
+        case "oneLeft": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "oneBottom": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "oneRight": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "oneTop": this.scene.rotate(Math.degToRad(-90), 1, 0, 0); break;
+
+        case "twoHorizontal": this.scene.rotate(Math.degToRad(90), 0, 1, 0);
+        case "twoVertical": this.scene.rotate(Math.degToRad(90), 1, 0, 0); break;
+
+        case "turnRightLeft": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "turnRightBottom": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "turnRightRight": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "turnRightTop": this.scene.rotate(Math.degToRad(90), 0, 0, 1); break;
+
+        case "turnLeftLeft": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "turnLeftBottom": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "turnLeftRight": this.scene.rotate(Math.degToRad(-90), 0, 1, 0);
+        case "turnLeftTop": this.scene.rotate(Math.degToRad(-90), 0, 0, 1); break;
+
+        case "cross": default: break;
+    }
+}
 MyBarragoonPiece.prototype.getTopTexture = function () {
     switch (this.numDots) {
         case 2:

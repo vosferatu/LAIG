@@ -456,9 +456,9 @@
         <TRANSLATION x="0" y="9" z="0" />
         <SCALE sx="5" sy="3" sz="5"/>
 
-        <!-- <ANIMATIONREFS>
+        <ANIMATIONREFS>
             <ANIMATIONREF id="flagAnim" />
-        </ANIMATIONREFS>    -->
+        </ANIMATIONREFS>   
 
         <DESCENDANTS>
             <LEAF id="bandeiraTras" type="patch" args="30 30" >
