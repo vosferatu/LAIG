@@ -11,13 +11,14 @@ var BLACK_TILE_TX = "blacktile.jpg"
 var STRUCTURE_TX = "wood.jpg";
 
 var EE = -1;
-var W2 = 0;
-var W3 = 1;
-var W4 = 2;
-var B2 = 3;
-var B3 = 4;
-var B4 = 5;
-var BG = 6;
+var W2 = 0, W3 = 1, W4 = 2;
+var B2 = 3, B3 = 4, B4 = 5;
+var NO = 6;
+var OR = 7, OL = 8, OT = 9, OB = 10;
+var TH = 11, TV = 12;
+var RR = 13, RL = 14, RT = 15, RB = 16;
+var LR = 17, LL = 18, LT = 19, LB = 20;
+var AT = 21;
 
 
 function MyGameBoard(scene) {
@@ -150,6 +151,8 @@ MyGameBoard.prototype.initPieces = function () {
     for (let i = 0; i < this.outsideBGnumber; i++) {
         this.outsideBGOrientations.push(Math.randomInt(0, this.barragoonPiece.possibleOrientations.length));
     }
+
+    this.outsidePieces = [];
 }
 
 MyGameBoard.prototype.setInitialBoard = function (){
@@ -157,9 +160,9 @@ MyGameBoard.prototype.setInitialBoard = function (){
         [EE, W4, W3, EE, W3, W4, EE],
         [EE, EE, W2, W3, W2, EE, EE],
         [EE, EE, EE, EE, EE, EE, EE],
-        [EE, BG, EE, EE, EE, BG, EE],
-        [BG, EE, BG, EE, BG, EE, BG],
-        [EE, BG, EE, EE, EE, BG, EE],
+        [EE, NO, EE, EE, EE, NO, EE],
+        [NO, EE, NO, EE, NO, EE, NO],
+        [EE, NO, EE, EE, EE, NO, EE],
         [EE, EE, EE, EE, EE, EE, EE],
         [EE, EE, B2, B3, B2, EE, EE],
         [EE, B4, B3, EE, B3, B4, EE]
@@ -209,6 +212,11 @@ MyGameBoard.prototype.display = function () {
     this.scene.pushMatrix();
     this.scene.translate(-7, 0, -0.75);
     this.displayOutsideBarragoons();
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    this.scene.translate(4, 0, -2);
+    this.displayOutsidePieces();
     this.scene.popMatrix();
 
 
@@ -270,7 +278,11 @@ MyGameBoard.prototype.displayPieces = function () {
 
             }
 
-            this.pieces[piece].display();
+            if(piece < 6)
+                this.pieces[piece].display();
+            else{
+                this.pieces[6].display(this.barragoonPiece.possibleOrientations[piece - 6]);
+            }
             this.scene.popMatrix();
 
         }
@@ -291,6 +303,24 @@ MyGameBoard.prototype.displayOutsideBarragoons = function () {
     }
 }
 
+MyGameBoard.prototype.displayOutsidePieces = function () {
+
+    for (let i = 0; i < this.outsidePieces.length; i++) {
+        this.scene.pushMatrix();
+        this.scene.translate((i % 2), 0, Math.floor(i / 2));
+
+        let piece = this.pieces[this.outsidePieces[i]];
+
+        if (this.animations[101 + i] != null) {
+
+            this.scene.multMatrix(this.animations[101 + i][1]);
+        }
+
+        piece.display();
+        this.scene.popMatrix();
+    }
+}
+
 
 MyGameBoard.prototype.isEmpty = function(id){
     if(id < 0 || id === undefined) return true;
@@ -306,15 +336,46 @@ MyGameBoard.prototype.move = function(){
     if(this.isEmpty(this.src))
         return;
 
+    
+
     let srcIndex = Math.idToIndex(this.src);
     let destIndex = Math.idToIndex(this.dest);
 
-    let piece = this.board[srcIndex[0]][srcIndex[1]];
+    let srcPiece = this.board[srcIndex[0]][srcIndex[1]];
+    let destPiece = this.board[destIndex[0]][destIndex[1]];
+
+    if (!this.isEmpty(this.dest)) {
+        this.playerPieceOutAnimation();
+    }
 
     this.board[srcIndex[0]][srcIndex[1]] = EE;
-    this.board[destIndex[0]][destIndex[1]] = piece;
+    this.board[destIndex[0]][destIndex[1]] = srcPiece;
 
+    this.pieceCapturedAnimation();
 
+    this.dest = -1;
+    this.src = -1;
+    
+    this.changePlayer();
+    
+}
+
+MyGameBoard.prototype.playerPieceOutAnimation = function(){
+    this.outsidePieces.push(destPiece);
+
+    let x = 8 + (this.outsidePieces.length - 1) % 2;
+    let z = 1 + Math.floor((this.outsidePieces.length - 1) / 2);
+    let controlPointsOut = [];
+    controlPointsOut.push([destIndex[1] - x, 0.31, destIndex[0] - z]);
+    controlPointsOut.push([destIndex[1] - x, 2, destIndex[0] - z]);
+    controlPointsOut.push([0, 2, 0]);
+    controlPointsOut.push([0, 0, 0]);
+    let movingAnimationOut = new MyBezierAnimation(this.scene, 3, controlPointsOut);
+
+    this.animations[100 + this.outsidePieces.length] = [movingAnimationOut, null, null];
+}
+
+MyGameBoard.prototype.pieceCapturedAnimation = function(){
     let controlPoints = [];
     controlPoints.push([srcIndex[1] - destIndex[1], 0, srcIndex[0] - destIndex[0]]);
     controlPoints.push([srcIndex[1] - destIndex[1], 2, srcIndex[0] - destIndex[0]]);
@@ -323,19 +384,6 @@ MyGameBoard.prototype.move = function(){
     let movingAnimation = new MyBezierAnimation(this.scene, 3, controlPoints);
 
     this.animations[this.dest] = [movingAnimation, null, null];
-    
-
-    this.dest = -1;
-    this.src = -1;
-    if(this.currentPlayer == 1){
-        this.currentPlayer = 2;
-    } else {
-        this.currentPlayer = 1;
-    }
-
-    if(!this.isEmpty(this.dest)){
-        //comeu. animar peça comida
-    }
 }
 
 MyGameBoard.prototype.newGame = function () {
@@ -343,3 +391,11 @@ MyGameBoard.prototype.newGame = function () {
   this.requestInitialBoard();
   this.currentPlayer = 1;
 };
+
+MyGameBoard.prototype.changePlayer = function(){
+    if (this.currentPlayer == 1) {
+        this.currentPlayer = 2;
+    } else {
+        this.currentPlayer = 1;
+    }
+}

@@ -11,10 +11,10 @@ function MyBarragoonPiece(scene) {
 
     this.possibleOrientations = [
         "cross",
-        "oneLeft", "oneRight", "oneTop", "oneBottom", 
+        "oneRight", "oneLeft", "oneTop", "oneBottom", 
         "twoHorizontal", "twoVertical", 
-        "turnRightLeft", "turnRightRight", "turnRightTop", "turnRightBottom", 
-        "turnLeftLeft", "turnLeftRight", "turnLeftTop", "turnLeftBottom", 
+        "turnRightRight", "turnRightLeft", "turnRightTop", "turnRightBottom", 
+        "turnLeftRight", "turnLeftLeft", "turnLeftTop", "turnLeftBottom", 
         "allDirections"
     ];
 
