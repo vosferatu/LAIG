@@ -37,7 +37,7 @@ function MyGameBoard(scene) {
 
     this.selectedTile = -1;
     this.animations = [];
-    
+
 };
 
 MyGameBoard.prototype = Object.create(CGFobject.prototype);
@@ -196,6 +196,8 @@ MyGameBoard.prototype.display = function () {
     this.displayTiles();
     this.scene.popMatrix();
 
+    this.scene.clearPickRegistration();
+
     this.scene.pushMatrix();
     this.scene.translate(-7, 0, -0.75);
     this.displayOutsideBarragoons();
@@ -270,7 +272,7 @@ MyGameBoard.prototype.displayPieces = function () {
 
 
 MyGameBoard.prototype.displayOutsideBarragoons = function () {
-    
+
     for (let i = 0; i < this.outsideBGnumber; i++) {
         this.scene.pushMatrix();
         this.scene.translate((i % 3) / 2, 0, Math.floor(i / 3) / 2);
@@ -311,7 +313,7 @@ MyGameBoard.prototype.move = function(){
     let movingAnimation = new MyLinearAnimation(this.scene, 0.3, controlPoints);
 
     this.animations[this.dest] = [movingAnimation, movingAnimation.getMatrix(0)];
-    
+
 
     this.dest = -1;
     this.src = -1;
@@ -325,3 +327,9 @@ MyGameBoard.prototype.move = function(){
         //comeu. animar peça comida
     }
 }
+
+MyGameBoard.prototype.newGame = function () {
+  this.setInitialBoard();
+  this.requestInitialBoard();
+  this.currentPlayer = 1;
+};

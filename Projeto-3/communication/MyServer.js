@@ -34,8 +34,8 @@ MyGameBoard.prototype.requestMove = function(){
 };
 
 MyGameBoard.prototype.requestPCMove = function(){
-  var playerAtom = Number(this.currentPlayer + 1);
-  if(this.difficulty == 0 ){
+  var playerAtom = Number(this.currentPlayer);
+  if(this.difficulty){
     var requestStr = 'randomCPU(' + playerAtom + ',' + this.prologBoard + ')';
   } else {
     var requestStr = 'aiCPU(' + playerAtom + ',' + this.prologBoard + ')';
@@ -46,14 +46,13 @@ MyGameBoard.prototype.requestPCMove = function(){
 
 MyGameBoard.prototype.getPCMove = function(data){
   if(this.error(data) == 0) return;
-  var move = eval(data.target.response);
+  var move = data.target.response.split("-");
+
   this.prologBoard = move[0];
-  this.initialCell.x = move[1];
-  this.initialCell.y = move[2];
-  this.finalCell.x = move[3];
-  this.finalCell.y = move[4];
-  //send movement from here
-  //this.makeMovement();
+  this.src = Math.indexToNum(Number(move[1]), Number(move[2]));
+  this.dest = Math.indexToNum(Number(move[3]), Number(move[4]));
+
+  this.move();
 };
 
 MyGameBoard.prototype.getBoard = function(data){
@@ -119,8 +118,8 @@ MyGameBoard.prototype.getPCBarragoon = function(data){
   this.bgCell.x = move[1];
   this.bgCell.y = move[2];
   this.bg = move[3];
-  //send movement from here
-  //this.bgMovement();
+
+  this.move();
 };
 
 MyGameBoard.prototype.requestHumanBarragoon = function(){

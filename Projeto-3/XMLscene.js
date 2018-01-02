@@ -52,7 +52,7 @@ function XMLscene(interface) {
     this.player1 = true;
     this.player2 = true;
     this.difficulty = true;
-    
+
 
     this.setPickEnabled(true);
 }
@@ -284,9 +284,6 @@ XMLscene.prototype.update = function (currTime) {
         selectedColor: this.selectedColor
     });
 
-    if(this.board.selectedTile == 11){
-        this.board.requestMove();
-    }
 }
 
 XMLscene.prototype.logPicking = function () {
@@ -312,7 +309,7 @@ XMLscene.prototype.logPicking = function () {
 }
 
 XMLscene.prototype.newGame = function (){
-    this.board.setInitialBoard();
+    this.board.newGame();
 }
 
 // Converts from degrees to radians.
@@ -362,6 +359,10 @@ Math.indexToId = function (row, column) {
     return (row + 1) * 10 + (column + 1);
 }
 
+Math.indexToNum = function (row, column) {
+
+    return (row) * 10 + (column);
+}
 
 Math.randomInt = function (min, max) {
     min = Math.ceil(min);
