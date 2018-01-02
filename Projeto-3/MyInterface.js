@@ -3,7 +3,7 @@
  * @constructor
  */
 function MyInterface() {
-    //call CGFinterface constructor 
+    //call CGFinterface constructor
     CGFinterface.call(this);
 }
 ;
@@ -21,11 +21,11 @@ MyInterface.prototype.init = function(application) {
 
     // init GUI. For more information on the methods, check:
     //  http://workshop.chromeexperiments.com/examples/gui
-    
+
     this.gui = new dat.GUI();
 
     // add a group of controls (and open/expand by defult)
-    
+
     return true;
 };
 
@@ -68,7 +68,7 @@ MyInterface.prototype.addHighlightSelection = function (/* selectableNodes, */sr
         "Purple" : 4
     }).name('Selected Color');
 
-    // Due to a bug in the color interface of dat.GUI, it was not possible to use 
+    // Due to a bug in the color interface of dat.GUI, it was not possible to use
     // it for highlight color selection:
 
     // groupHighlight.addColor(this.scene, 'selectedColorInterface').name("Color");
@@ -81,9 +81,9 @@ MyInterface.prototype.addGameOptions = function (src = this.gui) {
 
     groupGameOptions.add(this.scene, "newGame").name("New Game");
 
-    groupGameOptions.add(this.scene, "player1", { Human: true, Computer: false }).name("Player 1");
-    groupGameOptions.add(this.scene, "player2", { Human: true, Computer: false }).name("Player 2");
-    groupGameOptions.add(this.scene, "difficulty", { Random: false, Smart: true }).name("Difficulty");
+    groupGameOptions.add(this.scene.board, "player1", { Human: true, Computer: false }).name("Player 1");
+    groupGameOptions.add(this.scene.board, "player2", { Human: true, Computer: false }).name("Player 2");
+    groupGameOptions.add(this.scene.board, "difficulty", { Random: false, Smart: true }).name("Difficulty");
 
     this.addLightsGroup(this.scene.graph.lights, groupGameOptions);
     this.addHighlightSelection(groupGameOptions);

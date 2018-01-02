@@ -32,6 +32,9 @@ function MyGameBoard(scene) {
     this.setInitialBoard();
     this.requestInitialBoard();
 
+    this.difficulty = false;
+    this.player1 = true;
+    this.player2 = true;
     this.currentPlayer = 1;
     this.dest = -1;
     this.src = -1;
@@ -192,6 +195,10 @@ MyGameBoard.prototype.update = function (currTime){
         this.animations[i][1] = newMatrix;
 
     }
+
+    if(!this.isPlayerHuman() && this.noAnimations()){
+      this.requestPCMove();
+    }
 }
 
 MyGameBoard.prototype.display = function () {
@@ -339,7 +346,7 @@ MyGameBoard.prototype.move = function(){
     if(this.isEmpty(this.src))
         return;
 
-    
+
 
     let srcIndex = Math.idToIndex(this.src);
     let destIndex = Math.idToIndex(this.dest);
@@ -363,9 +370,9 @@ MyGameBoard.prototype.move = function(){
 
     this.dest = -1;
     this.src = -1;
-    
+
     this.changePlayer();
-    
+
 }
 MyGameBoard.prototype.barragoonPieceOutAnimation = function (destIndex) {
 
@@ -396,7 +403,7 @@ MyGameBoard.prototype.pieceCapturedAnimation = function(srcIndex, destIndex){
     this.animations[this.dest] = [movingAnimation, null, null];
 }
 
-MyGameBoard.prototype.noAnimations=function () {
+MyGameBoard.prototype.noAnimations = function () {
   for (var i = 0; i < this.animations.length; i++) {
       if(this.animations[i]!=null)
         return false;
@@ -416,4 +423,14 @@ MyGameBoard.prototype.changePlayer = function(){
     } else {
         this.currentPlayer = 1;
     }
+}
+
+MyGameBoard.prototype.isPlayerHuman = function(){
+  if(this.player1 == true && this.currentPlayer == 1)
+    return true;
+
+  if(this.player2 == true && this.currentPlayer == 2)
+    return true;
+
+  return false;
 }

@@ -36,9 +36,9 @@ MyGameBoard.prototype.requestMove = function(){
 MyGameBoard.prototype.requestPCMove = function(){
   var playerAtom = Number(this.currentPlayer);
   if(this.difficulty){
-    var requestStr = 'randomCPU(' + playerAtom + ',' + this.prologBoard + ')';
-  } else {
     var requestStr = 'aiCPU(' + playerAtom + ',' + this.prologBoard + ')';
+  } else {
+    var requestStr = 'randomCPU(' + playerAtom + ',' + this.prologBoard + ')';
   }
 
   this.getPrologRequest(requestStr, this.getPCMove);
@@ -51,6 +51,10 @@ MyGameBoard.prototype.getPCMove = function(data){
   this.prologBoard = move[0];
   this.src = Math.indexToNum(Number(move[1]), Number(move[2]));
   this.dest = Math.indexToNum(Number(move[3]), Number(move[4]));
+
+  console.log(this.prologBoard);
+  console.log(this.src);
+  console.log(this.dest);
 
   this.move();
 };

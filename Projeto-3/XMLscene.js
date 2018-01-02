@@ -222,10 +222,10 @@ XMLscene.prototype.display = function () {
             }
         }
 
-
-        this.logPicking();
-        this.clearPickRegistration();
-
+        if(this.board.isPlayerHuman()){
+          this.logPicking();
+          this.clearPickRegistration();
+        }
         // Displays the scene.
         this.graph.displayScene();
 
@@ -292,9 +292,11 @@ XMLscene.prototype.logPicking = function () {
                 var customId = this.pickResults[i][1];
                 if (customId) {
                     if (this.board.selectedTile != -1) {
-                        this.board.dest = customId;
-                        this.board.src = this.board.selectedTile;
-                        this.board.requestMove();
+                        if(this.board.noAnimations() && this.board.isPlayerHuman()){
+                          this.board.dest = customId;
+                          this.board.src = this.board.selectedTile;
+                          this.board.requestMove();
+                        }
                         this.board.selectedTile = -1;
                     } else if (!this.board.isEmpty(customId)) {
                         this.board.selectedTile = customId;
