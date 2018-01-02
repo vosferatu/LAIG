@@ -232,9 +232,6 @@ XMLscene.prototype.display = function () {
         this.displayBoardComponents();
         this.highlightNodeRendered = false;
 
-        console.log("NOANIMS: " + this.board.noAnimations());
-
-
     } else {
         // Draw axis
         this.axis.display();

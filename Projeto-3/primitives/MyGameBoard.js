@@ -348,13 +348,18 @@ MyGameBoard.prototype.move = function(){
     let destPiece = this.board[destIndex[0]][destIndex[1]];
 
     if (!this.isEmpty(this.dest)) {
-        this.playerPieceOutAnimation();
+        if (destPiece < 6){
+            this.playerPieceOutAnimation(destIndex, destPiece);
+        }
+        else{
+            this.barragoonPieceOutAnimation();
+        }
     }
 
     this.board[srcIndex[0]][srcIndex[1]] = EE;
     this.board[destIndex[0]][destIndex[1]] = srcPiece;
 
-    this.pieceCapturedAnimation();
+    this.pieceCapturedAnimation(srcIndex, destIndex);
 
     this.dest = -1;
     this.src = -1;
@@ -362,8 +367,10 @@ MyGameBoard.prototype.move = function(){
     this.changePlayer();
     
 }
+MyGameBoard.prototype.barragoonPieceOutAnimation = function (destIndex) {
 
-MyGameBoard.prototype.playerPieceOutAnimation = function(){
+}
+MyGameBoard.prototype.playerPieceOutAnimation = function (destIndex, destPiece) {
     this.outsidePieces.push(destPiece);
 
     let x = 8 + (this.outsidePieces.length - 1) % 2;
@@ -378,7 +385,7 @@ MyGameBoard.prototype.playerPieceOutAnimation = function(){
     this.animations[100 + this.outsidePieces.length] = [movingAnimationOut, null, null];
 }
 
-MyGameBoard.prototype.pieceCapturedAnimation = function(){
+MyGameBoard.prototype.pieceCapturedAnimation = function(srcIndex, destIndex){
     let controlPoints = [];
     controlPoints.push([srcIndex[1] - destIndex[1], 0, srcIndex[0] - destIndex[0]]);
     controlPoints.push([srcIndex[1] - destIndex[1], 2, srcIndex[0] - destIndex[0]]);
