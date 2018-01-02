@@ -122,7 +122,7 @@ parse_input(end(BoardIn), Loser):-
 		gameOver(BoardIn, Loser).
 
 parse_input(gameOver(Player, Board), N):-
-		getPlayerChar(PlayerNo, CurrPlayer),
+		getPlayerChar(Player, CurrPlayer),
 		findall(XBoard, A^B^C^D^movePiece(CurrPlayer, Board, A, B, C, D, XBoard), PossiblePlays),
 		length(PossiblePlays, N).
 

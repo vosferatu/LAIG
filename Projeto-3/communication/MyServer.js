@@ -16,10 +16,14 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
 };
 
 MyGameBoard.prototype.requestInitialBoard = function(){
+  this.requested = true;
   this.getPrologRequest('start_game', this.getBoard);
 };
 
 MyGameBoard.prototype.requestMove = function(){
+
+  this.requested = true;
+
   if(this.isEmpty(this.src))
       return;
 
@@ -34,11 +38,14 @@ MyGameBoard.prototype.requestMove = function(){
 };
 
 MyGameBoard.prototype.requestPCMove = function(){
+
+  this.requested = true;
+
   var playerAtom = Number(this.currentPlayer);
   if(this.difficulty){
-    var requestStr = 'randomCPU(' + playerAtom + ',' + this.prologBoard + ')';
-  } else {
     var requestStr = 'aiCPU(' + playerAtom + ',' + this.prologBoard + ')';
+  } else {
+    var requestStr = 'randomCPU(' + playerAtom + ',' + this.prologBoard + ')';
   }
 
   this.getPrologRequest(requestStr, this.getPCMove);
@@ -52,21 +59,35 @@ MyGameBoard.prototype.getPCMove = function(data){
   this.src = Math.indexToNum(Number(move[1]), Number(move[2]));
   this.dest = Math.indexToNum(Number(move[3]), Number(move[4]));
 
+  console.log(this.prologBoard);
+  console.log(this.src);
+  console.log(this.dest);
+
   this.move();
+  this.requested = false;
+
 };
 
 MyGameBoard.prototype.getBoard = function(data){
   if(this.error(data)) return;
   this.prologBoard = data.target.response;
+
+  this.requested = false;
+
 };
 
 MyGameBoard.prototype.getMove = function(data){
   if(this.error(data)) return;
   this.prologBoard = data.target.response;
   this.move();
+
+  this.requested = false;
+
 };
 
 MyGameBoard.prototype.requestGameOver = function(){
+  this.requested = true;
+
   var playerAtom = Number(this.currentPlayer);
   var requestStr = 'gameOver('+ playerAtom + ',' + this.prologBoard + ')';
   this.getPrologRequest(requestStr, this.getGameOver);
@@ -77,9 +98,15 @@ MyGameBoard.prototype.getGameOver = function(data){
   var over = Number(data.target.response); //loser is current player
 
   this.gameOver = (over == 0) ? true : false;
+
+  this.requested = false;
+
 };
 
 MyGameBoard.prototype.requestEnd = function(){
+
+  this.requested = true;
+
   var requestStr = 'end(' + this.prologBoard + ')';
   this.getPrologRequest(requestStr, this.getEnd);
 };
@@ -99,10 +126,12 @@ MyGameBoard.prototype.getEnd = function(data){
           this.gameOver = false;
       return;
   }
-  this.gameOver = true;
+  this.gameOver = false;
 };
 
 MyGameBoard.prototype.requestPCBarragoon = function(){
+  this.requested = true;
+
   var playerAtom = Number(this.currentPlayer);
   var requestStr = 'barragoonRandom('+ this.prologBoard + ')';
   this.getPrologRequest(requestStr, this.getPCBarragoon);
@@ -116,10 +145,18 @@ MyGameBoard.prototype.getPCBarragoon = function(data){
   this.bgIndex = Math.indexToNum(Number(move[1]), Number(move[2]));
   this.bg = move[3];
 
+  this.requested = false;
+
+  this.placeBarragoon();
+  
+  this.requestGameOver();
+
   //movement function
 };
 
 MyGameBoard.prototype.requestBarragoon = function(){
+  this.requested = true;
+
   //this.bg é a string que representa o barragoon
   let dest = Math.idToNum(this.bgIndex);
   var requestStr = 'barragoonH(' + this.prologBoard + ',' + dest[0] + ',' + dest[1] + ',' + this.bg + ')';
@@ -133,10 +170,15 @@ MyGameBoard.prototype.getBarragoon = function(data){
   console.log(this.prologBoard);
 
   //movement function
+  this.requested = false;
+
+  this.requestGameOver();
+
 };
 
 MyGameBoard.prototype.error = function(data){
   if (data.target.response == "Syntax Error" || data.target.response == "Bad Request"){
+    this.requested = false;
     return 1;
   }
 }

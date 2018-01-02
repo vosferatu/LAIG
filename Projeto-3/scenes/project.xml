@@ -264,7 +264,137 @@
 <!-- The nodes -->
 <NODES>
 
-    <ROOT id="root" />
+    <ROOT id="root2" />
+
+    <!-- The root node -->
+    <NODE id="root2">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        
+        <DESCENDANTS>
+
+            <NODEREF id="chao" />
+            <NODEREF id="balizas" />
+
+
+
+        </DESCENDANTS>
+    </NODE>
+
+        <!-- chao -->
+    <NODE id="chao">
+        <MATERIAL id="null" />
+        <TEXTURE id="grass" />
+        <TRANSLATION x="-25" y="0" z="-15" />
+        <SCALE sx="50" sy="10.01" sz="30"/>
+
+        <DESCENDANTS>
+            <NODEREF id="cubo" />
+        </DESCENDANTS>
+
+    </NODE>
+
+          <!-- balizas -->
+    <NODE id="balizas">
+        <MATERIAL id="null" />
+        <TEXTURE id="rocks" />
+        <TRANSLATION x="0" y="10" z="0" />
+
+        <DESCENDANTS>
+            <NODEREF id="baliza1" />
+            <NODEREF id="baliza2" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="baliza1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <TRANSLATION x="-22" y="0" z="0" />
+        <ROTATION axis="y" angle="90" />
+
+
+        <DESCENDANTS>
+            <NODEREF id="baliza" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="baliza2">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <TRANSLATION x="22" y="0" z="0" />
+
+        <ROTATION axis="y" angle="90" />
+
+        <DESCENDANTS>
+            <NODEREF id="baliza" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="baliza">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <TRANSLATION x="-5" y="0" z="0" />
+
+        <DESCENDANTS>
+            <NODEREF id="poste1" />
+            <NODEREF id="poste2" />
+            <NODEREF id="barra" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    
+    <NODE id="poste1">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="0.1" sy="0.1" sz="1"/>
+
+        <DESCENDANTS>
+        <!-- function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap = 0, botcap = 0, minS, maxS, minT, maxT){
+ -->    
+		    <LEAF id="cylinder2" type="cylinder" args="5 1 1 20 20 1 1" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="poste2">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        
+        <TRANSLATION x="10" y="0" z="0" />
+
+        <ROTATION axis="x" angle="-90" />
+        <SCALE sx="0.1" sy="0.1" sz="1"/>
+
+        <DESCENDANTS>
+        <!-- function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap = 0, botcap = 0, minS, maxS, minT, maxT){
+ -->    
+		    <LEAF id="cylinder2" type="cylinder" args="5 1 1 20 20 1 1" />
+        </DESCENDANTS>
+
+    </NODE>
+
+        <NODE id="barra">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        
+        <TRANSLATION x="0" y="5" z="0" />
+        <ROTATION axis="y" angle="90" />
+        <SCALE sx="0.1" sy="0.1" sz="2"/>
+
+        <DESCENDANTS>
+        <!-- function MyCylinder(scene, height, botradius, topradius, stacks, slices, topcap = 0, botcap = 0, minS, maxS, minT, maxT){
+ -->    
+		    <LEAF id="cylinder2" type="cylinder" args="5 1 1 20 20 1 1" />
+        </DESCENDANTS>
+
+    </NODE>
 
     <!-- The root node -->
     <NODE id="root">

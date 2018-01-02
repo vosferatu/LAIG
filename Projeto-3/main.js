@@ -33,6 +33,7 @@ serialInclude([
     'primitives/MyBarragoonPiece.js',
     'animations/MyAnimation.js',
     'animations/MyBezierAnimation.js',
+    'animations/MyCameraAnimation.js',
     'animations/MyCircularAnimation.js',
     'animations/MyComboAnimation.js',
     'animations/MyLinearAnimation.js',

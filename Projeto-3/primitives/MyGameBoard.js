@@ -34,6 +34,9 @@ function MyGameBoard(scene) {
     this.setInitialBoard();
     this.requestInitialBoard();
 
+    this.difficulty = false;
+    this.player1 = true;
+    this.player2 = true;
     this.currentPlayer = 1;
     this.dest = -1;
     this.src = -1;
@@ -46,6 +49,8 @@ function MyGameBoard(scene) {
 
     this.choosingBarragoon = null;
     this.animationsCount=0;
+
+    this.requested = false;
 
 
 };
@@ -212,6 +217,20 @@ MyGameBoard.prototype.update = function (currTime){
         this.animations[i][1] = newMatrix;
 
     }
+
+
+    if(!this.gameOver){
+
+        if (!this.isPlayerHuman() && this.noAnimations() && !this.requested) {
+            this.requestPCMove();
+        }
+    }
+    else{
+        alert("Player " + (this.currentPlayer == 1 ? "BLACK" : "WHITE") + " WINS!");
+        this.newGame();
+    }
+
+   
 }
 
 MyGameBoard.prototype.display = function () {
@@ -380,7 +399,6 @@ MyGameBoard.prototype.move = function(){
     if(this.isEmpty(this.src))
         return;
 
-    
 
     let srcIndex = Math.idToIndex(this.src);
     let destIndex = Math.idToIndex(this.dest);
@@ -403,10 +421,10 @@ MyGameBoard.prototype.move = function(){
             }
             else{
                 this.requestPCBarragoon();
-                this.placeBarragoon();
+                this.outsideBGnumber--;
 
                 this.requestPCBarragoon();
-                this.placeBarragoon();
+                this.outsideBGnumber--;
 
             }
         }
@@ -417,7 +435,6 @@ MyGameBoard.prototype.move = function(){
             }
             else{
                 this.requestPCBarragoon();
-                this.placeBarragoon();
 
             }
         }
@@ -430,9 +447,11 @@ MyGameBoard.prototype.move = function(){
 
     this.dest = -1;
     this.src = -1;
-    
+
     this.changePlayer();
-    
+    this.requestGameOver();
+
+
 }
 
 MyGameBoard.prototype.chooseBarragoonPiece2Player = function(){
@@ -444,6 +463,7 @@ MyGameBoard.prototype.chooseBarragoonPiece2Player = function(){
     this.outsideBGnumber--;
     this.changePlayer();
 
+    this.requestGameOver();
 
 }
 
@@ -451,7 +471,7 @@ MyGameBoard.prototype.chooseBarragoonPiece2Player = function(){
 MyGameBoard.prototype.placeBarragoon = function () {
     
     let destIndex = Math.idToIndex(this.bgIndex);
-    this.board[destIndex[0]][destIndex[1]] = this.choosingBarragoon;
+    this.board[destIndex[0]][destIndex[1]] = this.isPlayerHuman() ? this.choosingBarragoon : (this.barragoonPiece.possibleOrientations.indexOf(this.bg)+6);
     this.choosingBarragoon = null;
 
     if(this.isPlayerHuman()){
@@ -549,11 +569,15 @@ MyGameBoard.prototype.noAnimations=function () {
 }
 
 MyGameBoard.prototype.newGame = function () {
+  if(this.requested) return;
+
   this.setInitialBoard();
+  this.prologBoard = null;
   this.requestInitialBoard();
   this.currentPlayer = 1;
   this.outsideBGnumber = 24;
   this.outsidePieces = [];
+  this.gameOver = false;
 };
 
 MyGameBoard.prototype.changePlayer = function(){
@@ -562,4 +586,14 @@ MyGameBoard.prototype.changePlayer = function(){
     } else {
         this.currentPlayer = 1;
     }
+}
+
+MyGameBoard.prototype.isPlayerHuman = function(){
+  if(this.player1 == true && this.currentPlayer == 1)
+    return true;
+
+  if(this.player2 == true && this.currentPlayer == 2)
+    return true;
+
+  return false;
 }

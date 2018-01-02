@@ -49,10 +49,7 @@ function XMLscene(interface) {
         [0.75, 0, 0.75, 1],
     ];
 
-    this.player1 = true;
-    this.player2 = true;
-    this.difficulty = true;
-
+    this.cameraMoving = false;
 
     this.setPickEnabled(true);
 }
@@ -177,6 +174,15 @@ XMLscene.prototype.onGraphLoaded = function () {
 
     this.initLights();
 
+    this.cameraIndex = 0;
+
+    this.perspectives = []; this.perspectives.push(this.camera);
+    this.perspectives.push(new CGFcamera(0.6, 0.1, 500, vec3.fromValues(-0.2, 10, -5.5), vec3.fromValues(0.2, 0, 2.5)));
+
+    this.camera = this.perspectives[this.cameraIndex];
+
+    this.interface.setActiveCamera(this.camera);
+
     // Adds menu elements.
     
     this.interface.addGameOptions();
@@ -223,10 +229,10 @@ XMLscene.prototype.display = function () {
             }
         }
 
-
-        this.logPicking();
-        this.clearPickRegistration();
-
+        if(this.board.isPlayerHuman()){
+          this.logPicking();
+          this.clearPickRegistration();
+        }
         // Displays the scene.
         this.graph.displayScene();
 
@@ -284,6 +290,11 @@ XMLscene.prototype.update = function (currTime) {
         selectedColor: this.selectedColor
     });
 
+    if(this.cameraMoving){
+        this.cameraAnimation.update(elapsed);
+        this.interface.setActiveCamera(this.camera);
+    }
+
 }
 
 XMLscene.prototype.logPicking = function () {
@@ -314,10 +325,12 @@ XMLscene.prototype.logPicking = function () {
                         
                     }
                     else if (this.board.selectedTile != -1) {
-                        this.board.dest = customId;
-                        this.board.src = this.board.selectedTile;
-                        this.board.requestMove();
-                        this.board.selectedTile = -1;
+                        if (this.board.isPlayerHuman()) {
+                            this.board.dest = customId;
+                            this.board.src = this.board.selectedTile;
+                            this.board.requestMove();
+                            this.board.selectedTile = -1;
+                        } 
                     } 
                     else if (!this.board.isEmpty(customId)) {
                         this.board.selectedTile = customId;
