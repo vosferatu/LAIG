@@ -89,3 +89,18 @@ MyInterface.prototype.addGameOptions = function (src = this.gui) {
     this.addHighlightSelection(groupGameOptions);
 }
 
+MyInterface.prototype.processKeyDown = function(event) {
+
+    CGFinterface.prototype.processKeyDown.call(this,event);
+    console.log(event.keyCode);
+	switch (event.keyCode){
+		case(67):
+		    var firstCam = this.scene.perspectives[this.scene.cameraIndex];
+		    this.scene.cameraIndex = (this.scene.cameraIndex + 1) % this.scene.perspectives.length;
+	    	this.scene.camera = this.scene.perspectives[this.scene.cameraIndex];
+			this.scene.cameraMoving = true;
+			this.scene.cameraAnimation = new MyCameraAnimation(this.scene, 2, firstCam, this.scene.camera);
+			this.setActiveCamera(this.scene.camera);
+			break;
+	}
+};

@@ -49,10 +49,7 @@ function XMLscene(interface) {
         [0.75, 0, 0.75, 1],
     ];
 
-    this.player1 = true;
-    this.player2 = true;
-    this.difficulty = true;
-
+    this.cameraMoving = false;
 
     this.setPickEnabled(true);
 }
@@ -177,6 +174,15 @@ XMLscene.prototype.onGraphLoaded = function () {
 
     this.initLights();
 
+    this.cameraIndex = 0;
+
+    this.perspectives = []; this.perspectives.push(this.camera);
+    this.perspectives.push(new CGFcamera(0.6, 0.1, 500, vec3.fromValues(-0.2, 10, -5.5), vec3.fromValues(0.2, 0, 2.5)));
+
+    this.camera = this.perspectives[this.cameraIndex];
+
+    this.interface.setActiveCamera(this.camera);
+
     // Adds menu elements.
     
     this.interface.addGameOptions();
@@ -283,6 +289,11 @@ XMLscene.prototype.update = function (currTime) {
         timeFactor: newDelta,
         selectedColor: this.selectedColor
     });
+
+    if(this.cameraMoving){
+        this.cameraAnimation.update(elapsed);
+        this.interface.setActiveCamera(this.camera);
+    }
 
 }
 
