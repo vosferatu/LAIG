@@ -35,6 +35,9 @@ function MyGameBoard(scene) {
     this.dest = -1;
     this.src = -1;
 
+    this.bg;
+    this.bgIndex = null;
+
     this.selectedTile = -1;
     this.animations = [];
 
@@ -323,7 +326,7 @@ MyGameBoard.prototype.move = function(){
     let movingAnimation = new MyBezierAnimation(this.scene, 3, controlPoints);
 
     this.animations[this.dest] = [movingAnimation, null, null];
-    
+
 
     this.dest = -1;
     this.src = -1;
@@ -336,6 +339,14 @@ MyGameBoard.prototype.move = function(){
     if(!this.isEmpty(this.dest)){
         //comeu. animar peça comida
     }
+}
+
+MyGameBoard.prototype.noAnimations=function () {
+  for (var i = 0; i < this.animations.length; i++) {
+      if(this.animations[i]!=null)
+        return false;
+  }
+  return true;
 }
 
 MyGameBoard.prototype.newGame = function () {

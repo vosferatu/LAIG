@@ -232,6 +232,8 @@ XMLscene.prototype.display = function () {
         this.displayBoardComponents();
         this.highlightNodeRendered = false;
 
+        console.log("NOANIMS: " + this.board.noAnimations());
+
 
     } else {
         // Draw axis
@@ -292,7 +294,7 @@ XMLscene.prototype.logPicking = function () {
             for (var i = 0; i < this.pickResults.length; i++) {
                 var customId = this.pickResults[i][1];
                 if (customId) {
-                    if (this.board.selectedTile != -1 && this.board.isEmpty(customId)) {
+                    if (this.board.selectedTile != -1) {
                         this.board.dest = customId;
                         this.board.src = this.board.selectedTile;
                         this.board.requestMove();

@@ -67,16 +67,16 @@ MyGameBoard.prototype.getMove = function(data){
 };
 
 MyGameBoard.prototype.requestGameOver = function(){
-  if(this.error(data)) return;
   var playerAtom = Number(this.currentPlayer);
-  var requestStr = '('+ playerAtom + ',' + this.prologBoard + ')';
+  var requestStr = 'gameOver('+ playerAtom + ',' + this.prologBoard + ')';
   this.getPrologRequest(requestStr, this.getGameOver);
 };
 
 MyGameBoard.prototype.getGameOver = function(data){
   if(this.error(data)) return;
-  var over = data.target.response; //loser is current player
-  this.gameOver = (over == 1) ? 0 : 1;
+  var over = Number(data.target.response); //loser is current player
+
+  this.gameOver = (over == 0) ? true : false;
 };
 
 MyGameBoard.prototype.requestEnd = function(){
@@ -95,14 +95,11 @@ MyGameBoard.prototype.getEnd = function(data){
       case 119:
           this.winner = 1; //white
       break;
-      case 0:
-          this.winner = -1; //tie
-      break;
       default:
-          this.gameOver = 0;
+          this.gameOver = false;
       return;
   }
-  this.gameOver = 1;
+  this.gameOver = true;
 };
 
 MyGameBoard.prototype.requestPCBarragoon = function(){
@@ -113,20 +110,29 @@ MyGameBoard.prototype.requestPCBarragoon = function(){
 
 MyGameBoard.prototype.getPCBarragoon = function(data){
   if(this.error(data)) return;
-  var move = eval(data.target.response);
+  var move = data.target.response.split("-");
+
   this.prologBoard = move[0];
-  this.bgCell.x = move[1];
-  this.bgCell.y = move[2];
+  this.bgIndex = Math.indexToNum(Number(move[1]), Number(move[2]));
   this.bg = move[3];
 
-  this.move();
+  //movement function
 };
 
-MyGameBoard.prototype.requestHumanBarragoon = function(){
-  var playerAtom = Number(this.currentPlayer);
+MyGameBoard.prototype.requestBarragoon = function(){
   //this.bg é a string que representa o barragoon
-  var requestStr = 'setBarragoon(' + this.prologBoard + + ',' + this.bgCell.x + ',' + this.bgCell.y + ',' + this.bg + ')';
-  this.getPrologRequest(requestStr, this.getBoard);
+  let dest = Math.idToNum(this.bgIndex);
+  var requestStr = 'barragoonH(' + this.prologBoard + ',' + dest[0] + ',' + dest[1] + ',' + this.bg + ')';
+  this.getPrologRequest(requestStr, this.getBarragoon);
+};
+
+MyGameBoard.prototype.getBarragoon = function(data){
+  if(this.error(data)) return;
+  this.prologBoard = data.target.response;
+  console.log("HERE");
+  console.log(this.prologBoard);
+
+  //movement function
 };
 
 MyGameBoard.prototype.error = function(data){
