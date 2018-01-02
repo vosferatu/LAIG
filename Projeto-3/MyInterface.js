@@ -23,6 +23,8 @@ MyInterface.prototype.init = function(application) {
     //  http://workshop.chromeexperiments.com/examples/gui
     
     this.gui = new dat.GUI();
+    this.gui.add(this.scene, "newGame").name("New Game");
+
 
     // add a group of controls (and open/expand by defult)
     
@@ -77,9 +79,7 @@ MyInterface.prototype.addHighlightSelection = function (/* selectableNodes, */sr
 
 MyInterface.prototype.addGameOptions = function (src = this.gui) {
     var groupGameOptions = src.addFolder("Game Options");
-    groupGameOptions.open();
-
-    groupGameOptions.add(this.scene, "newGame").name("New Game");
+    groupGameOptions.close();
 
     groupGameOptions.add(this.scene, "player1", { Human: true, Computer: false }).name("Player 1");
     groupGameOptions.add(this.scene, "player2", { Human: true, Computer: false }).name("Player 2");
@@ -88,3 +88,4 @@ MyInterface.prototype.addGameOptions = function (src = this.gui) {
     this.addLightsGroup(this.scene.graph.lights, groupGameOptions);
     this.addHighlightSelection(groupGameOptions);
 }
+
