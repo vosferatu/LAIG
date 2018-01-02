@@ -9,6 +9,8 @@
 var WHITE_TILE_TX = "whitetile.jpg"
 var BLACK_TILE_TX = "blacktile.jpg"
 var STRUCTURE_TX = "wood.jpg";
+var WHITE_TURN_TX = "whitePlayerTurn.jpg"
+var BLACK_TURN_TX = "blackPlayerTurn.jpg"
 
 var EE = -1;
 var W2 = 0, W3 = 1, W4 = 2;
@@ -55,7 +57,6 @@ MyGameBoard.prototype.initTextures = function(){
 
     this.whiteTileTx = new CGFtexture(this.scene, "./scenes/images/" + WHITE_TILE_TX);
     this.blackTileTx = new CGFtexture(this.scene, "./scenes/images/" + BLACK_TILE_TX);
-    // this.selectedTileTx = new CGFtexture(this.scene, "./scenes/images/" + SELECTED_TILE_TX);
 }
 
 MyGameBoard.prototype.initTiles = function(){
@@ -78,12 +79,25 @@ MyGameBoard.prototype.initBoardStructure = function(){
         CGFobject.call(this, scene);
 
         this.structureTx = new CGFtexture(this.scene, "./scenes/images/" + STRUCTURE_TX);
+        this.whiteTurnTx = new CGFtexture(this.scene, "./scenes/images/" + WHITE_TURN_TX);
+        this.blackTurnTx = new CGFtexture(this.scene, "./scenes/images/" + BLACK_TURN_TX);
+
         this.cube = new MyCube(this.scene);
+        this.turn = new MyQuad(this.scene);
     };
     MyBoardStructure.prototype = Object.create(CGFobject.prototype);
     MyBoardStructure.prototype.constructor = MyBoardStructure;
 
     MyBoardStructure.prototype.display = function(){
+        let turnTx = this.scene.board.currentPlayer == 1 ? this.whiteTurnTx : this.blackTurnTx;
+        turnTx.bind();
+        this.scene.pushMatrix();
+        this.scene.translate(-7, 0.05, -3.5);
+        this.scene.rotate(Math.degToRad(-90), 1,0,0);
+        this.scene.scale(2.5, 2.5, 2.5);
+        this.turn.display();
+        this.scene.popMatrix();
+
         this.structureTx.bind();
 
         // BASE
@@ -228,19 +242,28 @@ MyGameBoard.prototype.display = function () {
     this.displayOutsidePieces();
     this.scene.popMatrix();
 
-    if(this.choosingBarragoon != null){
-        
-        this.scene.pushMatrix();
-        this.scene.translate(-1, 10.5, 10);
+    this.scene.pushMatrix();
+    this.displayBarragoonChoosingPiece();
+    this.scene.popMatrix();
+
+
+
+}
+
+MyGameBoard.prototype.displayBarragoonChoosingPiece = function(){
+    if (this.choosingBarragoon != null) {
+
+        this.scene.translate(0, 10.5, 10);
         if (this.animations[5] != null) {
-            this.scene.multMatrix(this.animations[5][1]);
+
+            let matrix = this.animations[5][1];
+
+            this.scene.multMatrix(matrix != null ? matrix : this.animations[5][0].getMatrix(0));
+
         }
         this.barragoonPiece.display(this.barragoonPiece.possibleOrientations[this.choosingBarragoon - 6]);
-        this.scene.popMatrix();
 
     }
-
-
 }
 
 MyGameBoard.prototype.displayTiles = function(){
@@ -295,7 +318,9 @@ MyGameBoard.prototype.displayPieces = function () {
 
             if (this.animations[pickingId] != null){
 
-                this.scene.multMatrix(this.animations[pickingId][1]);
+                let matrix = this.animations[pickingId][1];
+                
+                this.scene.multMatrix(matrix != null ? matrix : this.animations[pickingId][0].getMatrix(0));
 
             }
 
@@ -309,8 +334,6 @@ MyGameBoard.prototype.displayPieces = function () {
         }
     }
 }
-
-
 
 MyGameBoard.prototype.displayOutsideBarragoons = function () {
 
@@ -368,10 +391,35 @@ MyGameBoard.prototype.move = function(){
     if (!this.isEmpty(this.dest)) {
         if (destPiece < 6){
             this.playerPieceOutAnimation(destIndex, destPiece);
+
+            if(this.isPlayerHuman()){
+
+                let newBgIndex = [2.5 + Math.floor((this.outsideBGnumber - 1) / 3) / 2, -2.75 + ((this.outsideBGnumber - 1) % 3) / 2];
+                this.barragoonPieceOutAnimation(newBgIndex, this.outsideBGOrientations[this.outsideBGnumber - 1] + 6);
+                this.handleKeyboardChoosingBarragoon();
+                this.outsideBGnumber--;
+
+                this.secondPlayerToChoose = true;
+            }
+            else{
+                this.requestPCBarragoon();
+                this.placeBarragoon();
+
+                this.requestPCBarragoon();
+                this.placeBarragoon();
+
+            }
         }
         else{
-            this.barragoonPieceOutAnimation(destIndex, destPiece);
-            this.handleKeyboardChoosingBarragoon();
+            if(this.isPlayerHuman()){
+                this.barragoonPieceOutAnimation(destIndex, destPiece);
+                this.handleKeyboardChoosingBarragoon();
+            }
+            else{
+                this.requestPCBarragoon();
+                this.placeBarragoon();
+
+            }
         }
     }
 
@@ -385,6 +433,41 @@ MyGameBoard.prototype.move = function(){
     
     this.changePlayer();
     
+}
+
+MyGameBoard.prototype.chooseBarragoonPiece2Player = function(){
+
+    let newBgIndex = [2.5 + Math.floor((this.outsideBGnumber-1) / 3) / 2, -2.75 + ((this.outsideBGnumber-1) % 3) / 2]; 
+    this.barragoonPieceOutAnimation(newBgIndex, this.outsideBGOrientations[this.outsideBGnumber - 1] +6);
+    this.handleKeyboardChoosingBarragoon();
+    // alert("PLAYER " + (this.currentPlayer == 1 ? "BLACK" : "WHITE") + "!\nChoose an orientation (A/D) and a tile (clicking on it) for place the Barragoon Piece. ");
+    this.outsideBGnumber--;
+    this.changePlayer();
+
+
+}
+
+
+MyGameBoard.prototype.placeBarragoon = function () {
+    
+    let destIndex = Math.idToIndex(this.bgIndex);
+    this.board[destIndex[0]][destIndex[1]] = this.choosingBarragoon;
+    this.choosingBarragoon = null;
+
+    if(this.isPlayerHuman()){
+        let x = 4;
+        let y = 10.5;
+        let z = 13;
+
+        let controlPointsOut = [];
+        controlPointsOut.push([x - destIndex[1], y - 0.31, z - destIndex[0]]);
+        controlPointsOut.push([0, 0, 0]);
+        let movingAnimationOut = new MyLinearAnimation(this.scene, 8, controlPointsOut);
+
+        this.animations[this.bgIndex] = [movingAnimationOut, null, null];
+        this.animationsCount++;
+    }
+
 }
 
 MyGameBoard.prototype.handleKeyboardChoosingBarragoon = function () {
@@ -415,30 +498,30 @@ MyGameBoard.prototype.handleKeyboardChoosingBarragoon = function () {
     window.onkeypress = handlerKeyPressed.bind(this);
 }
 
-MyGameBoard.prototype.barragoonPieceOutAnimation = function (destIndex, destPiece) {
+MyGameBoard.prototype.barragoonPieceOutAnimation = function (srcIndex, srcPiece) {
 
-    this.choosingBarragoon = destPiece;
+    this.choosingBarragoon = srcPiece;
 
-    let x = 3;
+    let x = 4;
     let y = 10.5;
     let z = 13;
     let controlPointsOut = [];
-    controlPointsOut.push([destIndex[1]-x, 0.31-y, destIndex[0]-z]);
+    controlPointsOut.push([srcIndex[1]-x, 0.31-y, srcIndex[0]-z]);
     controlPointsOut.push([0, 0, 0]);
-    let movingAnimationOut = new MyLinearAnimation(this.scene, 5, controlPointsOut);
+    let movingAnimationOut = new MyLinearAnimation(this.scene, 8, controlPointsOut);
 
     this.animations[5] = [movingAnimationOut, null, null];
     this.animationsCount++;
 }
 
-MyGameBoard.prototype.playerPieceOutAnimation = function (destIndex, destPiece) {
-    this.outsidePieces.push(destPiece);
+MyGameBoard.prototype.playerPieceOutAnimation = function (srcIndex, srcPiece) {
+    this.outsidePieces.push(srcPiece);
 
     let x = 8 + (this.outsidePieces.length - 1) % 2;
     let z = 1 + Math.floor((this.outsidePieces.length - 1) / 2);
     let controlPointsOut = [];
-    controlPointsOut.push([destIndex[1] - x, 0.31, destIndex[0] - z]);
-    controlPointsOut.push([destIndex[1] - x, 2, destIndex[0] - z]);
+    controlPointsOut.push([srcIndex[1] - x, 0.31, srcIndex[0] - z]);
+    controlPointsOut.push([srcIndex[1] - x, 2, srcIndex[0] - z]);
     controlPointsOut.push([0, 2, 0]);
     controlPointsOut.push([0, 0, 0]);
     let movingAnimationOut = new MyBezierAnimation(this.scene, 3, controlPointsOut);

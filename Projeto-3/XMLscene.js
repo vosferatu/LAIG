@@ -292,12 +292,34 @@ XMLscene.prototype.logPicking = function () {
             for (var i = 0; i < this.pickResults.length; i++) {
                 var customId = this.pickResults[i][1];
                 if (customId) {
-                    if (this.board.selectedTile != -1) {
+                    if (this.board.choosingBarragoon != null){
+                        if (this.board.isEmpty(customId)) {
+                            this.board.bgIndex = customId;
+                            this.board.bg = this.board.barragoonPiece.possibleOrientations[this.board.choosingBarragoon - 6];
+
+                            this.board.requestBarragoon();
+
+                            this.board.placeBarragoon();
+
+                            if(this.board.secondPlayerToChoose == true){
+
+                                this.board.chooseBarragoonPiece2Player();
+                                this.board.secondPlayerToChoose = false;
+                            }
+                            else
+                                this.board.changePlayer();
+
+                        }
+                        
+                        
+                    }
+                    else if (this.board.selectedTile != -1) {
                         this.board.dest = customId;
                         this.board.src = this.board.selectedTile;
                         this.board.requestMove();
                         this.board.selectedTile = -1;
-                    } else if (!this.board.isEmpty(customId)) {
+                    } 
+                    else if (!this.board.isEmpty(customId)) {
                         this.board.selectedTile = customId;
                     }
                     console.log("Picked object: with pick id " + customId);
