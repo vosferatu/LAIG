@@ -130,7 +130,7 @@ XMLscene.prototype.initCameras = function () {
     // position: -0.6684833765029907, 4.384912967681885, 2.4064443111419678, 0
     // target: -0.6684833765029907, 1.8929692506790161, 0, 0
 
-    this.camera = new CGFcamera(0.5, 0.1, 500, vec3.fromValues(-0.2, 10, 5.5), vec3.fromValues(-0.2, 0, -2.5));
+    this.camera = new CGFcamera(0.6, 0.1, 500, vec3.fromValues(-0.2, 10, 5.5), vec3.fromValues(-0.2, 0, -2.5));
 }
 
 /**
@@ -178,6 +178,7 @@ XMLscene.prototype.onGraphLoaded = function () {
     this.initLights();
 
     // Adds menu elements.
+    
     this.interface.addGameOptions();
 }
 
