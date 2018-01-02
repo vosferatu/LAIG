@@ -48,6 +48,8 @@ function MyGameBoard(scene) {
     this.choosingBarragoon = null;
     this.animationsCount=0;
 
+    this.requested = false;
+
 
 };
 
@@ -202,7 +204,7 @@ MyGameBoard.prototype.update = function (currTime){
 
     }
 
-    if(!this.isPlayerHuman() && this.noAnimations()){
+    if(!this.isPlayerHuman() && this.noAnimations() && !this.requested){
       this.requestPCMove();
     }
 }
@@ -473,11 +475,16 @@ MyGameBoard.prototype.noAnimations=function () {
 }
 
 MyGameBoard.prototype.newGame = function () {
+  if(this.requested) return;
+
   this.setInitialBoard();
+  this.prologBoard = null;
   this.requestInitialBoard();
   this.currentPlayer = 1;
   this.outsideBGnumber = 24;
   this.outsidePieces = [];
+  //this.requested = false;
+  //this.animationsCount = 0;
 };
 
 MyGameBoard.prototype.changePlayer = function(){
