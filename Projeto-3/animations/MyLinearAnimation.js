@@ -37,9 +37,6 @@ MyLinearAnimation.prototype.getMatrix = function (currTime) {
 
   }
 
-  // mat4.translate(animationMatrix, animationMatrix, [(p2[0] - p1[0]) * variation + p1[0], (p2[1] - p1[1]) * variation + p1[1], (p2[2] - p1[2]) * variation + p1[2]]);
-  // mat4.rotate(animationMatrix, animationMatrix, rotation, this.scene.graph.axisCoords['y']);
-
   return animationMatrix;
 }
 
@@ -55,7 +52,7 @@ MyLinearAnimation.prototype.getMatrixSimpleLinear = function (deltaTime, point1,
   rotation = Math.atan2(point2[0] - point1[0],  point2[2] - point1[2]);
   
   mat4.translate(animationMatrix, animationMatrix, result);
-  mat4.rotate(animationMatrix, animationMatrix, rotation, this.scene.graph.axisCoords['y']);
+  // mat4.rotate(animationMatrix, animationMatrix, rotation, this.scene.graph.axisCoords['y']);
 
   return animationMatrix;
 }

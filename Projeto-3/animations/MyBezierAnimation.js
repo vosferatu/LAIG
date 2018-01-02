@@ -25,7 +25,7 @@ MyBezierAnimation.prototype.getMatrix = function (deltaTime) {
   this.getPositionAndRotation(deltaTime);
 
   mat4.translate(animationMatrix, animationMatrix, [this.translation[0], this.translation[1], this.translation[2]]);
-  mat4.rotate(animationMatrix, animationMatrix, this.rotationAngle, [0, 1, 0]);
+  // mat4.rotate(animationMatrix, animationMatrix, this.rotationAngle, [0, 1, 0]);
 
   return animationMatrix;
 

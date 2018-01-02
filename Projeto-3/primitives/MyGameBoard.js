@@ -174,7 +174,15 @@ MyGameBoard.prototype.update = function (currTime){
 
         if (this.animations[i] == null) continue;
 
-        let newMatrix = this.animations[i][0].getMatrix(elapsedTime);
+        if(this.animations[i][2] == null){
+            this.animations[i][2] = elapsedTime;
+        }
+
+        if (elapsedTime - this.animations[i][2] >= this.animations[i][0].time){
+            this.animations[i] = null;
+            continue;
+        }
+        let newMatrix = this.animations[i][0].getMatrix(elapsedTime - this.animations[i][2]);
         this.animations[i][1] = newMatrix;
 
     }
@@ -195,6 +203,8 @@ MyGameBoard.prototype.display = function () {
     this.scene.translate(-4.5,0.31,-3.5);
     this.displayTiles();
     this.scene.popMatrix();
+
+    this.scene.clearPickRegistration();
 
     this.scene.pushMatrix();
     this.scene.translate(-7, 0, -0.75);
@@ -306,11 +316,13 @@ MyGameBoard.prototype.move = function(){
 
 
     let controlPoints = [];
-    controlPoints.push([srcIndex[0] - destIndex[0], 0, srcIndex[1] - destIndex[1]]);
+    controlPoints.push([srcIndex[1] - destIndex[1], 0, srcIndex[0] - destIndex[0]]);
+    controlPoints.push([srcIndex[1] - destIndex[1], 2, srcIndex[0] - destIndex[0]]);
+    controlPoints.push([0, 2, 0]);
     controlPoints.push([0, 0, 0]);
-    let movingAnimation = new MyLinearAnimation(this.scene, 0.3, controlPoints);
+    let movingAnimation = new MyBezierAnimation(this.scene, 3, controlPoints);
 
-    this.animations[this.dest] = [movingAnimation, movingAnimation.getMatrix(0)];
+    this.animations[this.dest] = [movingAnimation, null, null];
     
 
     this.dest = -1;
